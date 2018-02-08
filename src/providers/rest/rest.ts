@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { AUTH_TOKEN_HEADER } from '../authentication/authentication';
 
 // TODO: Read domain from (environment-specific) config file
 const BASE_URL = 'http://localhost:9000/v1'
+
+const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 
 @Injectable()
 export class RestProvider {
@@ -30,5 +31,9 @@ export class RestProvider {
 
   public setAuthToken(token: string): void {
     this.authToken = token;
+  }
+
+  public isLoggedIn(): boolean {
+    return !!this.authToken;
   }
 }
