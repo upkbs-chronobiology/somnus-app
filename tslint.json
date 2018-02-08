@@ -3,6 +3,10 @@
     "no-duplicate-variable": true,
     "no-unused-variable": [
       true
+    ],
+    "quotemark": [
+      true,
+      "single"
     ]
   },
   "rulesDirectory": [
