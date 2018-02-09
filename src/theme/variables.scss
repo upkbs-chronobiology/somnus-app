@@ -41,6 +41,10 @@ $colors: (
   dark:       #222
 );
 
+// convenience variables
+$primary: color($colors, primary, base);
+$secondary: color($colors, secondary, base);
+$danger: color($colors, danger, base);
 
 // App iOS Variables
 // --------------------------------------------------

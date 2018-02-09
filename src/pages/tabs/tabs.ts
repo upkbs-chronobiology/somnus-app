@@ -20,6 +20,6 @@ export class TabsPage implements OnInit {
 
   ngOnInit(): void {
     if (!this.rest.isLoggedIn())
-      this.modal.create(LoginComponent).present();
+      this.modal.create(LoginComponent, {}, { enableBackdropDismiss: false }).present();
   }
 }

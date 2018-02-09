@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -27,6 +27,15 @@ export class RestProvider {
 
   public post(endpoint: string, body: any): Observable<Object> {
     return this.http.post(`${BASE_URL}/${endpoint}`, body, { headers: this.buildHeaders() });
+  }
+
+  public postResponse(endpoint: string, body: any): Observable<HttpResponse<Object>> {
+    return this.http.post(`${BASE_URL}/${endpoint}`, body, {
+      headers: this.buildHeaders(),
+      observe: 'response',
+      // XXX: Maybe not too clean but currently required, as the server sometimes returns non-json (e.g. on login success)
+      responseType: 'text'
+    });
   }
 
   public setAuthToken(token: string): void {

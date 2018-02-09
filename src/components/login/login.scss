@@ -1,3 +1,11 @@
 login {
+  padding: $content-padding;
 
+  .switch-button-icon {
+    margin-left: 0.5ex;
+  }
+}
+
+.failure-toast .toast-message {
+  background-color: $danger;
 }
