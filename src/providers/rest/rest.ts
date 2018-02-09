@@ -10,7 +10,13 @@ const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 @Injectable()
 export class RestProvider {
 
-  private authToken: string;
+  private get authToken(): string {
+    return localStorage.authToken;
+  }
+
+  private set authToken(token: string) {
+    localStorage.authToken = token;
+  }
 
   constructor(public http: HttpClient) {
   }
