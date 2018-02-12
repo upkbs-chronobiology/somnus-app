@@ -25,6 +25,7 @@ export class AuthenticationProvider {
   public login(credentials: Credentials): Observable<void> {
     return this.rest.postResponse(LOGIN_ENDPOINT, credentials)
       .map((response: HttpResponse<Object>) => {
+        // FIXME: Header is "invisible" to us for some reason
         this.rest.setAuthToken(response.headers.get(AUTH_TOKEN_HEADER));
       });
   }

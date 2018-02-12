@@ -13,6 +13,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from '../components/components.module';
+import { QuestionsProvider } from '../providers/questions/questions';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ComponentsModule } from '../components/components.module';
     AuthenticationProvider,
     RestProvider,
     HttpClientModule,
+    QuestionsProvider,
   ]
 })
 export class AppModule {}

@@ -5,5 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  (questions will be listed here someday)
+  <ol>
+    <li *ngFor="let question of questions">{{question.content}}</li>
+  </ol>
 </ion-content>

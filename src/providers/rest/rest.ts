@@ -15,20 +15,24 @@ export class RestProvider {
   }
 
   private set authToken(token: string) {
-    localStorage.authToken = token;
+    if (!token)
+      delete localStorage.authToken;
+    else
+      localStorage.authToken = token;
   }
 
-  constructor(public http: HttpClient) {
+  constructor(private http: HttpClient) {
   }
 
-  private buildHeaders(): HttpHeaders {
-    const headers = new HttpHeaders();
-    if (this.authToken) headers.append(AUTH_TOKEN_HEADER, this.authToken);
+  private buildHeaders(authenticate: boolean = true): HttpHeaders {
+    let headers = new HttpHeaders();
+    // TODO: Somehow trigger login prompt if token is missing (or expired). Might require some refactoring.
+    if (authenticate && this.authToken) headers = headers.append(AUTH_TOKEN_HEADER, this.authToken);
     return headers;
   }
 
-  public get(endpoint: string): Observable<Object> {
-    return this.http.get(`${BASE_URL}/${endpoint}`, { headers: this.buildHeaders() });
+  public get(endpoint: string, authenticate: boolean = true): Observable<Object> {
+    return this.http.get(`${BASE_URL}/${endpoint}`, { headers: this.buildHeaders(authenticate) });
   }
 
   public post(endpoint: string, body: any): Observable<Object> {
