@@ -5,7 +5,23 @@
 </ion-header>
 
 <ion-content padding>
-  <ol>
-    <li *ngFor="let question of questions">{{question.content}}</li>
-  </ol>
+  <ion-slides #slides pager>
+    <ion-slide *ngFor="let question of questions; let i = index">
+      <h2>{{question.content}}</h2>
+      <ion-item>
+        <ion-input #input="ngModel" [(ngModel)]="answers[i].content" required placeholder="..."></ion-input>
+      </ion-item>
+
+      <ion-fab bottom right>
+        <button ion-fab (click)="slides.slideNext()" [disabled]="input.invalid">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-slide>
+
+    <ion-slide>
+      <h2>Thanks, that's all for now</h2>
+      <button ion-button (click)="submitAnswers()" [disabled]="!everthingAnswered()">Submit</button>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
