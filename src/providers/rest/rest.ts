@@ -7,6 +7,8 @@ const BASE_URL = 'http://localhost:9000/v1'
 
 const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 
+// TODO: Wrap request observables in ReplaySubject to ensure they're
+// always executed (even without external subscribers).
 @Injectable()
 export class RestProvider {
 

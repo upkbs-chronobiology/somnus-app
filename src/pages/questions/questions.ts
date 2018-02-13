@@ -3,6 +3,7 @@ import { Question } from '../../model/question';
 import { Answer } from '../../model/answer';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { QuestionsProvider } from '../../providers/questions/questions';
+import { AnswersProvider } from '../../providers/answers/answers';
 
 @Component({
   selector: 'page-questions',
@@ -14,7 +15,10 @@ export class QuestionsPage implements OnInit {
 
   answers: Answer[];
 
-  constructor(private questionsProvider: QuestionsProvider) {
+  constructor(
+    private questionsProvider: QuestionsProvider,
+    private answersProvider: AnswersProvider
+  ) {
   }
 
   ngOnInit(): void {
@@ -29,6 +33,6 @@ export class QuestionsPage implements OnInit {
   }
 
   submitAnswers(): void {
-    // TODO: Send to server
+    this.answersProvider.sendAll(this.answers).subscribe();
   }
 }

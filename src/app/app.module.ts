@@ -14,6 +14,7 @@ import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from '../components/components.module';
 import { QuestionsProvider } from '../providers/questions/questions';
+import { AnswersProvider } from '../providers/answers/answers';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { QuestionsProvider } from '../providers/questions/questions';
     RestProvider,
     HttpClientModule,
     QuestionsProvider,
+    AnswersProvider,
   ]
 })
 export class AppModule {}
