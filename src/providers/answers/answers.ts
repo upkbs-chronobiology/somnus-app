@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../model/answer';
 import { Observable } from 'rxjs/Observable';
-import { RestProvider } from '../rest/rest';
+import { AuthRestProvider } from '../auth-rest/auth-rest';
 
 @Injectable()
 export class AnswersProvider {
 
-  constructor(private rest: RestProvider) {
+  constructor(private rest: AuthRestProvider) {
   }
 
   sendAll(answers: Answer[]): Observable<Answer[]> {

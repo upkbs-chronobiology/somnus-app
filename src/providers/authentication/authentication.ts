@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Credentials, Particulars } from '../../model/credentials';
 import { RestProvider } from '../rest/rest';
 import { Observable } from 'rxjs/Observable';
@@ -15,19 +15,15 @@ const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 @Injectable()
 export class AuthenticationProvider {
 
-  constructor(private injector: Injector) { // FIXME: injection hack
+  constructor(private rest: RestProvider) { // FIXME: injection hack
   }
 
-  public register(particulars: Particulars): Observable<void> {
-    const rest = this.injector.get(RestProvider);
-    return rest.post(REGISTER_ENDPOINT, particulars).map(() => { });
+  public register(particulars: Particulars): Observable<any> {
+    return this.rest.post(REGISTER_ENDPOINT, particulars);
   }
 
-  public login(credentials: Credentials): Observable<void> {
-    const rest = this.injector.get(RestProvider);
-    return rest.postResponse(LOGIN_ENDPOINT, credentials, false)
-      .map((response: HttpResponse<Object>) => {
-        rest.setAuthToken(response.headers.get(AUTH_TOKEN_HEADER));
-      });
+  public login(credentials: Credentials): Observable<string> {
+    return this.rest.postResponse(LOGIN_ENDPOINT, credentials)
+      .map((response: HttpResponse<Object>) => response.headers.get(AUTH_TOKEN_HEADER));
   }
 }

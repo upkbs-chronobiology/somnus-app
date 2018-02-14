@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Credentials } from '../../model/credentials';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { Observable } from 'rxjs/Observable';
 import { ViewController, ToastController } from 'ionic-angular';
 
 const TOAST_DURATION = 4000;
@@ -23,21 +22,25 @@ export class LoginComponent {
   }
 
   public submit() {
+    if (this.registration) this.register();
+    else this.login();
+  }
+
+  private register() {
     // currently works because particulars have the same form as credentials
-    const action: (credentials: Credentials) => Observable<void> =
-      this.registration ? this.authentication.register : this.authentication.login;
+    this.authentication.register(this.credentials).subscribe(() => {
+      this.showToast('Registration successful', true);
+      this.registration = false;
+    },
+      error => this.showToast('Registration failed', false));
+  }
 
-    action.call(this.authentication, this.credentials).subscribe(
-      () => {
-        this.showToast(this.registration ? 'Registration successful' : 'Login successful', true);
-
-        if (!this.registration)
-          this.view.dismiss();
-        else
-          this.registration = false;
-      },
-      error => this.showToast(this.registration ? 'Registration failed' : 'Login failed', false)
-    );
+  private login() {
+    this.authentication.login(this.credentials).subscribe((token: string) => {
+      this.showToast('Login successful', true);
+      this.view.dismiss(token);
+    },
+      error => this.showToast('Login failed', false));
   }
 
   private showToast(message: string, success: boolean) {

@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from '../components/components.module';
 import { QuestionsProvider } from '../providers/questions/questions';
 import { AnswersProvider } from '../providers/answers/answers';
+import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AnswersProvider } from '../providers/answers/answers';
     HttpClientModule,
     QuestionsProvider,
     AnswersProvider,
+    AuthRestProvider,
   ]
 })
 export class AppModule {}
