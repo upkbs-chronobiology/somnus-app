@@ -33,6 +33,6 @@ export class QuestionsPage implements OnInit {
   }
 
   submitAnswers(): void {
-    this.answersProvider.sendAll(this.answers).subscribe();
+    this.answersProvider.sendAll(this.answers);
   }
 }
