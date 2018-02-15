@@ -13,4 +13,4 @@ After setting up Ionic, run `ionic serve` to launch the app on localhost for dev
 
 ## Testing
 
-TODO
+In order to execute Karma/Jasmine tests, run `npm test`.

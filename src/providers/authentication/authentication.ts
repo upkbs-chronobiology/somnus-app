@@ -15,7 +15,7 @@ const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 @Injectable()
 export class AuthenticationProvider {
 
-  constructor(private rest: RestProvider) { // FIXME: injection hack
+  constructor(private rest: RestProvider) {
   }
 
   public register(particulars: Particulars): Observable<any> {

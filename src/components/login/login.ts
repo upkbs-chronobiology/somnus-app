@@ -1,7 +1,7 @@
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component } from '@angular/core';
 import { Credentials } from '../../model/credentials';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { ViewController, ToastController } from 'ionic-angular';
+import { ToastController, ViewController } from 'ionic-angular';
 
 const TOAST_DURATION = 4000;
 
