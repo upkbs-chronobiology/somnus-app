@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #slides pager>
+  <ion-slides #slides pager *ngIf="questions">
     <ion-slide *ngFor="let question of questions; let i = index">
       <h2>{{question.content}}</h2>
       <ion-item>
@@ -22,7 +22,13 @@
     <ion-slide>
       <p *ngIf="everthingAnswered()">Thanks, answers are ready to be submitted:</p>
       <p *ngIf="!everthingAnswered()">There are unanswered questions, please go back and edit.</p>
-      <button ion-button (click)="submitAnswers()" [disabled]="!everthingAnswered()">Submit</button>
+      <button *ngIf="!submitting" ion-button (click)="submitAnswers()" [disabled]="!everthingAnswered()">Submit</button>
+      <ion-spinner *ngIf="submitting" color="primary"></ion-spinner>
     </ion-slide>
   </ion-slides>
+
+  <centrizer *ngIf="!questions" class="no-questions">
+    <ion-icon class="icon" name="checkmark"></ion-icon>
+    <div>There are no questions at the moment.</div>
+  </centrizer>
 </ion-content>

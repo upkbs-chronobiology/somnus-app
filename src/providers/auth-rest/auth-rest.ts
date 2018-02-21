@@ -54,28 +54,32 @@ export class AuthRestProvider {
   private fetchResponse(
     method: string, endpoint: string, authenticate: boolean = true, options = {}
   ): Observable<HttpResponse<Object>> {
+    const loginAndRetry = () => this.logIn().concatMap(() => this.fetchResponse(method, endpoint, authenticate, options));
+
     if (authenticate && !this.authToken)
-      return this.logIn().concatMap(() => this.fetchResponse(method, endpoint, authenticate, options));
-
-    const mapResponse = (response: HttpResponse<Object>): Observable<HttpResponse<Object>> => {
-      if (response.status === UNAUTHORIZED)
-        return this.logIn().concatMap(() => this.fetchResponse(method, endpoint, authenticate, options));
-
-      return Observable.of(response);
-    }
+      return loginAndRetry();
 
     return this.rest.fetchResponse(method, endpoint, {
       headers: this.buildHeaders(authenticate),
       ...options
-    }).catch(mapResponse)
-      .concatMap(mapResponse);
+    }).concatMap((response: HttpResponse<Object>): Observable<HttpResponse<Object>> => {
+      if (response.status === UNAUTHORIZED)
+        return loginAndRetry();
+
+      return Observable.of(response);
+    });
   }
 
   private fetchBody(
     method: string, endpoint: string, authenticate: boolean = true, options = {}
   ): Observable<Object> {
     return this.fetchResponse(method, endpoint, authenticate, options)
-      .map(response => response.body);
+      .concatMap(response => {
+        if (!response.ok)
+          return Observable.throw(`${response.status} ${response.statusText}`);
+
+        return Observable.of(response.body);
+      });
   }
 
   public get(endpoint: string, authenticate: boolean = true): Observable<Object> {

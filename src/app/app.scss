@@ -18,3 +18,7 @@
 .modal-wrapper {
   background-color: $background-color;
 }
+
+.failure-toast .toast-message {
+  background-color: $danger;
+}

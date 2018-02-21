@@ -16,6 +16,7 @@ import { ComponentsModule } from '../components/components.module';
 import { QuestionsProvider } from '../providers/questions/questions';
 import { AnswersProvider } from '../providers/answers/answers';
 import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
+import { ToastProvider } from '../providers/toast/toast';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
     QuestionsProvider,
     AnswersProvider,
     AuthRestProvider,
+    ToastProvider,
   ]
 })
 export class AppModule {}

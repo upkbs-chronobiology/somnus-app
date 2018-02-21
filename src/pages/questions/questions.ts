@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { Question } from '../../model/question';
 import { Answer } from '../../model/answer';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { QuestionsProvider } from '../../providers/questions/questions';
 import { AnswersProvider } from '../../providers/answers/answers';
+import { Component } from '@angular/core';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Question } from '../../model/question';
+import { QuestionsProvider } from '../../providers/questions/questions';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @Component({
   selector: 'page-questions',
@@ -15,9 +16,12 @@ export class QuestionsPage implements OnInit {
 
   answers: Answer[];
 
+  submitting: boolean = false;
+
   constructor(
     private questionsProvider: QuestionsProvider,
-    private answersProvider: AnswersProvider
+    private answersProvider: AnswersProvider,
+    private toast: ToastProvider,
   ) {
   }
 
@@ -33,6 +37,14 @@ export class QuestionsPage implements OnInit {
   }
 
   submitAnswers(): void {
-    this.answersProvider.sendAll(this.answers);
+    this.submitting = true;
+    this.answersProvider.sendAll(this.answers).subscribe(createdAnswers => {
+      this.submitting = false;
+      delete this.questions;
+      this.toast.show(`${createdAnswers.length} answers successfully submitted`);
+    }, error => {
+      this.submitting = false;
+      this.toast.show(`Answer submission failed: ${error.message || error}`, true);
+    });
   }
 }

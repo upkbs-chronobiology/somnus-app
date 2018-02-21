@@ -1,9 +1,8 @@
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component } from '@angular/core';
 import { Credentials } from '../../model/credentials';
-import { ToastController, ViewController } from 'ionic-angular';
-
-const TOAST_DURATION = 4000;
+import { ViewController } from 'ionic-angular';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @Component({
   selector: 'login',
@@ -17,7 +16,7 @@ export class LoginComponent {
   constructor(
     private authentication: AuthenticationProvider,
     private view: ViewController,
-    private toast: ToastController,
+    private toast: ToastProvider,
   ) {
   }
 
@@ -44,10 +43,6 @@ export class LoginComponent {
   }
 
   private showToast(message: string, success: boolean) {
-    this.toast.create({
-      message: message,
-      duration: TOAST_DURATION,
-      cssClass: success ? 'success-toast' : 'failure-toast'
-    }).present();
+    this.toast.show(message, !success);
   }
 }
