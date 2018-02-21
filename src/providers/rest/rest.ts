@@ -32,7 +32,9 @@ export class RestProvider {
 
   public postResponse(endpoint: string, body: any): Observable<HttpResponse<Object>> {
     return ensure(this.fetchResponse('post', endpoint, {
-      body: body
+      body: body,
+      // XXX: Currently required because server sometimes responds with non-json (e.g. on login success)
+      responseType: 'text'
     }));
   }
 }
