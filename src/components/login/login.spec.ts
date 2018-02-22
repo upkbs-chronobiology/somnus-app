@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { IonicModule, ToastController, ViewController } from 'ionic-angular';
+import { IonicModule, ViewController } from 'ionic-angular';
 import { LoginComponent } from './login';
 import { ApplicationModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ToastProvider } from '../../providers/toast/toast';
 
 describe('LoginComponent', () => {
 
@@ -23,7 +24,7 @@ describe('LoginComponent', () => {
       providers: [
         { provide: AuthenticationProvider, useValue: {} as AuthenticationProvider },
         { provide: ViewController, useValue: {} as ViewController },
-        { provide: ToastController, useValue: {} as ToastController },
+        { provide: ToastProvider, useValue: {} as ToastProvider },
       ]
     });
   }));
