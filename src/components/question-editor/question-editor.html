@@ -1,0 +1,11 @@
+<button ion-button icon-only outline color="dark" (click)="delete()" title="Delete"><ion-icon name="trash"></ion-icon></button>
+
+<ion-item>
+  <ion-input [(ngModel)]="newContent"></ion-input>
+</ion-item>
+
+<button ion-button *ngIf="newContent !== question.content && !submitting" [disabled]="!newContent"
+  (click)="save()" title="Save" icon-only>
+  <ion-icon name="cloud-upload"></ion-icon>
+</button>
+<ion-spinner *ngIf="submitting" color="primary"></ion-spinner>

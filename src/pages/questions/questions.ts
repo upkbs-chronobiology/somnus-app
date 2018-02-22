@@ -40,7 +40,7 @@ export class QuestionsPage implements OnInit {
     this.submitting = true;
     this.answersProvider.sendAll(this.answers).subscribe(createdAnswers => {
       this.submitting = false;
-      delete this.questions;
+      this.questions = [];
       this.toast.show(`${createdAnswers.length} answers successfully submitted`);
     }, error => {
       this.submitting = false;

@@ -27,8 +27,12 @@
     </ion-slide>
   </ion-slides>
 
-  <centrizer *ngIf="!questions" class="no-questions">
+  <centrizer *ngIf="questions && questions.length === 0" class="no-questions">
     <ion-icon class="icon" name="checkmark"></ion-icon>
     <div>There are no questions at the moment.</div>
+  </centrizer>
+
+  <centrizer *ngIf="!questions">
+    <ion-spinner></ion-spinner>
   </centrizer>
 </ion-content>

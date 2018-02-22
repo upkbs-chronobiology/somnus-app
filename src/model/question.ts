@@ -1,4 +1,6 @@
-export interface Question {
-  id: number,
-  content: string
+export class Question {
+  constructor(
+    public id: number,
+    public content: string
+  ) { }
 }

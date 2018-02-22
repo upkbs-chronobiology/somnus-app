@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Editor</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ng-container *ngIf="questions; else loadingIndicator">
+  <question-editor *ngFor="let question of questions" [question]="question"></question-editor>
+
+  <div class="new-question">
+    <ion-item>
+      <ion-label floating>New Question</ion-label>
+      <ion-input [(ngModel)]="newQuestionContent"></ion-input>
+    </ion-item>
+
+    <button ion-button icon-left *ngIf="newQuestionContent && !creatingQuestion" (click)="createQuestion()">
+      <ion-icon name="add"></ion-icon>
+      Add question
+    </button>
+    <ion-spinner *ngIf="creatingQuestion" color="primary"></ion-spinner>
+  </div>
+  </ng-container>
+  
+  <ng-template #loadingIndicator>
+    <centrizer>
+      <ion-spinner></ion-spinner>
+    </centrizer>
+  </ng-template>
+</ion-content>

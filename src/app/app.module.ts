@@ -17,6 +17,7 @@ import { QuestionsProvider } from '../providers/questions/questions';
 import { AnswersProvider } from '../providers/answers/answers';
 import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
 import { ToastProvider } from '../providers/toast/toast';
+import { EditorPageModule } from '../pages/editor/editor.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ToastProvider } from '../providers/toast/toast';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    ComponentsModule
+    ComponentsModule,
+    EditorPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

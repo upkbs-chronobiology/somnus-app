@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { ModalController } from 'ionic-angular';
-import { RestProvider } from '../rest/rest';
-import { Observable } from 'rxjs/Observable';
+import { ensure } from '../../util/streams';
+import { ErrorResponse, RestProvider } from '../rest/rest';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Subject } from 'rxjs/Subject';
-import { ensure } from '../../util/streams'
+import { Injectable } from '@angular/core';
 import { LoginComponent } from '../../components/login/login';
-import { ToastProvider } from '../toast/toast';
+import { ModalController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 
@@ -14,8 +13,8 @@ const UNAUTHORIZED = 401;
 
 const GET = 'get';
 const POST = 'post';
-// const PUT = 'put';
-// const DELETE = 'delete';
+const PUT = 'put';
+const DELETE = 'delete';
 
 @Injectable()
 export class AuthRestProvider {
@@ -31,7 +30,7 @@ export class AuthRestProvider {
       localStorage.authToken = token;
   }
 
-  constructor(public rest: RestProvider, private modal: ModalController, private toast: ToastProvider) {
+  constructor(public rest: RestProvider, private modal: ModalController) {
   }
 
   private buildHeaders(authenticate: boolean = true): HttpHeaders {
@@ -72,7 +71,13 @@ export class AuthRestProvider {
       if (error.status === UNAUTHORIZED)
         return loginAndRetry();
 
-      this.toast.show(`Request to server failed: ${error.message || error}`, true);
+      // XXX: Why is this?
+      const body = error.error;
+      if (body.message) {
+        const message = (body as ErrorResponse).message;
+        return Observable.throw(new Error(message));
+      }
+
       return Observable.throw(error);
     });
   }
@@ -81,12 +86,7 @@ export class AuthRestProvider {
     method: string, endpoint: string, authenticate: boolean = true, options = {}
   ): Observable<Object> {
     return this.fetchResponse(method, endpoint, authenticate, options)
-      .concatMap(response => {
-        if (!response.ok)
-          return Observable.throw(`${response.status} ${response.statusText}`);
-
-        return Observable.of(response.body);
-      });
+      .concatMap(response => Observable.of(response.body));
   }
 
   public get(endpoint: string, authenticate: boolean = true): Observable<Object> {
@@ -97,6 +97,16 @@ export class AuthRestProvider {
     return ensure(this.fetchBody(POST, endpoint, true, {
       body: body
     }));
+  }
+
+  public put(endpoint: string, body: any): Observable<Object> {
+    return ensure(this.fetchBody(PUT, endpoint, true, {
+      body: body
+    }));
+  }
+
+  public delete(endpoint: string): Observable<Object> {
+    return ensure(this.fetchBody(DELETE, endpoint, true));
   }
 
   public postResponse(endpoint: string, body: any, authenticate: boolean = true): Observable<HttpResponse<Object>> {

@@ -9,6 +9,10 @@ import { ensure } from '../../util/streams';
 // TODO: Read domain from (environment-specific) config file
 const BASE_URL = 'http://localhost:9000/v1'
 
+export interface ErrorResponse {
+  message: string
+}
+
 @Injectable()
 export class RestProvider {
 
@@ -30,11 +34,11 @@ export class RestProvider {
     }).map(r => r.body));
   }
 
-  public postResponse(endpoint: string, body: any): Observable<HttpResponse<Object>> {
+  // XXX: text response type as default needed atm because server sometimes responds with non-json
+  public postResponse(endpoint: string, body: any, responseType: string = 'text'): Observable<HttpResponse<Object>> {
     return ensure(this.fetchResponse('post', endpoint, {
       body: body,
-      // XXX: Currently required because server sometimes responds with non-json (e.g. on login success)
-      responseType: 'text'
+      responseType: responseType
     }));
   }
 }

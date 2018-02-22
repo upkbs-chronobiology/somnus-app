@@ -1,0 +1,12 @@
+question-editor {
+  display: flex;
+  max-height: 10em;
+
+  &.deleted {
+    max-height: 0;
+    opacity: 0;
+    transition-property: max-height, opacity;
+    transition-duration: $medium-transition-duration;
+    transition-timing-function: ease-out;
+  }
+}

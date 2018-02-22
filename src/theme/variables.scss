@@ -90,3 +90,6 @@ $danger: color($colors, danger, base);
 
 @import "roboto";
 @import "noto-sans";
+
+// custom constants
+$medium-transition-duration: 400ms;
