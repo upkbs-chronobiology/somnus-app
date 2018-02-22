@@ -6,6 +6,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
 import { ensure } from '../../util/streams'
 import { LoginComponent } from '../../components/login/login';
+import { ToastProvider } from '../toast/toast';
 
 const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 
@@ -30,7 +31,7 @@ export class AuthRestProvider {
       localStorage.authToken = token;
   }
 
-  constructor(public rest: RestProvider, private modal: ModalController) {
+  constructor(public rest: RestProvider, private modal: ModalController, private toast: ToastProvider) {
   }
 
   private buildHeaders(authenticate: boolean = true): HttpHeaders {
@@ -67,6 +68,12 @@ export class AuthRestProvider {
         return loginAndRetry();
 
       return Observable.of(response);
+    }).catch(error => {
+      if (error.status === UNAUTHORIZED)
+        return loginAndRetry();
+
+      this.toast.show(`Request to server failed: ${error.message || error}`, true);
+      return Observable.throw(error);
     });
   }
 
