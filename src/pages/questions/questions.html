@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #slides pager *ngIf="questions">
+  <ion-slides #slides pager *ngIf="questions && questions.length > 0">
     <ion-slide *ngFor="let question of questions; let i = index">
       <h2>{{question.content}}</h2>
       <ion-item>
