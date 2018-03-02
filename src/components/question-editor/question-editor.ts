@@ -1,14 +1,23 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { AnswerType } from '../../model/answer-type';
+import { Component, HostBinding, Input } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { ToastProvider } from '../../providers/toast/toast';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'question-editor',
   templateUrl: 'question-editor.html'
 })
 export class QuestionEditorComponent {
+
+  // XXX: Some duplication with question-editor
+  answerTypes: AnswerType[] = Object.keys(AnswerType).map(key => AnswerType[key]);
+  answerTypeLabels = {
+    [AnswerType.Text]: 'Text',
+    [AnswerType.RangeContinuous]: 'Continuous Range (0-1)',
+    [AnswerType.RangeDiscrete5]: 'Discrete Range (1-5)',
+  };
 
   submitting: boolean = false;
 
@@ -17,7 +26,7 @@ export class QuestionEditorComponent {
 
   private _question: Question;
 
-  newContent: string;
+  editedQuestion: Question;
 
   get question(): Question {
     return this._question;
@@ -26,7 +35,7 @@ export class QuestionEditorComponent {
   @Input()
   set question(question: Question) {
     this._question = question;
-    this.newContent = question.content;
+    this.editedQuestion = Question.clone(question);
   }
 
   constructor(private questions: QuestionsProvider, private toast: ToastProvider) {
@@ -34,7 +43,7 @@ export class QuestionEditorComponent {
 
   save() {
     this.submitting = true;
-    this.questions.update(new Question(this.question.id, this.newContent))
+    this.questions.update(this.editedQuestion)
       .subscribe(updatedQuestion => {
         this.question = updatedQuestion;
         this.submitting = false;
@@ -44,10 +53,19 @@ export class QuestionEditorComponent {
   // TODO: Confirmation?
   delete() {
     this.questions.delete(this.question.id)
-    .catch((error, caught) => {
-      this.toast.show(error.message, true);
-      return Observable.empty();
-    })
-    .subscribe(() => this.deleted = true);
+      .catch((error, caught) => {
+        this.toast.show(error.message, true);
+        return Observable.empty();
+      })
+      .subscribe(() => this.deleted = true);
+  }
+
+  questionEdited(): boolean {
+    return this.editedQuestion.content !== this.question.content ||
+      this.editedQuestion.answerType !== this.question.answerType;
+  }
+
+  requiredMissing(): boolean {
+    return !this.editedQuestion.content || !this.editedQuestion.answerType;
   }
 }

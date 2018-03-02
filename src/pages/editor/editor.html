@@ -14,10 +14,16 @@
   <div class="new-question">
     <ion-item>
       <ion-label floating>New Question</ion-label>
-      <ion-input [(ngModel)]="newQuestionContent"></ion-input>
+      <ion-input [(ngModel)]="newQuestion.content"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Type</ion-label>
+      <ion-select [(ngModel)]="newQuestion.answerType" interface="popover">
+        <ion-option *ngFor="let type of answerTypes" [value]="type">{{type}}</ion-option>
+      </ion-select>
     </ion-item>
 
-    <button ion-button icon-left *ngIf="newQuestionContent && !creatingQuestion" (click)="createQuestion()">
+    <button ion-button icon-left *ngIf="newQuestion.content && newQuestion.answerType && !creatingQuestion" (click)="createQuestion()">
       <ion-icon name="add"></ion-icon>
       Add question
     </button>

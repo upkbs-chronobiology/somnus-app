@@ -1,10 +1,16 @@
 <button ion-button icon-only outline color="dark" (click)="delete()" title="Delete"><ion-icon name="trash"></ion-icon></button>
 
 <ion-item>
-  <ion-input [(ngModel)]="newContent"></ion-input>
+  <ion-input [(ngModel)]="editedQuestion.content"></ion-input>
 </ion-item>
 
-<button ion-button *ngIf="newContent !== question.content && !submitting" [disabled]="!newContent"
+<ion-item>
+  <ion-select [(ngModel)]="editedQuestion.answerType" interface="popover">
+    <ion-option *ngFor="let type of answerTypes" [value]="type">{{type}}</ion-option>
+  </ion-select>
+</ion-item>
+
+<button ion-button *ngIf="questionEdited() && !submitting" [disabled]="requiredMissing()"
   (click)="save()" title="Save" icon-only>
   <ion-icon name="cloud-upload"></ion-icon>
 </button>
