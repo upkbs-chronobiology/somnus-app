@@ -1,4 +1,4 @@
-import { Observable, ReplaySubject } from 'rxjs'
+import { Observable, ReplaySubject } from 'rxjs';
 
 /**
  * Make sure the provided observable gets executed, even without an

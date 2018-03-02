@@ -114,7 +114,7 @@ export class AuthRestProvider {
       body: body,
       // XXX: Maybe not too clean but currently required, as the server sometimes returns non-json (e.g. on login success)
       responseType: 'text'
-    })
+    });
     return ensure(action);
   }
 }

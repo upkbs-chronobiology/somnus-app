@@ -21,7 +21,8 @@
       "check-typecast",
       "check-type-operator",
       "check-preblock"
-    ]
+    ],
+    "semicolon": [true, "always"]
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"

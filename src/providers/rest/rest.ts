@@ -7,10 +7,10 @@ import 'rxjs/add/operator/catch';
 import { ensure } from '../../util/streams';
 
 // TODO: Read domain from (environment-specific) config file
-const BASE_URL = 'http://localhost:9000/v1'
+const BASE_URL = 'http://localhost:9000/v1';
 
 export interface ErrorResponse {
-  message: string
+  message: string;
 }
 
 @Injectable()
