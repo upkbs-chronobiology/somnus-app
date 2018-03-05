@@ -9,11 +9,22 @@
     <ion-slide *ngFor="let question of questions; let i = index">
       <h2>{{question.content}}</h2>
       <ion-item>
-        <ion-input #input="ngModel" [(ngModel)]="answers[i].content" required placeholder="..."></ion-input>
+        <ion-input *ngIf="question.answerType === AnswerType.Text"
+          [(ngModel)]="answers[i].content" required placeholder="..."></ion-input>
+        <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous"
+          [(ngModel)]="answers[i].content" required>
+          <ion-icon range-left name="sad"></ion-icon>
+          <ion-icon range-right name="happy"></ion-icon>
+        </continuous-range>
+        <ion-range *ngIf="question.answerType === AnswerType.RangeDiscrete5"
+          min="1" max="5" step="1" snaps="true" pin="true" [(ngModel)]="answers[i].content" required>
+          <ion-label range-left>1</ion-label>
+          <ion-label range-right>5</ion-label>
+        </ion-range>
       </ion-item>
 
       <ion-fab bottom right>
-        <button ion-fab (click)="slides.slideNext()" [disabled]="input.invalid">
+        <button ion-fab (click)="slides.slideNext()" [disabled]="!isValidAnswer(answers[i].content)">
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-fab>

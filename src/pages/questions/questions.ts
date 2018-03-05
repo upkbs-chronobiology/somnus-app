@@ -5,12 +5,15 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { ToastProvider } from '../../providers/toast/toast';
+import { AnswerType } from '../../model/answer-type';
 
 @Component({
   selector: 'page-questions',
   templateUrl: 'questions.html'
 })
 export class QuestionsPage implements OnInit {
+
+  AnswerType = AnswerType;
 
   questions: Question[];
 
@@ -28,7 +31,13 @@ export class QuestionsPage implements OnInit {
   ngOnInit(): void {
     this.questionsProvider.listAll().subscribe(questions => {
       this.questions = questions;
-      this.answers = questions.map(q => new Answer(null, q.id));
+      this.answers = questions.map(q => {
+        const answer = new Answer(null, q.id);
+        // default sliders to center
+        if (q.answerType === AnswerType.RangeContinuous) answer.content = '0.5';
+        if (q.answerType === AnswerType.RangeDiscrete5) answer.content = '3';
+        return answer;
+      });
     });
   }
 
@@ -46,5 +55,9 @@ export class QuestionsPage implements OnInit {
       this.submitting = false;
       this.toast.show(`Answer submission failed: ${error.message || error}`, true);
     });
+  }
+
+  isValidAnswer(value: any): boolean {
+    return typeof(value) === 'number' || !!value;
   }
 }
