@@ -1,9 +1,8 @@
 import { BaseInput } from 'ionic-angular/util/base-input';
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { Config, Form, Item, DomController, Haptic, Platform } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { Config, Form, Item } from 'ionic-angular';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ElementRef, Renderer } from '@angular/core';
-import { NgControl, ControlValueAccessor } from '@angular/forms';
-import { Range } from 'ionic-angular/components/range/range';
 
 @Component({
   selector: 'continuous-range',
