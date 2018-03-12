@@ -27,7 +27,7 @@ export class EditorPage {
   newQuestion: Question = new Question(0, '', null, null);
   creatingQuestion: boolean = false;
 
-  constructor(private questionsProvider: QuestionsProvider, private studiesProvider: StudiesProvider) {
+  constructor(private questionsProvider: QuestionsProvider, studiesProvider: StudiesProvider) {
     questionsProvider.listAll().subscribe(list => this.questions = list);
     studiesProvider.listAll().subscribe(list => this.studies = list);
   }

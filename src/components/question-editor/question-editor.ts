@@ -44,7 +44,7 @@ export class QuestionEditorComponent {
 
   constructor(
     private questions: QuestionsProvider,
-    private studiesProvider: StudiesProvider,
+    studiesProvider: StudiesProvider,
     private toast: ToastProvider
   ) {
     studiesProvider.listAll().subscribe(list => this.studies = list);

@@ -19,6 +19,7 @@ import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
 import { ToastProvider } from '../providers/toast/toast';
 import { EditorPageModule } from '../pages/editor/editor.module';
 import { StudiesProvider } from '../providers/studies/studies';
+import { CacheProvider } from '../providers/cache/cache';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { StudiesProvider } from '../providers/studies/studies';
     AuthRestProvider,
     ToastProvider,
     StudiesProvider,
+    CacheProvider,
   ]
 })
 export class AppModule {}
