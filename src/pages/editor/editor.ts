@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
+import { StudiesProvider } from '../../providers/studies/studies';
+import { Study } from '../../model/study';
 
 @IonicPage()
 @Component({
@@ -20,12 +22,14 @@ export class EditorPage {
   };
 
   questions: Question[];
+  studies: Study[];
 
-  newQuestion: Question = new Question(0, '', null);
+  newQuestion: Question = new Question(0, '', null, null);
   creatingQuestion: boolean = false;
 
-  constructor(private questionsProvider: QuestionsProvider) {
+  constructor(private questionsProvider: QuestionsProvider, private studiesProvider: StudiesProvider) {
     questionsProvider.listAll().subscribe(list => this.questions = list);
+    studiesProvider.listAll().subscribe(list => this.studies = list);
   }
 
   ionViewDidLoad() {
@@ -36,7 +40,7 @@ export class EditorPage {
     this.questionsProvider.create(this.newQuestion)
       .subscribe(createdQuestion => {
         this.questions.push(createdQuestion);
-        this.newQuestion = new Question(0, '', null);
+        this.newQuestion = new Question(0, '', null, null);
         this.creatingQuestion = false;
       });
   }

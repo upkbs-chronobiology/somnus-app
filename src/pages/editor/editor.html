@@ -22,6 +22,13 @@
         <ion-option *ngFor="let type of answerTypes" [value]="type">{{type}}</ion-option>
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label floating>Study</ion-label>
+      <ion-select [(ngModel)]="newQuestion.studyId" interface="popover">
+        <ion-option [value]="null"></ion-option>
+        <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
+      </ion-select>
+    </ion-item>
 
     <button ion-button icon-left *ngIf="newQuestion.content && newQuestion.answerType && !creatingQuestion" (click)="createQuestion()">
       <ion-icon name="add"></ion-icon>

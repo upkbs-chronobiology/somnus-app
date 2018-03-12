@@ -22,3 +22,8 @@
 .failure-toast .toast-message {
   background-color: $danger;
 }
+
+// override silly default rule by Ionic - probably related to labels
+ion-item.item-select:not([class*="item-label"]) ion-select {
+  max-width: 100%;
+}

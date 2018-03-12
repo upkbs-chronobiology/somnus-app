@@ -4,10 +4,11 @@ export class Question {
   constructor(
     public id: number,
     public content: string,
-    public answerType: AnswerType
+    public answerType: AnswerType,
+    public studyId: number
   ) { }
 
   static clone(question: Question) {
-    return new Question(question.id, question.content, question.answerType);
+    return new Question(question.id, question.content, question.answerType, question.studyId);
   }
 }

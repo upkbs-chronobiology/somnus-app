@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { ToastProvider } from '../../providers/toast/toast';
+import { StudiesProvider } from '../../providers/studies/studies';
+import { Study } from '../../model/study';
 
 @Component({
   selector: 'question-editor',
@@ -18,6 +20,8 @@ export class QuestionEditorComponent {
     [AnswerType.RangeContinuous]: 'Continuous Range (0-1)',
     [AnswerType.RangeDiscrete5]: 'Discrete Range (1-5)',
   };
+
+  studies: Study[];
 
   submitting: boolean = false;
 
@@ -38,7 +42,12 @@ export class QuestionEditorComponent {
     this.editedQuestion = Question.clone(question);
   }
 
-  constructor(private questions: QuestionsProvider, private toast: ToastProvider) {
+  constructor(
+    private questions: QuestionsProvider,
+    private studiesProvider: StudiesProvider,
+    private toast: ToastProvider
+  ) {
+    studiesProvider.listAll().subscribe(list => this.studies = list);
   }
 
   save() {

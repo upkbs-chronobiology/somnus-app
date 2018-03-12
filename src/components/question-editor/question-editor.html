@@ -10,6 +10,13 @@
   </ion-select>
 </ion-item>
 
+<ion-item>
+  <ion-select [(ngModel)]="editedQuestion.studyId" interface="popover" placeholder="(no study)">
+    <ion-option [value]="null"></ion-option>
+    <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
+  </ion-select>
+</ion-item>
+
 <button ion-button *ngIf="questionEdited() && !submitting" [disabled]="requiredMissing()"
   (click)="save()" title="Save" icon-only>
   <ion-icon name="cloud-upload"></ion-icon>
