@@ -1,3 +1,4 @@
 <ion-content padding>
-  <i>Studies editor is under construction...</i>
+  <study-editor *ngFor="let study of studies" [study]="study"></study-editor>
+  <study-editor new></study-editor>
 </ion-content>

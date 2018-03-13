@@ -7,7 +7,6 @@ import { StudiesEditorPage } from './studies-editor/studies-editor';
 import { UsersEditorPage } from './users-editor/users-editor';
 
 
-// XXX: Is the existence of a separate module for this page justified?
 @NgModule({
   declarations: [
     EditorPage,
