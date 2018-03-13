@@ -1,25 +1,24 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-
 import { AboutPage } from '../pages/about/about';
-import { QuestionsPage } from '../pages/questions/questions';
-import { TabsPage } from '../pages/tabs/tabs';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { AuthenticationProvider } from '../providers/authentication/authentication';
-import { RestProvider } from '../providers/rest/rest';
-import { HttpClientModule } from '@angular/common/http';
-import { ComponentsModule } from '../components/components.module';
-import { QuestionsProvider } from '../providers/questions/questions';
 import { AnswersProvider } from '../providers/answers/answers';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
-import { ToastProvider } from '../providers/toast/toast';
-import { EditorPageModule } from '../pages/editor/editor.module';
-import { StudiesProvider } from '../providers/studies/studies';
+import { BrowserModule } from '@angular/platform-browser';
 import { CacheProvider } from '../providers/cache/cache';
+import { ComponentsModule } from '../components/components.module';
+import { EditorPageModule } from '../pages/editor/editor.module';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { MyApp } from './app.component';
+import { QuestionsPage } from '../pages/questions/questions';
+import { QuestionsProvider } from '../providers/questions/questions';
+import { RestProvider } from '../providers/rest/rest';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { StudiesProvider } from '../providers/studies/studies';
+import { TabsPage } from '../pages/tabs/tabs';
+import { ToastProvider } from '../providers/toast/toast';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +44,7 @@ import { CacheProvider } from '../providers/cache/cache';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthenticationProvider,
     RestProvider,
     HttpClientModule,
@@ -57,4 +56,4 @@ import { CacheProvider } from '../providers/cache/cache';
     CacheProvider,
   ]
 })
-export class AppModule {}
+export class AppModule { }

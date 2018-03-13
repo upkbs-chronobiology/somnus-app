@@ -13,7 +13,7 @@ import { Study } from '../../model/study';
 })
 export class QuestionEditorComponent {
 
-  // XXX: Some duplication with question-editor
+  // XXX: Some duplication with editor
   answerTypes: AnswerType[] = Object.keys(AnswerType).map(key => AnswerType[key]);
   answerTypeLabels = {
     [AnswerType.Text]: 'Text',

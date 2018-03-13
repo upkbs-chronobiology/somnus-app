@@ -1,0 +1,37 @@
+<ion-content padding>
+  <ng-container *ngIf="questions; else loadingIndicator">
+    <question-editor *ngFor="let question of questions" [question]="question"></question-editor>
+
+    <div class="new-question">
+      <ion-item>
+        <ion-label floating>New Question</ion-label>
+        <ion-input [(ngModel)]="newQuestion.content"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Type</ion-label>
+        <ion-select [(ngModel)]="newQuestion.answerType" interface="popover">
+          <ion-option *ngFor="let type of answerTypes" [value]="type">{{type}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Study</ion-label>
+        <ion-select [(ngModel)]="newQuestion.studyId" interface="popover">
+          <ion-option [value]="null"></ion-option>
+          <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <button ion-button icon-left *ngIf="newQuestion.content && newQuestion.answerType && !creatingQuestion" (click)="createQuestion()">
+        <ion-icon name="add"></ion-icon>
+        Add question
+      </button>
+      <ion-spinner *ngIf="creatingQuestion" color="primary"></ion-spinner>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingIndicator>
+    <centrizer>
+      <ion-spinner></ion-spinner>
+    </centrizer>
+  </ng-template>
+</ion-content>
