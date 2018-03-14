@@ -4,7 +4,7 @@
     <ion-input name="name" [(ngModel)]="editedStudy.name" required></ion-input>
   </ion-item>
 
-  <button ion-button *ngIf="isAltered()" type="submit" [disabled]="!form.valid">
+  <button ion-button *ngIf="isAltered()" type="submit" [disabled]="!form.valid" icon-only>
     <ion-icon *ngIf="!newStudy" name="cloud-upload"></ion-icon>
     <ion-icon *ngIf="newStudy" name="add"></ion-icon>
   </button>

@@ -2,5 +2,9 @@ questions-editor {
   .new-question {
     display: flex;
     align-items: flex-end;
+
+    [ion-button] {
+      flex-shrink: 0;
+    }
   }
 }

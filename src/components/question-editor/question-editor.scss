@@ -9,4 +9,8 @@ question-editor {
     transition-duration: $medium-transition-duration;
     transition-timing-function: ease-out;
   }
+
+  [ion-button] {
+    flex-shrink: 0;
+  }
 }

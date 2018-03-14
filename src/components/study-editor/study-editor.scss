@@ -3,4 +3,8 @@ study-editor {
     display: flex;
     align-items: center;
   }
+
+  [ion-button] {
+    flex-shrink: 0;
+  }
 }
