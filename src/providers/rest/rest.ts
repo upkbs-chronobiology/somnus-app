@@ -1,10 +1,11 @@
+import { ensure } from '../../util/streams';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { ToastProvider } from '../toast/toast';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
-import { ensure } from '../../util/streams';
 
 // TODO: Read domain from (environment-specific) config file
 const BASE_URL = 'http://localhost:9000/v1';
@@ -16,7 +17,7 @@ export interface ErrorResponse {
 @Injectable()
 export class RestProvider {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toast: ToastProvider) {
   }
 
   public fetchResponse(
@@ -25,6 +26,10 @@ export class RestProvider {
     return this.http.request(method, `${BASE_URL}/${endpoint}`, {
       observe: 'response',
       ...options
+    }).catch((error, caught) => {
+      if (error.status === 0)
+        this.toast.show('The service cannot be reached at the moment', true);
+      return Observable.throw(error);
     });
   }
 
