@@ -20,6 +20,6 @@ export class StudiesProvider {
   }
 
   update(study: Study): Observable<Study> {
-    return this.rest.post(`studies/${study.id}`, study).map(s => s as Study);
+    return this.rest.put(`studies/${study.id}`, study).map(s => s as Study);
   }
 }

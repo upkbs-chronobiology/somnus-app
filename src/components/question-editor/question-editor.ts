@@ -3,9 +3,9 @@ import { Component, HostBinding, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
-import { ToastProvider } from '../../providers/toast/toast';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @Component({
   selector: 'question-editor',
@@ -71,7 +71,8 @@ export class QuestionEditorComponent {
 
   questionEdited(): boolean {
     return this.editedQuestion.content !== this.question.content ||
-      this.editedQuestion.answerType !== this.question.answerType;
+      this.editedQuestion.answerType !== this.question.answerType ||
+      this.editedQuestion.studyId !== this.question.studyId;
   }
 
   requiredMissing(): boolean {
