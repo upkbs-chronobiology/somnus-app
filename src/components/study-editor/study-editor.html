@@ -1,10 +1,10 @@
-<form #form="ngForm" (ngSubmit)="submit()">
+<form #form="ngForm" class="line" (ngSubmit)="submit()">
   <ion-item>
     <ion-label *ngIf="newStudy" floating>New Study</ion-label>
     <ion-input name="name" [(ngModel)]="editedStudy.name" required></ion-input>
   </ion-item>
 
-  <button ion-button type="submit" [disabled]="!form.valid">
+  <button ion-button *ngIf="isAltered()" type="submit" [disabled]="!form.valid">
     <ion-icon *ngIf="!newStudy" name="cloud-upload"></ion-icon>
     <ion-icon *ngIf="newStudy" name="add"></ion-icon>
   </button>

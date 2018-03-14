@@ -61,4 +61,8 @@ export class StudyEditorComponent implements OnInit {
         this.sending = false;
       });
   }
+
+  isAltered(): boolean {
+    return this.editedStudy.name !== this.study.name;
+  }
 }
