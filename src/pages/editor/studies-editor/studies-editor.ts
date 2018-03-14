@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { StudiesProvider } from '../../../providers/studies/studies';
 import { Study } from '../../../model/study';
+import { StudyEditorComponent } from '../../../components/study-editor/study-editor';
 
 @Component({
   selector: 'page-studies-editor',
@@ -11,11 +11,19 @@ export class StudiesEditorPage {
 
   studies: Study[];
 
-  constructor(private studiesProvider: StudiesProvider) {
+  @ViewChild('newPlaceholder', { read: ViewContainerRef })
+  content: ViewContainerRef;
+
+  constructor(studiesProvider: StudiesProvider, private componentFactoryResolver: ComponentFactoryResolver) {
     studiesProvider.listAll().subscribe(s => this.studies = s);
   }
 
   ionViewDidLoad() {
   }
 
+  appendNew() {
+    const factory = this.componentFactoryResolver.resolveComponentFactory(StudyEditorComponent);
+    const newItem = this.content.createComponent(factory);
+    newItem.instance.newStudy = true;
+  }
 }

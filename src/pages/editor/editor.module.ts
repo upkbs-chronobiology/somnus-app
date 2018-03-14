@@ -4,6 +4,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
 import { QuestionsEditorPage } from './questions-editor/questions-editor';
 import { StudiesEditorPage } from './studies-editor/studies-editor';
+import { StudyEditorComponent } from '../../components/study-editor/study-editor';
 import { UsersEditorPage } from './users-editor/users-editor';
 
 
@@ -21,7 +22,8 @@ import { UsersEditorPage } from './users-editor/users-editor';
   entryComponents: [
     QuestionsEditorPage,
     StudiesEditorPage,
-    UsersEditorPage
+    UsersEditorPage,
+    StudyEditorComponent
   ]
 })
 export class EditorPageModule { }

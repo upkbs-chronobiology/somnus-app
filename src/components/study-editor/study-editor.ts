@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Attribute } from '@angular/core';
-import { Study } from '../../model/study';
+import { Attribute, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StudiesProvider } from '../../providers/studies/studies';
+import { Study } from '../../model/study';
 
 @Component({
   selector: 'study-editor',
@@ -22,6 +22,9 @@ export class StudyEditorComponent implements OnInit {
     this._study = s;
     this.editedStudy = Study.clone(s);
   }
+
+  @Output()
+  create: EventEmitter<any> = new EventEmitter();
 
   constructor(@Attribute('new') newAttr: string, private studiesProvider: StudiesProvider) {
     this.newStudy = newAttr === '';
@@ -46,6 +49,8 @@ export class StudyEditorComponent implements OnInit {
         this.study = s;
         this.newStudy = false;
         this.sending = false;
+
+        this.create.emit(null);
       });
   }
 
