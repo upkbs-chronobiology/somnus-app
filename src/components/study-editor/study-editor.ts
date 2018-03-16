@@ -1,6 +1,8 @@
-import { Attribute, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @Component({
   selector: 'study-editor',
@@ -9,6 +11,9 @@ import { Study } from '../../model/study';
 export class StudyEditorComponent implements OnInit {
 
   sending: boolean = false;
+
+  @HostBinding('class.deleted')
+  deleted: boolean = false;
 
   editedStudy: Study;
 
@@ -26,7 +31,7 @@ export class StudyEditorComponent implements OnInit {
   @Output()
   create: EventEmitter<any> = new EventEmitter();
 
-  constructor(@Attribute('new') newAttr: string, private studiesProvider: StudiesProvider) {
+  constructor(@Attribute('new') newAttr: string, private studiesProvider: StudiesProvider, private toast: ToastProvider) {
     this.newStudy = newAttr === '';
   }
 
@@ -60,6 +65,19 @@ export class StudyEditorComponent implements OnInit {
         this.study = s;
         this.sending = false;
       });
+  }
+
+  delete() {
+    this.studiesProvider.delete(this.editedStudy.id)
+      .catch((error, caught) => {
+        if (error.message) {
+          this.toast.show(`Study deletion failed: ${error.message}`, true);
+          return Observable.empty();
+        }
+
+        return Observable.throw(error);
+      })
+      .subscribe(() => this.deleted = true);
   }
 
   isAltered(): boolean {

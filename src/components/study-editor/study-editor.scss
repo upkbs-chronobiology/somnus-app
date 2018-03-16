@@ -1,4 +1,16 @@
 study-editor {
+  display: block;
+  max-height: 10em;
+
+  // TODO: collect in file shared with other editor components
+  &.deleted {
+    max-height: 0;
+    opacity: 0;
+    transition-property: max-height, opacity;
+    transition-duration: $medium-transition-duration;
+    transition-timing-function: ease-out;
+  }
+
   .line {
     display: flex;
     align-items: center;
