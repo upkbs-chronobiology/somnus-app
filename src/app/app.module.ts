@@ -18,6 +18,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { StudiesProvider } from '../providers/studies/studies';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
+import { UsersProvider } from '../providers/users/users';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { ToastProvider } from '../providers/toast/toast';
     ToastProvider,
     StudiesProvider,
     CacheProvider,
+    UsersProvider,
   ]
 })
 export class AppModule { }

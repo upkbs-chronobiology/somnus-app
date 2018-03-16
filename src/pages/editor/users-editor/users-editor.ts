@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { User } from '../../../model/user';
+import { UsersProvider } from '../../../providers/users/users';
 
 @Component({
   selector: 'page-users-editor',
@@ -7,7 +8,10 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class UsersEditorPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  users: User[];
+
+  constructor(usersProvider: UsersProvider) {
+    usersProvider.listAll().subscribe(users => this.users = users);
   }
 
   ionViewDidLoad() {

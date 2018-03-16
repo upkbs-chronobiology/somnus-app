@@ -5,13 +5,15 @@ import { NgModule } from '@angular/core';
 import { QuestionEditorComponent } from './question-editor/question-editor';
 import { ContinuousRangeComponent } from './continuous-range/continuous-range';
 import { StudyEditorComponent } from './study-editor/study-editor';
+import { UserEditorComponent } from './user-editor/user-editor';
 
 @NgModule({
   declarations: [LoginComponent,
     CentrizerComponent,
     QuestionEditorComponent,
     ContinuousRangeComponent,
-    StudyEditorComponent],
+    StudyEditorComponent,
+    UserEditorComponent],
   imports: [
     IonicModule,
   ],
@@ -19,7 +21,8 @@ import { StudyEditorComponent } from './study-editor/study-editor';
     CentrizerComponent,
     QuestionEditorComponent,
     ContinuousRangeComponent,
-    StudyEditorComponent],
+    StudyEditorComponent,
+    UserEditorComponent],
   entryComponents: [LoginComponent]
 })
 export class ComponentsModule { }
