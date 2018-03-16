@@ -1,4 +1,4 @@
-<form #form="ngForm" class="line" (ngSubmit)="submit()">
+<form #form="ngForm" class="line">
   <button ion-button icon-only outline *ngIf="!newStudy" color="dark" (click)="delete()" title="Delete">
     <ion-icon name="trash"></ion-icon>
   </button>
@@ -8,7 +8,7 @@
     <ion-input name="name" [(ngModel)]="editedStudy.name" required></ion-input>
   </ion-item>
 
-  <button ion-button *ngIf="isAltered()" type="submit" [disabled]="!form.valid" icon-only>
+  <button ion-button *ngIf="isAltered()" type="submit" (click)="submit()" [disabled]="!form.valid" icon-only>
     <ion-icon *ngIf="!newStudy" name="cloud-upload"></ion-icon>
     <ion-icon *ngIf="newStudy" name="add"></ion-icon>
   </button>

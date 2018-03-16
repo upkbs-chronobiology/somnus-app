@@ -27,3 +27,15 @@
 ion-item.item-select:not([class*="item-label"]) ion-select {
   max-width: 100%;
 }
+
+@keyframes pulsate {
+  from {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 0.8;
+  }
+}

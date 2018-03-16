@@ -11,6 +11,11 @@ study-editor {
     transition-timing-function: ease-out;
   }
 
+  &.sending {
+    pointer-events: none;
+    animation: pulsate 2*$medium-transition-duration linear infinite;
+  }
+
   .line {
     display: flex;
     align-items: center;

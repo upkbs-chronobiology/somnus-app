@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
 import { ToastProvider } from '../../providers/toast/toast';
+import 'rxjs/operator/finally';
 
 @Component({
   selector: 'study-editor',
@@ -10,6 +11,7 @@ import { ToastProvider } from '../../providers/toast/toast';
 })
 export class StudyEditorComponent implements OnInit {
 
+  @HostBinding('class.sending')
   sending: boolean = false;
 
   @HostBinding('class.deleted')
@@ -49,6 +51,7 @@ export class StudyEditorComponent implements OnInit {
   }
 
   submitCreation() {
+    this.sending = true;
     this.studiesProvider.create(this.editedStudy)
       .subscribe(s => {
         this.study = s;
@@ -60,6 +63,7 @@ export class StudyEditorComponent implements OnInit {
   }
 
   submitUpdate() {
+    this.sending = true;
     this.studiesProvider.update(this.editedStudy)
       .subscribe(s => {
         this.study = s;
@@ -68,7 +72,9 @@ export class StudyEditorComponent implements OnInit {
   }
 
   delete() {
+    this.sending = true;
     this.studiesProvider.delete(this.editedStudy.id)
+      .finally(() => this.sending = false)
       .catch((error, caught) => {
         if (error.message) {
           this.toast.show(`Study deletion failed: ${error.message}`, true);
@@ -77,7 +83,10 @@ export class StudyEditorComponent implements OnInit {
 
         return Observable.throw(error);
       })
-      .subscribe(() => this.deleted = true);
+      .subscribe(() => {
+        this.sending = false;
+        this.deleted = true;
+      });
   }
 
   isAltered(): boolean {
