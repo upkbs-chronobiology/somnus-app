@@ -25,5 +25,6 @@ export class StudiesEditorPage {
     const factory = this.componentFactoryResolver.resolveComponentFactory(StudyEditorComponent);
     const newItem = this.content.createComponent(factory);
     newItem.instance.newStudy = true;
+    newItem.instance.create.subscribe(this.appendNew.bind(this));
   }
 }
