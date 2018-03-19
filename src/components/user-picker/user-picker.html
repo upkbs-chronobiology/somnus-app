@@ -1,4 +1,17 @@
-<button ion-button full icon-left *ngFor="let user of users" color="light" [disabled]="shouldExclude(user)" (click)="pick(user)">
-  <ion-icon name="person"></ion-icon>
-  {{user.name}}
-</button>
+<ion-header>
+  <ion-navbar>
+    <ion-buttons right>
+      <button ion-button icon-only clear color="dark" (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Pick user</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <button ion-button full icon-left *ngFor="let user of users" color="light" [disabled]="shouldExclude(user)" (click)="pick(user)">
+    <ion-icon name="person"></ion-icon>
+    {{user.name}}
+  </button>
+</ion-content>

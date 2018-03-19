@@ -17,6 +17,10 @@ export class UserPickerComponent {
     this.exclude = params.get('exclude');
   }
 
+  close() {
+    this.view.dismiss();
+  }
+
   pick(user: User) {
     this.view.dismiss(user);
   }

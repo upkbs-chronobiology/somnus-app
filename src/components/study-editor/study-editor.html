@@ -1,27 +1,27 @@
 <form #form="ngForm" class="line">
-  <button ion-button icon-only outline *ngIf="!newStudy" color="dark" (click)="delete()" title="Delete">
-    <ion-icon name="trash"></ion-icon>
-  </button>
-
   <ion-item>
-    <ion-label *ngIf="newStudy" floating>New Study</ion-label>
-    <ion-input name="name" [(ngModel)]="editedStudy.name" required></ion-input>
-  </ion-item>
+    <button ion-button icon-only clear *ngIf="!newStudy" item-start color="secondary" (click)="delete()" title="Delete">
+      <ion-icon name="trash"></ion-icon>
+    </button>
 
-  <button ion-button *ngIf="isAltered()" type="submit" (click)="submit()" [disabled]="!form.valid" icon-only>
-    <ion-icon *ngIf="!newStudy" name="cloud-upload"></ion-icon>
-    <ion-icon *ngIf="newStudy" name="add"></ion-icon>
-  </button>
+    <ion-label *ngIf="newStudy" floating>New Study</ion-label>
+    <ion-input name="name" [(ngModel)]="editedStudy.name" required class="title"></ion-input>
+
+    <button ion-button *ngIf="isAltered()" item-end type="submit" (click)="submit()" [disabled]="!form.valid" icon-only>
+      <ion-icon *ngIf="!newStudy" name="cloud-upload"></ion-icon>
+      <ion-icon *ngIf="newStudy" name="add"></ion-icon>
+    </button>
+  </ion-item>
 </form>
 
 <div *ngIf="!newStudy" class="participants-area">
-  <ion-list class="participants-list">
-    <ion-list-header>Participants</ion-list-header>
+  <ion-list no-lines class="participants-list">
+    <ion-list-header no-lines>Participants</ion-list-header>
     <ion-item *ngFor="let participant of participants">
-      <ion-icon name="person"></ion-icon>
+      <ion-icon name="person" item-start></ion-icon>
       {{participant.name}}
-      <button ion-button round icon-only small outline color="dark" (click)="removeParticipant(participant)">
-        <ion-icon name="remove"></ion-icon>
+      <button ion-button round icon-only small clear color="secondary" item-end (click)="removeParticipant(participant)">
+        <ion-icon name="remove-circle"></ion-icon>
       </button>
     </ion-item>
     <ion-item *ngIf="participants && participants.length === 0">

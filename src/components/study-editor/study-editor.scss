@@ -16,6 +16,10 @@ study-editor {
     animation: pulsate 2*$medium-transition-duration linear infinite;
   }
 
+  .title {
+    font-weight: 500;
+  }
+
   .line {
     display: flex;
     align-items: center;

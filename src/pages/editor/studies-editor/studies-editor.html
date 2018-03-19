@@ -1,5 +1,8 @@
-<ion-content padding>
-  <study-editor *ngFor="let study of studies" [study]="study"></study-editor>
+<ion-content>
+  <ng-container *ngFor="let study of studies">
+    <study-editor [study]="study"></study-editor>
+    <hr>
+  </ng-container>
   <study-editor new (create)="appendNew()"></study-editor>
   <ng-container #newPlaceholder></ng-container>
 </ion-content>
