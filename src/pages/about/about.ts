@@ -1,3 +1,5 @@
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { AuthRestProvider } from '../../providers/auth-rest/auth-rest';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
@@ -7,8 +9,20 @@ import { NavController } from 'ionic-angular';
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController) {
+  currentUserName: string;
 
+  constructor(
+    public navCtrl: NavController,
+     private auth: AuthenticationProvider,
+     private authRest: AuthRestProvider
+    ) {
   }
 
+  ionViewDidLoad() {
+    this.currentUserName = this.auth.getCurrentUser().name;
+  }
+
+  logOut() {
+    this.authRest.logOut();
+  }
 }

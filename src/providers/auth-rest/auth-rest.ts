@@ -51,6 +51,15 @@ export class AuthRestProvider {
     return finishSubject;
   }
 
+  // XXX: Might semantically better fit to AuthenticationProvider, but lives here for technical reasons
+  logOut(): Observable<any> {
+    this.authToken = null;
+    // TODO: Notify server to forget token
+    // XXX: A bit hacky, maybe `this.logIn()` and manual cleanup instead?
+    location.reload();
+    return Observable.empty();
+  }
+
   private fetchResponse(
     method: string, endpoint: string, authenticate: boolean = true, options = {}
   ): Observable<HttpResponse<Object>> {

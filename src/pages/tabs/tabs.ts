@@ -1,8 +1,8 @@
 import { AboutPage } from '../about/about';
-import { Component } from '@angular/core';
-import { QuestionsPage } from '../questions/questions';
-import { EditorPage } from '../editor/editor';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { Component } from '@angular/core';
+import { EditorPage } from '../editor/editor';
+import { QuestionsPage } from '../questions/questions';
 
 @Component({
   templateUrl: 'tabs.html'

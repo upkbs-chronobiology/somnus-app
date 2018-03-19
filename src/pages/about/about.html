@@ -7,5 +7,9 @@
 </ion-header>
 
 <ion-content padding>
-  This is Somnus by the <a href="http://www.chronobiology.ch/" target="_blank">Centre for Chronobiology</a> in Basel, Switzerland.
+  <p>This is Somnus by the
+    <a href="http://www.chronobiology.ch/" target="_blank">Centre for Chronobiology</a> in Basel, Switzerland.
+  </p>
+  <p>You are currently logged in as <strong>{{currentUserName}}</strong>.</p>
+  <button ion-button (click)="logOut()">Log out</button>
 </ion-content>

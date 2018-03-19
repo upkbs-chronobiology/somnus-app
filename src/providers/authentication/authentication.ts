@@ -51,4 +51,8 @@ export class AuthenticationProvider {
   public userCanEdit(): boolean {
     return this.currentUser && [RESEARCHER, ADMIN].some(r => r === this.currentUser.role);
   }
+
+  getCurrentUser(): User {
+    return this.currentUser;
+  }
 }
