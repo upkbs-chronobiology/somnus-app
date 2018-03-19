@@ -13,3 +13,22 @@
     <ion-icon *ngIf="newStudy" name="add"></ion-icon>
   </button>
 </form>
+
+<div *ngIf="!newStudy" class="participants-area">
+  <ion-list class="participants-list">
+    <ion-list-header>Participants</ion-list-header>
+    <ion-item *ngFor="let participant of participants">
+      <ion-icon name="person"></ion-icon>
+      {{participant.name}}
+      <button ion-button round icon-only small outline color="dark" (click)="removeParticipant(participant)">
+        <ion-icon name="remove"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item *ngIf="participants && participants.length === 0">
+      <i>No participants</i>
+    </ion-item>
+  </ion-list>
+  <button ion-button round icon-only small outline (click)="addParticipant()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</div>

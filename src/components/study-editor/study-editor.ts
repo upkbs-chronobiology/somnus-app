@@ -1,8 +1,11 @@
 import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
 import { ToastProvider } from '../../providers/toast/toast';
+import { User } from '../../model/user';
+import { UserPickerComponent } from '../user-picker/user-picker';
 import 'rxjs/operator/finally';
 
 @Component({
@@ -23,6 +26,8 @@ export class StudyEditorComponent implements OnInit {
 
   newStudy: boolean;
 
+  participants: User[];
+
   @Input()
   get study(): Study { return this._study; }
   set study(s: Study) {
@@ -33,7 +38,12 @@ export class StudyEditorComponent implements OnInit {
   @Output()
   create: EventEmitter<any> = new EventEmitter();
 
-  constructor(@Attribute('new') newAttr: string, private studiesProvider: StudiesProvider, private toast: ToastProvider) {
+  constructor(
+    @Attribute('new') newAttr: string,
+    private studiesProvider: StudiesProvider,
+    private toast: ToastProvider,
+    private modal: ModalController
+  ) {
     this.newStudy = newAttr === '';
   }
 
@@ -43,6 +53,12 @@ export class StudyEditorComponent implements OnInit {
 
     if (this.newStudy)
       this.study = new Study(0, null);
+
+    if (this.study)
+      this.studiesProvider.listParticipants(this.study.id)
+        .subscribe(users => this.participants = users);
+    else
+      this.participants = [];
   }
 
   submit() {
@@ -91,5 +107,32 @@ export class StudyEditorComponent implements OnInit {
 
   isAltered(): boolean {
     return this.editedStudy.name !== this.study.name;
+  }
+
+  addParticipant() {
+    const overlay = this.modal.create(UserPickerComponent, { exclude: this.participants });
+    overlay.onWillDismiss((user: User) => {
+      if (!user || this.participants.find(p => p.id === user.id)) return;
+
+      this.participants.push(user);
+
+      this.sending = true;
+      this.studiesProvider.addParticipant(this.study.id, user.id)
+        .subscribe(() => this.sending = false);
+    });
+    overlay.present();
+  }
+
+  removeParticipant(user: User) {
+    const index = this.participants.indexOf(user);
+    if (index < 0) {
+      console.warn(`Tried to remove user ${user.name} from participants, but that one's not in the list.`);
+      return;
+    }
+    this.participants.splice(index, 1);
+
+    this.sending = true;
+    this.studiesProvider.removeParticipant(this.study.id, user.id)
+      .subscribe(() => this.sending = false);
   }
 }

@@ -1,0 +1,4 @@
+<button ion-button full icon-left *ngFor="let user of users" color="light" [disabled]="shouldExclude(user)" (click)="pick(user)">
+  <ion-icon name="person"></ion-icon>
+  {{user.name}}
+</button>

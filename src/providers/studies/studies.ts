@@ -3,6 +3,7 @@ import { CacheProvider } from '../cache/cache';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Study } from '../../model/study';
+import { User } from '../../model/user';
 
 @Injectable()
 export class StudiesProvider {
@@ -25,5 +26,17 @@ export class StudiesProvider {
 
   delete(studyId: number): Observable<any> {
     return this.rest.delete(`studies/${studyId}`);
+  }
+
+  listParticipants(studyId: number): Observable<User[]> {
+    return this.rest.get(`studies/${studyId}/participants`).map(u => u as User[]);
+  }
+
+  addParticipant(studyId: number, userId: number): Observable<any> {
+    return this.rest.put(`studies/${studyId}/participants/${userId}`, null);
+  }
+
+  removeParticipant(studyId: number, userId: number): Observable<any> {
+    return this.rest.delete(`studies/${studyId}/participants/${userId}`);
   }
 }

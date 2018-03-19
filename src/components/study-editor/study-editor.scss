@@ -1,6 +1,6 @@
 study-editor {
   display: block;
-  max-height: 10em;
+  max-height: 50em;
 
   // TODO: collect in file shared with other editor components
   &.deleted {
@@ -23,5 +23,15 @@ study-editor {
 
   [ion-button] {
     flex-shrink: 0;
+  }
+
+  .participants-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .participants-list {
+      flex-grow: 1;
+    }
   }
 }
