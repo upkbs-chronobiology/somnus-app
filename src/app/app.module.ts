@@ -5,6 +5,7 @@ import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
 import { BrowserModule } from '@angular/platform-browser';
 import { CacheProvider } from '../providers/cache/cache';
 import { ComponentsModule } from '../components/components.module';
+import { DataPage } from '../pages/data/data';
 import { EditorPageModule } from '../pages/editor/editor.module';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,7 +27,8 @@ import { UsersProvider } from '../providers/users/users';
     MyApp,
     AboutPage,
     QuestionsPage,
-    TabsPage
+    TabsPage,
+    DataPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { UsersProvider } from '../providers/users/users';
     MyApp,
     AboutPage,
     QuestionsPage,
-    TabsPage
+    TabsPage,
+    DataPage
   ],
   providers: [
     StatusBar,

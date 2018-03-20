@@ -1,0 +1,20 @@
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Data</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list *ngFor="let question of questions">
+    <ion-list-header>{{question.content}}</ion-list-header>
+    <ion-item *ngFor="let answer of getAnswersTo(question)">
+      <ion-badge item-start color="light">{{answer.userId}}:</ion-badge>
+      {{answer.content}}
+      <ion-badge item-end color="light">{{answer.created | date:'yyyy-MM-dd HH:mm'}}</ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>
