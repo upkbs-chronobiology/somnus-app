@@ -3,6 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { RestProvider } from '../rest/rest';
+import { Subject } from 'rxjs';
 import { User } from '../../model/user';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/concatMap';
@@ -18,14 +19,16 @@ const ADMIN = 'admin';
 
 @Injectable()
 export class AuthenticationProvider {
-
   private get currentUser(): User {
     return localStorage.currentUser && JSON.parse(localStorage.currentUser);
   }
 
   private set currentUser(user: User) {
     localStorage.currentUser = JSON.stringify(user);
+    this.userChangeSubject.next(user);
   }
+
+  userChangeSubject = new Subject<User>();
 
   constructor(private rest: RestProvider) {
   }
@@ -48,11 +51,19 @@ export class AuthenticationProvider {
   }
 
   // XXX: Does this belong here? Or maybe create sth like UserProvider?
-  public userCanEdit(): boolean {
-    return this.currentUser && [RESEARCHER, ADMIN].some(r => r === this.currentUser.role);
+  public userCanEdit(user: User = this.currentUser): boolean {
+    return user && [RESEARCHER, ADMIN].some(r => r === user.role);
   }
 
   getCurrentUser(): User {
     return this.currentUser;
+  }
+
+  userChange(): Observable<User> {
+    return this.userChangeSubject;
+  }
+
+  forgetUser() {
+    this.currentUser = null;
   }
 }

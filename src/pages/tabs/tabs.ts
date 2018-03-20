@@ -13,10 +13,12 @@ export class TabsPage {
   tab2Root = AboutPage;
   tab3Root = EditorPage;
 
-  constructor(private authentication: AuthenticationProvider) {
-  }
+  userCanEdit: boolean;
 
-  userCanEdit(): boolean {
-    return this.authentication.userCanEdit();
+  constructor(private authentication: AuthenticationProvider) {
+    this.userCanEdit = this.authentication.userCanEdit();
+    this.authentication.userChange().subscribe(newUser => {
+      this.userCanEdit = this.authentication.userCanEdit(newUser);
+    });
   }
 }

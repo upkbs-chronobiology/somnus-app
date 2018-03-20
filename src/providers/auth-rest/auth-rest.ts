@@ -1,3 +1,4 @@
+import { AuthenticationProvider } from '../authentication/authentication';
 import { ensure } from '../../util/streams';
 import { ErrorResponse, RestProvider } from '../rest/rest';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -30,7 +31,11 @@ export class AuthRestProvider {
       localStorage.authToken = token;
   }
 
-  constructor(public rest: RestProvider, private modal: ModalController) {
+  constructor(
+    public rest: RestProvider,
+    private modal: ModalController,
+    private authentication: AuthenticationProvider
+  ) {
   }
 
   private buildHeaders(authenticate: boolean = true): HttpHeaders {
@@ -54,6 +59,7 @@ export class AuthRestProvider {
   // XXX: Might semantically better fit to AuthenticationProvider, but lives here for technical reasons
   logOut(): Observable<any> {
     this.authToken = null;
+    this.authentication.forgetUser();
     // TODO: Notify server to forget token
     // XXX: A bit hacky, maybe `this.logIn()` and manual cleanup instead?
     location.reload();
