@@ -1,3 +1,4 @@
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { QuestionsEditorPage } from './questions-editor/questions-editor';
@@ -15,5 +16,11 @@ export class EditorPage {
   public studiesRoot = StudiesEditorPage;
   public usersRoot = UsersEditorPage;
 
-  constructor() { }
+  userIsAdmin: boolean;
+
+  constructor(authentication: AuthenticationProvider) {
+    this.userIsAdmin = authentication.userIsAdmin();
+    authentication.userChange()
+      .subscribe(user => this.userIsAdmin = authentication.userIsAdmin(user));
+  }
 }

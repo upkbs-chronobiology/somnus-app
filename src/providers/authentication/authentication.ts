@@ -19,6 +19,7 @@ const ADMIN = 'admin';
 
 @Injectable()
 export class AuthenticationProvider {
+
   private get currentUser(): User {
     return localStorage.currentUser && JSON.parse(localStorage.currentUser);
   }
@@ -53,6 +54,10 @@ export class AuthenticationProvider {
   // XXX: Does this belong here? Or maybe create sth like UserProvider?
   public userCanEdit(user: User = this.currentUser): boolean {
     return user && [RESEARCHER, ADMIN].some(r => r === user.role);
+  }
+
+  userIsAdmin(user: User = this.currentUser): boolean {
+    return user && user.role === ADMIN;
   }
 
   getCurrentUser(): User {
