@@ -1,3 +1,8 @@
 user-editor {
   display: block;
+
+  &.saving {
+    pointer-events: none;
+    animation: pulsate 2*$medium-transition-duration linear infinite;
+  }
 }

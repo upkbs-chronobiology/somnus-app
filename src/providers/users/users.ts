@@ -12,4 +12,8 @@ export class UsersProvider {
   listAll(): Observable<User[]> {
     return this.rest.get('users').map(u => u as User[]);
   }
+
+  update(user: User): Observable<any> {
+    return this.rest.put(`users/${user.id}`, user);
+  }
 }

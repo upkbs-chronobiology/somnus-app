@@ -8,7 +8,7 @@ describe('ensure', () => {
     const observable = Observable.create(observer => {
       canary = true;
       observer.next();
-    })
+    });
 
     expect(canary).toBe(false);
 
