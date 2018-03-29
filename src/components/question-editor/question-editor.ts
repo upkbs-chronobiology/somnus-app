@@ -2,9 +2,9 @@ import { AnswerType } from '../../model/answer-type';
 import { Component, HostBinding, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../../model/question';
+import { Questionnaire } from '../../model/questionnaire';
+import { QuestionnairesProvider } from '../../providers/questionnaires/questionnaires';
 import { QuestionsProvider } from '../../providers/questions/questions';
-import { StudiesProvider } from '../../providers/studies/studies';
-import { Study } from '../../model/study';
 import { ToastProvider } from '../../providers/toast/toast';
 
 @Component({
@@ -21,7 +21,7 @@ export class QuestionEditorComponent {
     [AnswerType.RangeDiscrete5]: 'Discrete Range (1-5)',
   };
 
-  studies: Study[];
+  questionnaires: Questionnaire[];
 
   submitting: boolean = false;
 
@@ -44,10 +44,10 @@ export class QuestionEditorComponent {
 
   constructor(
     private questions: QuestionsProvider,
-    studiesProvider: StudiesProvider,
+    questionnairesProvider: QuestionnairesProvider,
     private toast: ToastProvider
   ) {
-    studiesProvider.listAll().subscribe(list => this.studies = list);
+    questionnairesProvider.listAll().subscribe(list => this.questionnaires = list);
   }
 
   save() {
@@ -72,7 +72,7 @@ export class QuestionEditorComponent {
   questionEdited(): boolean {
     return this.editedQuestion.content !== this.question.content ||
       this.editedQuestion.answerType !== this.question.answerType ||
-      this.editedQuestion.studyId !== this.question.studyId;
+      this.editedQuestion.questionnaireId !== this.question.questionnaireId;
   }
 
   requiredMissing(): boolean {

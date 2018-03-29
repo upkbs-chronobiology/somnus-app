@@ -1,0 +1,5 @@
+<ion-content padding>
+  <questionnaire-editor *ngFor="let q of questionnaires" [questionnaire]="q"></questionnaire-editor>
+  <questionnaire-editor new (create)="appendNew()"></questionnaire-editor>
+  <ng-container #newPlaceholder></ng-container>
+</ion-content>

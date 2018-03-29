@@ -1,9 +1,9 @@
 import { AnswerType } from '../../../model/answer-type';
 import { Component } from '@angular/core';
 import { Question } from '../../../model/question';
+import { Questionnaire } from '../../../model/questionnaire';
+import { QuestionnairesProvider } from '../../../providers/questionnaires/questionnaires';
 import { QuestionsProvider } from '../../../providers/questions/questions';
-import { StudiesProvider } from '../../../providers/studies/studies';
-import { Study } from '../../../model/study';
 
 @Component({
   selector: 'questions-editor',
@@ -20,14 +20,14 @@ export class QuestionsEditorPage {
   };
 
   questions: Question[];
-  studies: Study[];
+  questionnaires: Questionnaire[];
 
   newQuestion: Question = new Question(0, '', null, null);
   creatingQuestion: boolean = false;
 
-  constructor(private questionsProvider: QuestionsProvider, studiesProvider: StudiesProvider) {
+  constructor(private questionsProvider: QuestionsProvider, questionnairesProvider: QuestionnairesProvider) {
     questionsProvider.listAll().subscribe(list => this.questions = list);
-    studiesProvider.listAll().subscribe(list => this.studies = list);
+    questionnairesProvider.listAll().subscribe(list => this.questionnaires = list);
   }
 
   createQuestion() {

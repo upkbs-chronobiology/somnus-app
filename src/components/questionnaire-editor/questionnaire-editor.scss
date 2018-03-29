@@ -1,0 +1,17 @@
+questionnaire-editor {
+  display: flex;
+  align-items: flex-end;
+
+  // TODO: collect in file shared with other editor components
+  &.deleted {
+    max-height: 0;
+    opacity: 0;
+    transition-property: max-height, opacity;
+    transition-duration: $medium-transition-duration;
+    transition-timing-function: ease-out;
+  }
+
+  [ion-button] {
+    flex-shrink: 0;
+  }
+}

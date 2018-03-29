@@ -20,6 +20,7 @@ import { StudiesProvider } from '../providers/studies/studies';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
+import { QuestionnairesProvider } from '../providers/questionnaires/questionnaires';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { UsersProvider } from '../providers/users/users';
     StudiesProvider,
     CacheProvider,
     UsersProvider,
+    QuestionnairesProvider,
   ]
 })
 export class AppModule { }

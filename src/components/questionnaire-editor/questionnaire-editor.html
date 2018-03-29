@@ -1,0 +1,21 @@
+<button ion-button icon-only clear *ngIf="!isNew" item-start color="secondary" (click)="delete()" title="Delete">
+  <ion-icon name="trash"></ion-icon>
+</button>
+
+<ion-item>
+  <ion-label *ngIf="isNew" floating>New Questionnaire</ion-label>
+  <ion-input [(ngModel)]="editedQuestionnaire.name"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label *ngIf="isNew" floating>Study</ion-label>
+  <ion-select [(ngModel)]="editedQuestionnaire.studyId" interface="popover">
+    <ion-option [value]="null"></ion-option>
+    <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
+  </ion-select>
+</ion-item>
+
+<button ion-button *ngIf="isAltered()" item-end type="submit" (click)="submit()" [disabled]="!isValid()" icon-only>
+  <ion-icon *ngIf="!isNew" name="cloud-upload"></ion-icon>
+  <ion-icon *ngIf="isNew" name="add"></ion-icon>
+</button>

@@ -11,9 +11,9 @@
 </ion-item>
 
 <ion-item>
-  <ion-select [(ngModel)]="editedQuestion.studyId" interface="popover" placeholder="(no study)">
+  <ion-select [(ngModel)]="editedQuestion.questionnaireId" interface="popover" placeholder="(no questionnaire)">
     <ion-option [value]="null"></ion-option>
-    <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
+    <ion-option *ngFor="let questionnaire of questionnaires" [value]="questionnaire.id">{{questionnaire.name}}</ion-option>
   </ion-select>
 </ion-item>
 

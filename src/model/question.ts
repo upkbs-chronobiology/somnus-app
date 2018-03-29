@@ -5,10 +5,10 @@ export class Question {
     public id: number,
     public content: string,
     public answerType: AnswerType,
-    public studyId: number
+    public questionnaireId: number
   ) { }
 
   static clone(question: Question) {
-    return new Question(question.id, question.content, question.answerType, question.studyId);
+    return new Question(question.id, question.content, question.answerType, question.questionnaireId);
   }
 }

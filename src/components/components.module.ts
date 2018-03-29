@@ -7,6 +7,7 @@ import { QuestionEditorComponent } from './question-editor/question-editor';
 import { StudyEditorComponent } from './study-editor/study-editor';
 import { UserEditorComponent } from './user-editor/user-editor';
 import { UserPickerComponent } from './user-picker/user-picker';
+import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnaire-editor';
 
 @NgModule({
   declarations: [LoginComponent,
@@ -15,7 +16,8 @@ import { UserPickerComponent } from './user-picker/user-picker';
     ContinuousRangeComponent,
     StudyEditorComponent,
     UserEditorComponent,
-    UserPickerComponent],
+    UserPickerComponent,
+    QuestionnaireEditorComponent],
   imports: [
     IonicModule,
   ],
@@ -25,7 +27,8 @@ import { UserPickerComponent } from './user-picker/user-picker';
     ContinuousRangeComponent,
     StudyEditorComponent,
     UserEditorComponent,
-    UserPickerComponent],
+    UserPickerComponent,
+    QuestionnaireEditorComponent],
   entryComponents: [LoginComponent,
     UserPickerComponent]
 })
