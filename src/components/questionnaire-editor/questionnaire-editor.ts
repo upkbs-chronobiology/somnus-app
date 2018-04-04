@@ -1,8 +1,10 @@
 import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from '../../model/questionnaire';
 import { QuestionnairesProvider } from '../../providers/questionnaires/questionnaires';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
+import { ToastProvider } from '../../providers/toast/toast';
 
 @Component({
   selector: 'questionnaire-editor',
@@ -10,6 +12,7 @@ import { Study } from '../../model/study';
 })
 export class QuestionnaireEditorComponent implements OnInit {
 
+  @HostBinding('class.submitting')
   submitting: boolean;
 
   @HostBinding('class.deleted')
@@ -35,7 +38,8 @@ export class QuestionnaireEditorComponent implements OnInit {
   constructor(
     @Attribute('new') newAttr: string,
     studiesProvider: StudiesProvider,
-    private questionnairesProvider: QuestionnairesProvider
+    private questionnairesProvider: QuestionnairesProvider,
+    private toast: ToastProvider
   ) {
     this.isNew = newAttr === '';
 
@@ -80,9 +84,19 @@ export class QuestionnaireEditorComponent implements OnInit {
 
   delete() {
     this.submitting = true;
-    this.questionnairesProvider.delete(this.editedQuestionnaire.id).subscribe(() => {
+    this.questionnairesProvider.delete(this.editedQuestionnaire.id)
+      .catch((error, caught) => {
+        if (!error.message)
+            throw error;
 
-      this.submitting = false;
-    });
+        this.toast.show(`Failed to delete questionnaire: ${error.message}`, true);
+        this.submitting = false;
+        return Observable.empty();
+      }).subscribe(() => {
+        this.submitting = false;
+        // XXX: Workaround for weird animation/transition-interference:
+        // https://stackoverflow.com/questions/49651265/transition-right-after-animation?noredirect=1#comment86310950_49651265
+        setTimeout(() => this.deleted = true, 0);
+      });
   }
 }

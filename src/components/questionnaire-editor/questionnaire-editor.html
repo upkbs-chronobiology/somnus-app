@@ -3,6 +3,7 @@
 </button>
 
 <ion-item>
+  <!-- FIXME: Some classes remain after removing/hiding label, like item-label-floating -->
   <ion-label *ngIf="isNew" floating>New Questionnaire</ion-label>
   <ion-input [(ngModel)]="editedQuestionnaire.name"></ion-input>
 </ion-item>

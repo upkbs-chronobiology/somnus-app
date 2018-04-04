@@ -101,7 +101,9 @@ export class StudyEditorComponent implements OnInit {
       })
       .subscribe(() => {
         this.sending = false;
-        this.deleted = true;
+        // XXX: Workaround for weird animation/transition-interference:
+        // https://stackoverflow.com/questions/49651265/transition-right-after-animation?noredirect=1#comment86310950_49651265
+        setTimeout(() => this.deleted = true, 0);
       });
   }
 
