@@ -1,11 +1,11 @@
 import { Answer } from '../../model/answer';
 import { AnswersProvider } from '../../providers/answers/answers';
+import { AnswerType } from '../../model/answer-type';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { ToastProvider } from '../../providers/toast/toast';
-import { AnswerType } from '../../model/answer-type';
 
 @Component({
   selector: 'page-questions',
@@ -35,7 +35,7 @@ export class QuestionsPage implements OnInit {
         const answer = new Answer(null, q.id);
         // default sliders to center
         if (q.answerType === AnswerType.RangeContinuous) answer.content = '0.5';
-        if (q.answerType === AnswerType.RangeDiscrete5) answer.content = '3';
+        if (q.answerType === AnswerType.RangeDiscrete) answer.content = '3';
         return answer;
       });
     });

@@ -1,14 +1,6 @@
 question-editor {
-  display: flex;
-  max-height: 10em;
-
-  // TODO: collect in file shared with other editor components
-  &.deleted {
-    max-height: 0;
-    opacity: 0;
-    transition-property: max-height, opacity;
-    transition-duration: $medium-transition-duration;
-    transition-timing-function: ease-out;
+  &.submitting ion-content {
+    pointer-events: none;
   }
 
   [ion-button] {

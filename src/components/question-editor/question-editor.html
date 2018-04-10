@@ -1,24 +1,84 @@
-<button ion-button icon-only outline color="dark" (click)="delete()" title="Delete"><ion-icon name="trash"></ion-icon></button>
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit question</ion-title>
+  </ion-navbar>
+</ion-header>
 
-<ion-item>
-  <ion-input [(ngModel)]="editedQuestion.content"></ion-input>
-</ion-item>
+<ion-content>
+  <ion-item>
+    <ion-label floating>Question</ion-label>
+    <ion-input [(ngModel)]="editedQuestion.content"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Questionnaire</ion-label>
+    <ion-select [(ngModel)]="editedQuestion.questionnaireId" interface="popover">
+      <ion-option [value]="null"></ion-option>
+      <ion-option *ngFor="let questionnaire of questionnaires" [value]="questionnaire.id">{{questionnaire.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Answer type</ion-label>
+    <ion-select [(ngModel)]="editedQuestion.answerType" interface="popover" (ionChange)="updateOptionals()">
+      <ion-option *ngFor="let type of answerTypes" [value]="type">{{answerTypeLabels[type]}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-list *ngIf="editedQuestion.answerRange">
+    <ion-list-header>Range</ion-list-header>
+    <ion-item>
+      <ion-label floating>Min</ion-label>
+      <ion-input type="number" [(ngModel)]="editedQuestion.answerRange.min"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Max</ion-label>
+      <ion-input type="number" [(ngModel)]="editedQuestion.answerRange.max"></ion-input>
+    </ion-item>
+  </ion-list>
 
-<ion-item>
-  <ion-select [(ngModel)]="editedQuestion.answerType" interface="popover">
-    <ion-option *ngFor="let type of answerTypes" [value]="type">{{type}}</ion-option>
-  </ion-select>
-</ion-item>
+  <ion-list *ngIf="editedQuestion.answerLabels">
+    <ion-list-header>
+      Answer labels
+      <ion-buttons item-end>
+        <button ion-button round icon-only clear *ngIf="editedQuestion.answerType === AnswerType.MultipleChoice"
+          (click)="editedQuestion.answerLabels.push('')">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-list-header>
 
-<ion-item>
-  <ion-select [(ngModel)]="editedQuestion.questionnaireId" interface="popover" placeholder="(no questionnaire)">
-    <ion-option [value]="null"></ion-option>
-    <ion-option *ngFor="let questionnaire of questionnaires" [value]="questionnaire.id">{{questionnaire.name}}</ion-option>
-  </ion-select>
-</ion-item>
+    <ion-item *ngFor="let option of editedQuestion.answerLabels; let i = index; trackBy: trackLabelFor">
+      <ion-input [(ngModel)]="editedQuestion.answerLabels[i]" placeholder="Label {{i + 1}}"
+        [required]="editedQuestion.answerType === AnswerType.MultipleChoice">
+      </ion-input>
+      <ion-buttons item-end>
+        <button ion-button small round icon-only clear color="secondary"
+          *ngIf="editedQuestion.answerType === AnswerType.MultipleChoice" (click)="editedQuestion.answerLabels.splice(i, 1)">
+          <ion-icon name="remove-circle"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>
 
-<button ion-button *ngIf="questionEdited() && !submitting" [disabled]="requiredMissing()"
-  (click)="save()" title="Save" icon-only>
-  <ion-icon name="cloud-upload"></ion-icon>
-</button>
-<ion-spinner *ngIf="submitting" color="primary"></ion-spinner>
+<ion-footer>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only *ngIf="!isNew" (click)="delete()" title="Delete" [disabled]="submitting">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-spinner *ngIf="submitting" color="primary"></ion-spinner>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button (click)="discard()" [disabled]="submitting">
+        Cancel
+      </button>
+      <button ion-button solid color="primary" (click)="save()" [disabled]="requiredMissing() || submitting">
+        Save
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>

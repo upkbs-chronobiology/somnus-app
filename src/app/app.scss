@@ -39,3 +39,12 @@ ion-item.item-select:not([class*="item-label"]) ion-select {
     opacity: 0.8;
   }
 }
+
+ion-navbar button,
+.bar-button,
+.bar-button-md {
+  padding: 0 1em;
+}
+.bar-button-md[icon-only] {
+  padding: 0 0.5em;
+}

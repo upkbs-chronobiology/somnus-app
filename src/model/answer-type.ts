@@ -1,7 +1,8 @@
 export enum AnswerType {
   Text = 'text',
-  // [0, 1] over ℝ
+  // [min, max] over ℝ
   RangeContinuous = 'range-continuous',
-  // [1, 5] over ℕ
-  RangeDiscrete5 = 'range-discrete-5'
+  // [min, max] over ℕ
+  RangeDiscrete = 'range-discrete',
+  MultipleChoice = 'multiple-choice'
 }

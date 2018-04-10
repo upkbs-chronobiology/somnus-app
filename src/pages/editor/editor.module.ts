@@ -2,6 +2,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { EditorPage } from './editor';
 import { IonicPageModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
+import { QuestionEditorComponent } from '../../components/question-editor/question-editor';
 import { QuestionnaireEditorComponent } from '../../components/questionnaire-editor/questionnaire-editor';
 import { QuestionnairesEditorPage } from './questionnaires-editor/questionnaires-editor';
 import { QuestionsEditorPage } from './questions-editor/questions-editor';
@@ -26,6 +27,7 @@ import { UsersEditorPage } from './users-editor/users-editor';
     QuestionsEditorPage,
     StudiesEditorPage,
     UsersEditorPage,
+    QuestionEditorComponent,
     StudyEditorComponent,
     QuestionnairesEditorPage,
     QuestionnaireEditorComponent

@@ -1,32 +1,12 @@
 <ion-content padding>
   <ng-container *ngIf="questions; else loadingIndicator">
-    <question-editor *ngFor="let question of questions" [question]="question"></question-editor>
+    <button ion-item *ngFor="let question of questions; let i = index" (click)="editQuestion(i)">
+      <ion-label>{{question.content}}</ion-label>
+    </button>
 
-    <div class="new-question">
-      <ion-item>
-        <ion-label floating>New Question</ion-label>
-        <ion-input [(ngModel)]="newQuestion.content"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Type</ion-label>
-        <ion-select [(ngModel)]="newQuestion.answerType" interface="popover">
-          <ion-option *ngFor="let type of answerTypes" [value]="type">{{type}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Questionnaire</ion-label>
-        <ion-select [(ngModel)]="newQuestion.questionnaireId" interface="popover">
-          <ion-option [value]="null"></ion-option>
-          <ion-option *ngFor="let questionnaire of questionnaires" [value]="questionnaire.id">{{questionnaire.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <button ion-button icon-left *ngIf="newQuestion.content && newQuestion.answerType && !creatingQuestion" (click)="createQuestion()">
-        <ion-icon name="add"></ion-icon>
-        Add question
-      </button>
-      <ion-spinner *ngIf="creatingQuestion" color="primary"></ion-spinner>
-    </div>
+    <ion-fab bottom right>
+      <button ion-fab (click)="createQuestion()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
   </ng-container>
 
   <ng-template #loadingIndicator>
