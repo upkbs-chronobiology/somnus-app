@@ -26,7 +26,7 @@ export class QuestionsEditorPage {
 
   createQuestion() {
     const overlay = this.modal.create(QuestionEditorComponent,
-      { question: null }, { enableBackdropDismiss: false });
+      { question: undefined }, { enableBackdropDismiss: false });
     overlay.onWillDismiss(data => {
       if (data.question)
         this.questions.push(data.question);

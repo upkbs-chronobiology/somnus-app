@@ -1,5 +1,7 @@
 import { AnswerType } from '../../model/answer-type';
+import { arraysEqual } from '../../util/arrays';
 import { Component, HostBinding, Input } from '@angular/core';
+import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
 import { InclusiveRange } from '../../model/inclusive-range';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -50,7 +52,8 @@ export class QuestionEditorComponent {
     questionnairesProvider: QuestionnairesProvider,
     private toast: ToastProvider,
     private view: ViewController,
-    params: NavParams
+    params: NavParams,
+    private confirmation: ConfirmationProvider
   ) {
     if (params.data.question) this.question = params.data.question;
     else if (!this.question) {
@@ -98,8 +101,13 @@ export class QuestionEditorComponent {
   }
 
   discard() {
-    // TODO: Confirmation if edited?
-    this.close(false);
+    if (!this.questionEdited())
+      this.close(false);
+    else
+      this.confirmation.confirm('This will drop unsaved changes - are you sure?')
+        .subscribe(response => {
+          if (response) this.close(false);
+        });
   }
 
   save() {
@@ -114,19 +122,25 @@ export class QuestionEditorComponent {
       });
   }
 
-  // TODO: Confirmation?
   delete() {
-    this.questions.delete(this.question.id)
-      .catch((error, caught) => {
-        this.toast.show(error.message, true);
-        return Observable.empty();
-      })
-      .subscribe(() => this.close());
+    this.confirmation.confirm('Do you really want to delete this question?')
+      .subscribe(response => {
+        if (response)
+          this.questions.delete(this.question.id)
+            .catch((error, caught) => {
+              this.toast.show(error.message, true);
+              return Observable.empty();
+            })
+            .subscribe(() => this.close());
+      });
   }
 
   questionEdited(): boolean {
     return this.editedQuestion.content !== this.question.content ||
       this.editedQuestion.answerType !== this.question.answerType ||
+      // double (and not triple) equals check to cover null vs. undefined
+      this.editedQuestion.answerRange != this.question.answerRange ||
+      !arraysEqual(this.editedQuestion.answerLabels, this.question.answerLabels) ||
       this.editedQuestion.questionnaireId !== this.question.questionnaireId;
   }
 

@@ -11,7 +11,7 @@ export class Question {
     public questionnaireId: number
   ) { }
 
-  static clone(q: Question) {
+  static clone(q: Question): Question {
     return new Question(q.id, q.content, q.answerType, q.answerLabels, q.answerRange, q.questionnaireId);
   }
 }

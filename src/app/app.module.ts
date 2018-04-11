@@ -21,6 +21,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
 import { QuestionnairesProvider } from '../providers/questionnaires/questionnaires';
+import { ConfirmationProvider } from '../providers/confirmation/confirmation';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { QuestionnairesProvider } from '../providers/questionnaires/questionnair
     CacheProvider,
     UsersProvider,
     QuestionnairesProvider,
+    ConfirmationProvider,
   ]
 })
 export class AppModule { }
