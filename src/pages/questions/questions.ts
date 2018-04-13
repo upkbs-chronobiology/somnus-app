@@ -2,6 +2,7 @@ import { Answer } from '../../model/answer';
 import { AnswersProvider } from '../../providers/answers/answers';
 import { AnswerType } from '../../model/answer-type';
 import { Component } from '@angular/core';
+import { InclusiveRange } from '../../model/inclusive-range';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
@@ -34,11 +35,15 @@ export class QuestionsPage implements OnInit {
       this.answers = questions.map(q => {
         const answer = new Answer(null, q.id);
         // default sliders to center
-        if (q.answerType === AnswerType.RangeContinuous) answer.content = '0.5';
-        if (q.answerType === AnswerType.RangeDiscrete) answer.content = '3';
+        if (q.answerType === AnswerType.RangeContinuous) answer.content = this.rangeCenter(q.answerRange).toString();
+        if (q.answerType === AnswerType.RangeDiscrete) answer.content = this.rangeCenter(q.answerRange).toString();
         return answer;
       });
     });
+  }
+
+  rangeCenter(range: InclusiveRange): number {
+    return (range.max - range.min) / 2 + range.min;
   }
 
   everthingAnswered(): boolean {
@@ -58,6 +63,6 @@ export class QuestionsPage implements OnInit {
   }
 
   isValidAnswer(value: any): boolean {
-    return typeof(value) === 'number' || !!value;
+    return typeof value === 'number' || !!value;
   }
 }

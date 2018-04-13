@@ -12,14 +12,22 @@
         <ion-input *ngIf="question.answerType === AnswerType.Text"
           [(ngModel)]="answers[i].content" required placeholder="..."></ion-input>
         <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous"
-          [(ngModel)]="answers[i].content" required>
-          <ion-icon range-left name="sad"></ion-icon>
-          <ion-icon range-right name="happy"></ion-icon>
+          [(ngModel)]="answers[i].content" [min]="question.answerRange.min" [max]="question.answerRange.max" required>
+          <ion-label range-left>
+            {{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}
+          </ion-label>
+          <ion-label range-right>
+            {{question.answerLabels ? question.answerLabels[1] : question.answerRange.max}}
+          </ion-label>
         </continuous-range>
         <ion-range *ngIf="question.answerType === AnswerType.RangeDiscrete"
-          min="1" max="5" step="1" snaps="true" pin="true" [(ngModel)]="answers[i].content" required>
-          <ion-label range-left>1</ion-label>
-          <ion-label range-right>5</ion-label>
+          [min]="question.answerRange.min" [max]="question.answerRange.max" step="1" snaps="true" pin="true"
+          [(ngModel)]="answers[i].content" required>
+          <ion-label range-left>{{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}</ion-label>
+          <!-- XXX: What about intermediate labels? -->
+          <ion-label range-right>
+            {{question.answerLabels ? question.answerLabels[question.answerLabels.length - 1] : question.answerRange.max}}
+          </ion-label>
         </ion-range>
       </ion-item>
       <ion-list radio-group *ngIf="question.answerType === AnswerType.MultipleChoice"

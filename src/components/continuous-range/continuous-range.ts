@@ -1,5 +1,5 @@
 import { BaseInput } from 'ionic-angular/util/base-input';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Config, Form, Item } from 'ionic-angular';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ElementRef, Renderer } from '@angular/core';
@@ -14,6 +14,12 @@ export class ContinuousRangeComponent extends BaseInput<number> implements Contr
 
   private callbacks = [];
 
+  @Input()
+  min: number = 0;
+
+  @Input()
+  max: number = 1;
+
   _valueInternal: number;
 
   get valueInternal(): number {
@@ -23,15 +29,15 @@ export class ContinuousRangeComponent extends BaseInput<number> implements Contr
   set valueInternal(newValue: number) {
     this._valueInternal = newValue;
 
-    this.callbacks.forEach(cb => cb(newValue / this.resolution));
+    this.callbacks.forEach(cb => cb(this.value));
   }
 
   get value(): number {
-    return this.valueInternal / this.resolution;
+    return this.transformFromUnit(this.valueInternal / this.resolution);
   }
 
   set value(newValue: number) {
-    this.valueInternal = newValue * this.resolution;
+    this.valueInternal = this.transformToUnit(newValue) * this.resolution;
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, _form: Form, _item: Item, _ngControl: NgControl) {
@@ -44,5 +50,13 @@ export class ContinuousRangeComponent extends BaseInput<number> implements Contr
 
   writeValue(val: number): void {
     this.value = val;
+  }
+
+  private transformToUnit(num: number): number {
+    return (num - this.min) / (this.max - this.min);
+  }
+
+  private transformFromUnit(num: number): number {
+    return num * (this.max - this.min) + this.min;
   }
 }

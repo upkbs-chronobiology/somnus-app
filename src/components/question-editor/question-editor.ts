@@ -65,7 +65,7 @@ export class QuestionEditorComponent {
   }
 
   getRangePoints(): number {
-    return this.editedQuestion.answerRange.max - this.editedQuestion.answerRange.min + 1;
+    return Math.max(this.editedQuestion.answerRange.max - this.editedQuestion.answerRange.min + 1, 0);
   }
 
   updateOptionals() {

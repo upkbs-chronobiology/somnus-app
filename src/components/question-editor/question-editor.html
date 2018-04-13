@@ -29,11 +29,11 @@
     <ion-list-header>Range</ion-list-header>
     <ion-item>
       <ion-label floating>Min</ion-label>
-      <ion-input type="number" [(ngModel)]="editedQuestion.answerRange.min"></ion-input>
+      <ion-input type="number" [(ngModel)]="editedQuestion.answerRange.min" (change)="updateOptionals()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Max</ion-label>
-      <ion-input type="number" [(ngModel)]="editedQuestion.answerRange.max"></ion-input>
+      <ion-input type="number" [(ngModel)]="editedQuestion.answerRange.max" (change)="updateOptionals()"></ion-input>
     </ion-item>
   </ion-list>
 
