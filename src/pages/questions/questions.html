@@ -8,7 +8,7 @@
   <ion-slides #slides pager *ngIf="questions && questions.length > 0">
     <ion-slide *ngFor="let question of questions; let i = index">
       <h2>{{question.content}}</h2>
-      <ion-item>
+      <ion-item *ngIf="question.answerType !== AnswerType.MultipleChoice">
         <ion-input *ngIf="question.answerType === AnswerType.Text"
           [(ngModel)]="answers[i].content" required placeholder="..."></ion-input>
         <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous"
@@ -21,10 +21,14 @@
           <ion-label range-left>1</ion-label>
           <ion-label range-right>5</ion-label>
         </ion-range>
-        <ng-container *ngIf="question.answerType === AnswerType.MultipleChoice">
-          TODO: AnswerType.MultipleChoice case
-        </ng-container>
       </ion-item>
+      <ion-list radio-group *ngIf="question.answerType === AnswerType.MultipleChoice"
+        [(ngModel)]="answers[i].content">
+        <ion-item *ngFor="let option of question.answerLabels; let i = index">
+          <ion-label>{{option}}</ion-label>
+          <ion-radio [value]="i"></ion-radio>
+        </ion-item>
+      </ion-list>
 
       <ion-fab bottom right>
         <button ion-fab (click)="slides.slideNext()" [disabled]="!isValidAnswer(answers[i].content)">
