@@ -74,7 +74,7 @@ export class QuestionEditorComponent {
     if ([AnswerType.RangeContinuous, AnswerType.RangeDiscrete].indexOf(q.answerType) < 0)
       delete q.answerRange;
     else if (!q.answerRange)
-      q.answerRange = new InclusiveRange(null, null);
+      q.answerRange = q.answerType === AnswerType.RangeContinuous ? new InclusiveRange(0, 1) : new InclusiveRange(1, 10);
 
     switch (q.answerType) {
       case AnswerType.MultipleChoice:
@@ -102,11 +102,11 @@ export class QuestionEditorComponent {
 
   discard() {
     if (!this.questionEdited())
-      this.close(false);
+      this.close(!this.isNew);
     else
       this.confirmation.confirm('This will drop unsaved changes - are you sure?')
         .subscribe(response => {
-          if (response) this.close(false);
+          if (response) this.close(!this.isNew);
         });
   }
 
@@ -131,15 +131,14 @@ export class QuestionEditorComponent {
               this.toast.show(error.message, true);
               return Observable.empty();
             })
-            .subscribe(() => this.close());
+            .subscribe(() => this.close(false));
       });
   }
 
   questionEdited(): boolean {
     return this.editedQuestion.content !== this.question.content ||
       this.editedQuestion.answerType !== this.question.answerType ||
-      // double (and not triple) equals check to cover null vs. undefined
-      this.editedQuestion.answerRange != this.question.answerRange ||
+      !InclusiveRange.equal(this.editedQuestion.answerRange, this.question.answerRange) ||
       !arraysEqual(this.editedQuestion.answerLabels, this.question.answerLabels) ||
       this.editedQuestion.questionnaireId !== this.question.questionnaireId;
   }

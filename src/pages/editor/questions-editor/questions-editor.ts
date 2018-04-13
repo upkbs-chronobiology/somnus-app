@@ -40,6 +40,8 @@ export class QuestionsEditorPage {
     overlay.onWillDismiss(data => {
       if (data.question)
         this.questions[index] = data.question;
+      else
+        this.questions.splice(index, 1);
     });
     overlay.present();
   }
