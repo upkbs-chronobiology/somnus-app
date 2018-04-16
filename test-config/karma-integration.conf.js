@@ -18,7 +18,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       {
-        pattern: './test-config/karma-test-shim.js',
+        pattern: './test-config/karma-integration-test-shim.js',
         watched: true
       },
       {
@@ -45,7 +45,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './test-config/karma-test-shim.js': ['webpack', 'sourcemap']
+      './test-config/karma-integration-test-shim.js': ['webpack', 'sourcemap']
     },
 
     mime: {

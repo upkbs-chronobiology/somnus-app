@@ -13,4 +13,10 @@ After setting up Ionic, run `ionic serve` to launch the app on localhost for dev
 
 ## Testing
 
-In order to execute Karma/Jasmine tests, run `npm test`.
+In order to execute Karma/Jasmine (unit) tests, run `npm test`.
+
+### Integration tests
+
+Before running integration tests, make sure a non-critical instance of the back end Somnus application is running, reachable, and has appropriate test users in place.
+**Do not run integration tests against a production back end, since they alter data.**
+Integration tests can then be executed with `npm test-integration`.
