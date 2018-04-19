@@ -22,6 +22,7 @@ import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
 import { QuestionnairesProvider } from '../providers/questionnaires/questionnaires';
 import { ConfirmationProvider } from '../providers/confirmation/confirmation';
+import { SchedulesProvider } from '../providers/schedules/schedules';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { ConfirmationProvider } from '../providers/confirmation/confirmation';
     UsersProvider,
     QuestionnairesProvider,
     ConfirmationProvider,
+    SchedulesProvider,
   ]
 })
 export class AppModule { }
