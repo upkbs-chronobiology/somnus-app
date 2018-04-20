@@ -1,5 +1,4 @@
 import { AuthRestProvider } from '../auth-rest/auth-rest';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Schedule } from '../../model/schedule';

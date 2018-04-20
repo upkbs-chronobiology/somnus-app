@@ -1,7 +1,5 @@
 import { AppModule } from '../../app/app.module';
-import { AuthenticationProvider } from '../authentication/authentication';
-import { Credentials } from '../../model/credentials';
-import { ModalController } from 'ionic-angular';
+import { loginAsTestUser } from '../../test/test-utils';
 import { StudiesProvider } from './studies';
 import { Study } from '../../model/study';
 import { TestBed } from '@angular/core/testing';
@@ -11,26 +9,11 @@ describe('Studies', () => {
   let studies: StudiesProvider;
 
   beforeEach(done => {
-    // XXX: Hacky as hell
-    let authToken;
-    const mockModalController = {
-      create: () => ({
-        present: () => { },
-        onDidDismiss: cb => setTimeout(() => cb(authToken), 0),
-      })
-    };
-
     TestBed.configureTestingModule({
       imports: [AppModule],
-      providers: [
-        { provide: ModalController, useValue: mockModalController }
-      ]
     });
 
-    // XXX: Authentication (and credentials) - modularize, make configurable etc.?
-    const authProvider: AuthenticationProvider = TestBed.get(AuthenticationProvider);
-    authProvider.login(new Credentials('test-user', 'test-user')).subscribe(token => {
-      authToken = token;
+    loginAsTestUser().subscribe(() => {
       studies = TestBed.get(StudiesProvider);
       done();
     });

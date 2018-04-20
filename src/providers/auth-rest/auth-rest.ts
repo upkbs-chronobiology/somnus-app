@@ -20,11 +20,12 @@ const DELETE = 'delete';
 @Injectable()
 export class AuthRestProvider {
 
-  private get authToken(): string {
+  // needs to be public for (integration) testing purposes
+  get authToken(): string {
     return localStorage.authToken;
   }
 
-  private set authToken(token: string) {
+  set authToken(token: string) {
     if (!token)
       delete localStorage.authToken;
     else
