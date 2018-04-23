@@ -88,7 +88,7 @@ export class QuestionEditorComponent {
       case AnswerType.RangeDiscrete:
         const numItems = this.getRangePoints();
         if (!q.answerLabels || q.answerLabels.length !== numItems)
-          q.answerLabels = new Array(numItems);
+          q.answerLabels = new Array(numItems).fill('');
         break;
       default:
         delete q.answerLabels;
