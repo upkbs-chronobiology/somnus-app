@@ -1,5 +1,22 @@
-<ion-content padding>
-  <questionnaire-editor *ngFor="let q of questionnaires" [questionnaire]="q"></questionnaire-editor>
-  <questionnaire-editor new (create)="appendNew()"></questionnaire-editor>
-  <ng-container #newPlaceholder></ng-container>
+<ion-content>
+  <ng-container *ngIf="questionnaires; else loadingIndicator">
+    <i *ngIf="!questionnaires.length">No questionnaires yet</i>
+
+    <button ion-item *ngFor="let questionnaire of questionnaires; let i = index" (click)="edit(i)">
+      <p item-start>{{questionnaire.id}}</p>
+      <ion-label>{{questionnaire.name}}</ion-label>
+    </button>
+
+    <ion-fab bottom right>
+      <button ion-fab (click)="create()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab>
+  </ng-container>
+
+  <ng-template #loadingIndicator>
+    <centrizer>
+      <ion-spinner></ion-spinner>
+    </centrizer>
+  </ng-template>
 </ion-content>

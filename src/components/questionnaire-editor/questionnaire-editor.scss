@@ -1,22 +1,8 @@
 questionnaire-editor {
-  display: flex;
-  align-items: flex-end;
-  max-height: 6em;
-  opacity: 1;
 
   &.submitting {
     animation: pulsate 2*$medium-transition-duration linear infinite;
     pointer-events: none;
-  }
-
-  // TODO: collect in file shared with other editor components
-  &.deleted {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition-property: max-height, opacity, overflow;
-    transition-duration: $medium-transition-duration;
-    transition-timing-function: ease-out;
   }
 
   [ion-button] {

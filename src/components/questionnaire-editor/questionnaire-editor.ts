@@ -1,4 +1,6 @@
-import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
+import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
+import { NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from '../../model/questionnaire';
 import { QuestionnairesProvider } from '../../providers/questionnaires/questionnaires';
@@ -10,18 +12,14 @@ import { ToastProvider } from '../../providers/toast/toast';
   selector: 'questionnaire-editor',
   templateUrl: 'questionnaire-editor.html'
 })
-export class QuestionnaireEditorComponent implements OnInit {
+export class QuestionnaireEditorComponent {
 
   @HostBinding('class.submitting')
   submitting: boolean;
 
-  @HostBinding('class.deleted')
-  deleted: boolean;
-
   editedQuestionnaire: Questionnaire;
 
   private _questionnaire: Questionnaire;
-  @Input()
   set questionnaire(q: Questionnaire) {
     this._questionnaire = q;
     this.editedQuestionnaire = Questionnaire.clone(this._questionnaire);
@@ -32,22 +30,21 @@ export class QuestionnaireEditorComponent implements OnInit {
 
   isNew: boolean;
 
-  @Output()
-  create: EventEmitter<any> = new EventEmitter();
-
   constructor(
-    @Attribute('new') newAttr: string,
     studiesProvider: StudiesProvider,
     private questionnairesProvider: QuestionnairesProvider,
-    private toast: ToastProvider
+    private toast: ToastProvider,
+    private view: ViewController,
+    params: NavParams,
+    private confirmation: ConfirmationProvider
   ) {
-    this.isNew = newAttr === '';
+    if (params.data.questionnaire) this.questionnaire = params.data.questionnaire;
+    else if (!this.questionnaire) {
+      this.questionnaire = new Questionnaire(null, null, null);
+      this.isNew = true;
+    }
 
     studiesProvider.listAll().subscribe(s => this.studies = s);
-  }
-
-  ngOnInit(): void {
-    if (this.isNew) this.questionnaire = new Questionnaire(null, null, null);
   }
 
   isValid(): boolean {
@@ -71,7 +68,7 @@ export class QuestionnaireEditorComponent implements OnInit {
       this.isNew = false;
       this.submitting = false;
 
-      this.create.emit(null);
+      this.close();
     });
   }
 
@@ -79,24 +76,45 @@ export class QuestionnaireEditorComponent implements OnInit {
     this.questionnairesProvider.update(this.editedQuestionnaire).subscribe(q => {
       this.questionnaire = q;
       this.submitting = false;
+
+      this.close();
+    });
+  }
+
+  discard() {
+    if (!this.isAltered()) {
+      this.close(!this.isNew);
+      return;
+    }
+
+    this.confirmation.confirm('Really drop changes?').subscribe(confirmed => {
+      if (confirmed) this.close(!this.isNew);
     });
   }
 
   delete() {
-    this.submitting = true;
-    this.questionnairesProvider.delete(this.editedQuestionnaire.id)
-      .catch((error, caught) => {
-        if (!error.message)
+    this.confirmation.confirm('Really delete?').subscribe(confirmed => {
+      if (!confirmed) return;
+
+      this.submitting = true;
+      this.questionnairesProvider.delete(this.editedQuestionnaire.id)
+        .catch((error, caught) => {
+          if (!error.message)
             throw error;
 
-        this.toast.show(`Failed to delete questionnaire: ${error.message}`, true);
-        this.submitting = false;
-        return Observable.empty();
-      }).subscribe(() => {
-        this.submitting = false;
-        // XXX: Workaround for weird animation/transition-interference:
-        // https://stackoverflow.com/questions/49651265/transition-right-after-animation?noredirect=1#comment86310950_49651265
-        setTimeout(() => this.deleted = true, 0);
-      });
+          this.toast.show(`Failed to delete questionnaire: ${error.message}`, true);
+          this.submitting = false;
+          return Observable.empty();
+        }).subscribe(() => {
+          this.submitting = false;
+          this.close(false);
+        });
+    });
+  }
+
+  private close(reportResult: boolean = true) {
+    this.view.dismiss({
+      questionnaire: reportResult ? this.questionnaire : undefined
+    });
   }
 }

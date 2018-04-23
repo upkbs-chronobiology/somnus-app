@@ -1,5 +1,7 @@
-<ion-content padding>
+<ion-content>
   <ng-container *ngIf="questions; else loadingIndicator">
+    <i *ngIf="!questions.length">No questions yet</i>
+
     <button ion-item *ngFor="let question of questions; let i = index" (click)="editQuestion(i)">
       <ion-label>{{question.content}}</ion-label>
     </button>

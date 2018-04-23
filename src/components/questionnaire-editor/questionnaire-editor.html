@@ -1,22 +1,42 @@
-<button ion-button icon-only clear *ngIf="!isNew" item-start color="secondary" (click)="delete()" title="Delete">
-  <ion-icon name="trash"></ion-icon>
-</button>
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit questionnaire</ion-title>
+  </ion-navbar>
+</ion-header>
 
-<ion-item>
-  <!-- FIXME: Some classes remain after removing/hiding label, like item-label-floating -->
-  <ion-label *ngIf="isNew" floating>New Questionnaire</ion-label>
-  <ion-input [(ngModel)]="editedQuestionnaire.name"></ion-input>
-</ion-item>
+<ion-content>
+  <ion-item>
+    <ion-label floating>Name</ion-label>
+    <ion-input [(ngModel)]="editedQuestionnaire.name"></ion-input>
+  </ion-item>
 
-<ion-item>
-  <ion-label *ngIf="isNew" floating>Study</ion-label>
-  <ion-select [(ngModel)]="editedQuestionnaire.studyId" interface="popover">
-    <ion-option [value]="null"></ion-option>
-    <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
-  </ion-select>
-</ion-item>
+  <ion-item>
+    <ion-label floating>Study</ion-label>
+    <ion-select [(ngModel)]="editedQuestionnaire.studyId" interface="popover">
+      <ion-option [value]="null"></ion-option>
+      <ion-option *ngFor="let study of studies" [value]="study.id">{{study.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
 
-<button ion-button *ngIf="isAltered()" item-end type="submit" (click)="submit()" [disabled]="!isValid()" icon-only>
-  <ion-icon *ngIf="!isNew" name="cloud-upload"></ion-icon>
-  <ion-icon *ngIf="isNew" name="add"></ion-icon>
-</button>
+<ion-footer>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only *ngIf="!isNew" (click)="delete()"
+        title="Delete">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons>
+      <ion-spinner *ngIf="submitting" color="primary"></ion-spinner>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button (click)="discard()">
+        Cancel
+      </button>
+      <button ion-button solid color="primary" type="submit" (click)="submit()" [disabled]="!isValid()">
+        Save
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>
