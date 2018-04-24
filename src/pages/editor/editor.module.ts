@@ -6,6 +6,7 @@ import { QuestionEditorComponent } from '../../components/question-editor/questi
 import { QuestionnaireEditorComponent } from '../../components/questionnaire-editor/questionnaire-editor';
 import { QuestionnairesEditorPage } from './questionnaires-editor/questionnaires-editor';
 import { QuestionsEditorPage } from './questions-editor/questions-editor';
+import { ScheduleEditorComponent } from '../../components/schedule-editor/schedule-editor';
 import { StudiesEditorPage } from './studies-editor/studies-editor';
 import { StudyEditorComponent } from '../../components/study-editor/study-editor';
 import { UsersEditorPage } from './users-editor/users-editor';
@@ -30,7 +31,8 @@ import { UsersEditorPage } from './users-editor/users-editor';
     QuestionEditorComponent,
     StudyEditorComponent,
     QuestionnairesEditorPage,
-    QuestionnaireEditorComponent
+    QuestionnaireEditorComponent,
+    ScheduleEditorComponent
   ]
 })
 export class EditorPageModule { }

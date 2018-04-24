@@ -14,6 +14,11 @@ export class SchedulesProvider {
       .map(s => s as Schedule[]);
   }
 
+  listForQuestionnaire(questionnaireId: number): Observable<Schedule[]> {
+    return this.rest.get(`questionnaires/${questionnaireId}/schedules`)
+      .map(s => s as Schedule[]);
+  }
+
   create(schedule: Schedule): Observable<Schedule> {
     return this.rest.post('schedules', schedule)
       .map(s => s as Schedule);

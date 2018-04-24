@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Schedule of
+      <strong>{{questionnaire.name}}</strong> for
+      <strong>{{participant.name}}</strong>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-item no-lines>
+    <ion-label>Start date</ion-label>
+    <ion-input [(ngModel)]="editedSchedule.startDate" pattern="\\d{4}-\\d\\d-\\d\\d" placeholder="YYYY-MM-DD"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <ion-icon name="calendar"></ion-icon>
+    </ion-label>
+    <ion-datetime displayFormat="DDD, DD MMM YYYY" [(ngModel)]="editedSchedule.startDate"></ion-datetime>
+  </ion-item>
+
+  <ion-item no-lines>
+    <ion-label>End date</ion-label>
+    <ion-input [(ngModel)]="editedSchedule.endDate" pattern="\\d{4}-\\d\\d-\\d\\d" placeholder="YYYY-MM-DD"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <ion-icon name="calendar"></ion-icon>
+    </ion-label>
+    <ion-datetime displayFormat="DDD, DD MMM YYYY" [(ngModel)]="editedSchedule.endDate"></ion-datetime>
+  </ion-item>
+
+  <ion-item no-lines>
+    <ion-label>Start time</ion-label>
+    <ion-input [(ngModel)]="editedSchedule.startTime" pattern="\\d\\d:\\d\\d:\\d\\d" placeholder="HH:mm:ss"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <ion-icon name="time"></ion-icon>
+    </ion-label>
+    <ion-datetime displayFormat="HH:mm:ss" [(ngModel)]="editedSchedule.startTime"></ion-datetime>
+  </ion-item>
+
+  <ion-item no-lines>
+    <ion-label>End time</ion-label>
+    <ion-input [(ngModel)]="editedSchedule.endTime" pattern="\\d\\d:\\d\\d:\\d\\d" placeholder="HH:mm:ss"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <ion-icon name="time"></ion-icon>
+    </ion-label>
+    <ion-datetime displayFormat="HH:mm:ss" [(ngModel)]="editedSchedule.endTime"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Frequency</ion-label>
+    <ion-input [(ngModel)]="editedSchedule.frequency" type="number" min="0"></ion-input>
+  </ion-item>
+</ion-content>
+
+<ion-footer>
+  <ion-navbar>
+    <ion-buttons right>
+      <button ion-button (click)="discard()">Cancel</button>
+      <button ion-button solid color="primary" (click)="save()" [disabled]="!isValid()">Save</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-footer>

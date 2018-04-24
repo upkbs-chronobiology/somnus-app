@@ -8,6 +8,7 @@ import { StudyEditorComponent } from './study-editor/study-editor';
 import { UserEditorComponent } from './user-editor/user-editor';
 import { UserPickerComponent } from './user-picker/user-picker';
 import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnaire-editor';
+import { ScheduleEditorComponent } from './schedule-editor/schedule-editor';
 
 @NgModule({
   declarations: [LoginComponent,
@@ -17,7 +18,8 @@ import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnai
     StudyEditorComponent,
     UserEditorComponent,
     UserPickerComponent,
-    QuestionnaireEditorComponent],
+    QuestionnaireEditorComponent,
+    ScheduleEditorComponent],
   imports: [
     IonicModule,
   ],
@@ -28,7 +30,8 @@ import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnai
     StudyEditorComponent,
     UserEditorComponent,
     UserPickerComponent,
-    QuestionnaireEditorComponent],
+    QuestionnaireEditorComponent,
+    ScheduleEditorComponent],
   entryComponents: [LoginComponent,
     UserPickerComponent]
 })
