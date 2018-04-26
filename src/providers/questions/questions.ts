@@ -13,6 +13,10 @@ export class QuestionsProvider {
     return this.rest.get('questions').map(object => object as Question[]);
   }
 
+  listByQuestionnaire(questionnaireId: number): Observable<Question[]> {
+    return this.rest.get(`questionnaires/${questionnaireId}/questions`).map(q => q as Question[]);
+  }
+
   create(question: Question): Observable<Question> {
     return this.rest.post('questions', question).map(object => object as Question);
   }

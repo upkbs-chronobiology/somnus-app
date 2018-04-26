@@ -16,4 +16,8 @@ export class AnswersProvider {
   listAll(): Observable<Answer[]> {
     return this.rest.get('answers').map(a => a as Answer[]);
   }
+
+  listMineByQuestionnaire(questionnaireId: number): Observable<Answer[]> {
+    return this.rest.get(`questionnaires/${questionnaireId}/answers/mine`).map(a => a as Answer[]);
+  }
 }

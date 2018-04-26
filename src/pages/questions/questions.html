@@ -55,7 +55,8 @@
 
   <centrizer *ngIf="questions && questions.length === 0" class="no-questions" padding>
     <ion-icon class="icon" name="checkmark"></ion-icon>
-    <div>There are no questions at the moment.</div>
+    <p>There are no questions at the moment.</p>
+    <p *ngIf="nextDue">Next ones coming up {{nextDue.fromNow()}} (at {{nextDue.format('HH:mm')}})</p>
   </centrizer>
 
   <centrizer *ngIf="!questions">
