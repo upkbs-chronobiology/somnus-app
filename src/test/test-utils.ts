@@ -4,6 +4,7 @@ import { Credentials } from '../model/credentials';
 import { Observable } from 'rxjs/Observable';
 import { TestBed } from '@angular/core/testing';
 
+// expected to be admin
 const USER_NAME = 'test-user';
 const USER_PW = 'test-user';
 
