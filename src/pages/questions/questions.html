@@ -46,9 +46,9 @@
     </ion-slide>
 
     <ion-slide>
-      <p *ngIf="everthingAnswered()">Thanks, answers are ready to be submitted:</p>
-      <p *ngIf="!everthingAnswered()">There are unanswered questions, please go back and edit.</p>
-      <button *ngIf="!submitting" ion-button (click)="submitAnswers()" [disabled]="!everthingAnswered()">Submit</button>
+      <p *ngIf="everythingAnswered()">Thanks, answers are ready to be submitted:</p>
+      <p *ngIf="!everythingAnswered()">There are unanswered questions, please go back and edit.</p>
+      <button *ngIf="!submitting" ion-button (click)="submitAnswers()" [disabled]="!everythingAnswered()">Submit</button>
       <ion-spinner *ngIf="submitting" color="primary"></ion-spinner>
     </ion-slide>
   </ion-slides>

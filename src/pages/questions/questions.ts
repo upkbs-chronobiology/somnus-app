@@ -100,7 +100,7 @@ export class QuestionsPage implements OnInit {
     return (range.max - range.min) / 2 + range.min;
   }
 
-  everthingAnswered(): boolean {
+  everythingAnswered(): boolean {
     return this.answers && this.answers.every(a => !!a.content);
   }
 
