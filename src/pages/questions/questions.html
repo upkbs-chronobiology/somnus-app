@@ -34,7 +34,7 @@
         [(ngModel)]="answers[i].content">
         <ion-item *ngFor="let option of question.answerLabels; let i = index">
           <ion-label>{{option}}</ion-label>
-          <ion-radio [value]="i"></ion-radio>
+          <ion-radio [value]="i.toString()"></ion-radio>
         </ion-item>
       </ion-list>
 
