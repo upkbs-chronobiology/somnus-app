@@ -20,6 +20,8 @@ const DELETE = 'delete';
 @Injectable()
 export class AuthRestProvider {
 
+  private loginFinish: Observable<any>;
+
   // needs to be public for (integration) testing purposes
   get authToken(): string {
     return localStorage.authToken;
@@ -46,12 +48,16 @@ export class AuthRestProvider {
   }
 
   private logIn(): Observable<any> {
+    if (this.loginFinish) return this.loginFinish;
+
     const overlay = this.modal.create(LoginComponent, {}, { enableBackdropDismiss: false });
     overlay.present();
 
     const finishSubject = new Subject();
+    this.loginFinish = finishSubject;
     overlay.onDidDismiss((token: string) => {
       this.authToken = token;
+      delete this.loginFinish;
       finishSubject.next();
     });
     return finishSubject;
