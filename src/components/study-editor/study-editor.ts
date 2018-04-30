@@ -1,4 +1,5 @@
 import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
 import { ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { StudiesProvider } from '../../providers/studies/studies';
@@ -42,7 +43,8 @@ export class StudyEditorComponent implements OnInit {
     @Attribute('new') newAttr: string,
     private studiesProvider: StudiesProvider,
     private toast: ToastProvider,
-    private modal: ModalController
+    private modal: ModalController,
+    private confirmation: ConfirmationProvider
   ) {
     this.newStudy = newAttr === '';
   }
@@ -88,23 +90,27 @@ export class StudyEditorComponent implements OnInit {
   }
 
   delete() {
-    this.sending = true;
-    this.studiesProvider.delete(this.editedStudy.id)
-      .finally(() => this.sending = false)
-      .catch((error, caught) => {
-        if (error.message) {
-          this.toast.show(`Study deletion failed: ${error.message}`, true);
-          return Observable.empty();
-        }
+    this.confirmation.confirm('Really delete?').subscribe(confirmed => {
+      if (!confirmed) return;
 
-        return Observable.throw(error);
-      })
-      .subscribe(() => {
-        this.sending = false;
-        // XXX: Workaround for weird animation/transition-interference:
-        // https://stackoverflow.com/questions/49651265/transition-right-after-animation?noredirect=1#comment86310950_49651265
-        setTimeout(() => this.deleted = true, 0);
-      });
+      this.sending = true;
+      this.studiesProvider.delete(this.editedStudy.id)
+        .finally(() => this.sending = false)
+        .catch((error, caught) => {
+          if (error.message) {
+            this.toast.show(`Study deletion failed: ${error.message}`, true);
+            return Observable.empty();
+          }
+
+          return Observable.throw(error);
+        })
+        .subscribe(() => {
+          this.sending = false;
+          // XXX: Workaround for weird animation/transition-interference:
+          // https://stackoverflow.com/questions/49651265/transition-right-after-animation?noredirect=1#comment86310950_49651265
+          setTimeout(() => this.deleted = true, 0);
+        });
+    });
   }
 
   isAltered(): boolean {
