@@ -7,36 +7,7 @@
 <ion-content>
   <ion-slides #slides pager *ngIf="questions && questions.length > 0">
     <ion-slide *ngFor="let question of questions; let i = index">
-      <h2>{{question.content}}</h2>
-      <ion-item *ngIf="question.answerType !== AnswerType.MultipleChoice">
-        <ion-input *ngIf="question.answerType === AnswerType.Text"
-          [(ngModel)]="answers[i].content" required placeholder="..."></ion-input>
-        <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous"
-          [(ngModel)]="answers[i].content" [min]="question.answerRange.min" [max]="question.answerRange.max" required>
-          <ion-label range-left>
-            {{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}
-          </ion-label>
-          <ion-label range-right>
-            {{question.answerLabels ? question.answerLabels[1] : question.answerRange.max}}
-          </ion-label>
-        </continuous-range>
-        <ion-range *ngIf="question.answerType === AnswerType.RangeDiscrete"
-          [min]="question.answerRange.min" [max]="question.answerRange.max" step="1" snaps="true" pin="true"
-          [(ngModel)]="answers[i].content" required>
-          <ion-label range-left>{{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}</ion-label>
-          <!-- XXX: What about intermediate labels? -->
-          <ion-label range-right>
-            {{question.answerLabels ? question.answerLabels[question.answerLabels.length - 1] : question.answerRange.max}}
-          </ion-label>
-        </ion-range>
-      </ion-item>
-      <ion-list radio-group *ngIf="question.answerType === AnswerType.MultipleChoice"
-        [(ngModel)]="answers[i].content">
-        <ion-item *ngFor="let option of question.answerLabels; let i = index">
-          <ion-label>{{option}}</ion-label>
-          <ion-radio [value]="i.toString()"></ion-radio>
-        </ion-item>
-      </ion-list>
+      <question-posing [question]="question" [answer]="answers[i]"></question-posing>
 
       <ion-fab bottom right>
         <button ion-fab (click)="slides.slideNext()" [disabled]="!isValidAnswer(answers[i].content)">
@@ -56,7 +27,7 @@
   <centrizer *ngIf="questions && questions.length === 0" class="no-questions" padding>
     <ion-icon class="icon" name="checkmark"></ion-icon>
     <p>There are no questions at the moment.</p>
-    <p *ngIf="nextDue">Next ones coming up {{nextDue.fromNow()}} (at {{nextDue.format('HH:mm')}})</p>
+    <p *ngIf="nextDue">Next coming up {{nextDue.fromNow()}} (at {{nextDue.format('HH:mm')}})</p>
   </centrizer>
 
   <centrizer *ngIf="!questions">

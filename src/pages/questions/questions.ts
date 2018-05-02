@@ -18,8 +18,6 @@ import { ToastProvider } from '../../providers/toast/toast';
 })
 export class QuestionsPage implements OnInit {
 
-  AnswerType = AnswerType;
-
   private scheduleManager: ScheduleManager;
 
   questions: Question[];

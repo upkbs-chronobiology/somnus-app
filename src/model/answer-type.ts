@@ -4,5 +4,6 @@ export enum AnswerType {
   RangeContinuous = 'range-continuous',
   // [min, max] over ℕ
   RangeDiscrete = 'range-discrete',
-  MultipleChoice = 'multiple-choice'
+  MultipleChoiceSingle = 'multiple-choice-single',
+  MultipleChoiceMany = 'multiple-choice-many'
 }

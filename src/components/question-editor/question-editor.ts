@@ -16,14 +16,14 @@ import { ToastProvider } from '../../providers/toast/toast';
   templateUrl: 'question-editor.html'
 })
 export class QuestionEditorComponent {
-  AnswerType = AnswerType;
 
   answerTypes: AnswerType[] = Object.keys(AnswerType).map(key => AnswerType[key]);
   answerTypeLabels = {
     [AnswerType.Text]: 'Text',
     [AnswerType.RangeContinuous]: 'Continuous range',
     [AnswerType.RangeDiscrete]: 'Discrete range',
-    [AnswerType.MultipleChoice]: 'Multiple choice'
+    [AnswerType.MultipleChoiceSingle]: 'Multiple choice (single)',
+    [AnswerType.MultipleChoiceMany]: 'Multiple choice (many)'
   };
 
   questionnaires: Questionnaire[];
@@ -64,6 +64,10 @@ export class QuestionEditorComponent {
     questionnairesProvider.listAll().subscribe(list => this.questionnaires = list);
   }
 
+  editedIsMultipleChoice(): boolean {
+    return [AnswerType.MultipleChoiceSingle, AnswerType.MultipleChoiceMany].indexOf(this.editedQuestion.answerType) >= 0;
+  }
+
   getRangePoints(): number {
     return Math.max(this.editedQuestion.answerRange.max - this.editedQuestion.answerRange.min + 1, 0);
   }
@@ -77,7 +81,8 @@ export class QuestionEditorComponent {
       q.answerRange = q.answerType === AnswerType.RangeContinuous ? new InclusiveRange(0, 1) : new InclusiveRange(1, 10);
 
     switch (q.answerType) {
-      case AnswerType.MultipleChoice:
+      case AnswerType.MultipleChoiceSingle:
+      case AnswerType.MultipleChoiceMany:
         if (!q.answerLabels || q.answerLabels.length === 0)
           q.answerLabels = [''];
         break;
@@ -145,7 +150,8 @@ export class QuestionEditorComponent {
 
   requiredMissing(): boolean {
     return !this.editedQuestion.content || !this.editedQuestion.answerType ||
-      this.editedQuestion.answerType === AnswerType.MultipleChoice && this.editedQuestion.answerLabels.indexOf('') >= 0;
+      [AnswerType.MultipleChoiceSingle, AnswerType.MultipleChoiceMany].indexOf(this.editedQuestion.answerType) >= 0 &&
+      this.editedQuestion.answerLabels.indexOf('') >= 0;
   }
 
   close(deliverResult: boolean = true) {

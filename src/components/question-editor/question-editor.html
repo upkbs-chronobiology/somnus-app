@@ -41,7 +41,8 @@
     <ion-list-header>
       Answer labels
       <ion-buttons item-end>
-        <button ion-button round icon-only clear *ngIf="editedQuestion.answerType === AnswerType.MultipleChoice"
+        <button ion-button round icon-only clear 
+          *ngIf="editedIsMultipleChoice()"
           (click)="editedQuestion.answerLabels.push('')">
           <ion-icon name="add"></ion-icon>
         </button>
@@ -50,11 +51,11 @@
 
     <ion-item *ngFor="let option of editedQuestion.answerLabels; let i = index; trackBy: trackLabelFor">
       <ion-input [(ngModel)]="editedQuestion.answerLabels[i]" placeholder="Label {{i + 1}}"
-        [required]="editedQuestion.answerType === AnswerType.MultipleChoice">
+        [required]="editedIsMultipleChoice()">
       </ion-input>
       <ion-buttons item-end>
         <button ion-button small round icon-only clear color="secondary"
-          *ngIf="editedQuestion.answerType === AnswerType.MultipleChoice" (click)="editedQuestion.answerLabels.splice(i, 1)">
+          *ngIf="editedIsMultipleChoice()" (click)="editedQuestion.answerLabels.splice(i, 1)">
           <ion-icon name="remove-circle"></ion-icon>
         </button>
       </ion-buttons>

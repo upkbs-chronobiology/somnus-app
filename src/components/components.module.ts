@@ -9,6 +9,7 @@ import { UserEditorComponent } from './user-editor/user-editor';
 import { UserPickerComponent } from './user-picker/user-picker';
 import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnaire-editor';
 import { ScheduleEditorComponent } from './schedule-editor/schedule-editor';
+import { QuestionPosingComponent } from './question-posing/question-posing';
 
 @NgModule({
   declarations: [LoginComponent,
@@ -19,7 +20,8 @@ import { ScheduleEditorComponent } from './schedule-editor/schedule-editor';
     UserEditorComponent,
     UserPickerComponent,
     QuestionnaireEditorComponent,
-    ScheduleEditorComponent],
+    ScheduleEditorComponent,
+    QuestionPosingComponent],
   imports: [
     IonicModule,
   ],
@@ -31,7 +33,8 @@ import { ScheduleEditorComponent } from './schedule-editor/schedule-editor';
     UserEditorComponent,
     UserPickerComponent,
     QuestionnaireEditorComponent,
-    ScheduleEditorComponent],
+    ScheduleEditorComponent,
+    QuestionPosingComponent],
   entryComponents: [LoginComponent,
     UserPickerComponent]
 })
