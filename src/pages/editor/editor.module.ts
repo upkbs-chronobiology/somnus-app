@@ -7,6 +7,7 @@ import { QuestionnaireEditorComponent } from '../../components/questionnaire-edi
 import { QuestionnairesEditorPage } from './questionnaires-editor/questionnaires-editor';
 import { QuestionsEditorPage } from './questions-editor/questions-editor';
 import { ScheduleEditorComponent } from '../../components/schedule-editor/schedule-editor';
+import { SchedulesEditorComponent } from './schedules-editor/schedules-editor';
 import { StudiesEditorPage } from './studies-editor/studies-editor';
 import { StudyEditorComponent } from '../../components/study-editor/study-editor';
 import { UsersEditorPage } from './users-editor/users-editor';
@@ -18,7 +19,8 @@ import { UsersEditorPage } from './users-editor/users-editor';
     QuestionsEditorPage,
     StudiesEditorPage,
     UsersEditorPage,
-    QuestionnairesEditorPage
+    QuestionnairesEditorPage,
+    SchedulesEditorComponent
   ],
   imports: [
     IonicPageModule.forChild(EditorPage),
@@ -32,6 +34,7 @@ import { UsersEditorPage } from './users-editor/users-editor';
     StudyEditorComponent,
     QuestionnairesEditorPage,
     QuestionnaireEditorComponent,
+    SchedulesEditorComponent,
     ScheduleEditorComponent
   ]
 })

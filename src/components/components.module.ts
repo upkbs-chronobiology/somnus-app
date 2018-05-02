@@ -4,12 +4,12 @@ import { IonicModule } from 'ionic-angular';
 import { LoginComponent } from './login/login';
 import { NgModule } from '@angular/core';
 import { QuestionEditorComponent } from './question-editor/question-editor';
+import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnaire-editor';
+import { QuestionPosingComponent } from './question-posing/question-posing';
+import { ScheduleEditorComponent } from './schedule-editor/schedule-editor';
 import { StudyEditorComponent } from './study-editor/study-editor';
 import { UserEditorComponent } from './user-editor/user-editor';
 import { UserPickerComponent } from './user-picker/user-picker';
-import { QuestionnaireEditorComponent } from './questionnaire-editor/questionnaire-editor';
-import { ScheduleEditorComponent } from './schedule-editor/schedule-editor';
-import { QuestionPosingComponent } from './question-posing/question-posing';
 
 @NgModule({
   declarations: [LoginComponent,

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Schedules of
+      <strong>{{questionnaire.name}}</strong>
+    </ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="questionnaire.studyId; else noStudy">
+    <ion-list-header>Participant schedules</ion-list-header>
+
+    <ng-container *ngIf="participants; else participantsLoading">
+      <button ion-item *ngFor="let participant of participants" (click)="editSchedule(participant)">
+        <ion-label item-start>{{ participant.name }}</ion-label>
+        <p item-content *ngIf="getScheduleFor(participant) as schedule; else noParticipant">
+          {{ schedule.startDate }} - {{ schedule.endDate }}, {{ schedule.startTime }} - {{ schedule.endTime
+          }}, {{ schedule.frequency }}⨉
+        </p>
+        <ng-template #noParticipant>
+          <ion-label>
+            <i>No schedule</i>
+          </ion-label>
+        </ng-template>
+      </button>
+      <ion-item *ngIf="!participants.length">
+        <i>No participants</i>
+      </ion-item>
+    </ng-container>
+
+    <ng-template #participantsLoading>
+      <ion-item>
+        <centrizer>
+          <ion-spinner></ion-spinner>
+        </centrizer>
+      </ion-item>
+    </ng-template>
+  </ion-list>
+
+  <ng-template #noStudy>
+    This questionnaire has no study attached, therefore no participants and no schedules
+  </ng-template>
+</ion-content>

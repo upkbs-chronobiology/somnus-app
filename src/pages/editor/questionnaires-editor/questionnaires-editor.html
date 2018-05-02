@@ -2,10 +2,14 @@
   <ng-container *ngIf="questionnaires; else loadingIndicator">
     <i *ngIf="!questionnaires.length">No questionnaires yet</i>
 
-    <button ion-item *ngFor="let questionnaire of questionnaires; let i = index" (click)="edit(i)">
+    <ion-item *ngFor="let questionnaire of questionnaires; let i = index">
       <p item-start>{{questionnaire.id}}</p>
-      <ion-label>{{questionnaire.name}}</ion-label>
-    </button>
+      <ion-label tappable (click)="edit(i)">{{questionnaire.name}}</ion-label>
+      <button ion-button item-end icon-start *ngIf="questionnaire.studyId" (click)="editSchedules(questionnaire)">
+        <ion-icon name="calendar" class="hide-sm"></ion-icon>
+        <span>Schedules</span>
+      </button>
+    </ion-item>
 
     <ion-fab bottom right>
       <button ion-fab (click)="create()">

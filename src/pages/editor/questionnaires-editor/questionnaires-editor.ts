@@ -3,6 +3,7 @@ import { ModalController } from 'ionic-angular';
 import { Questionnaire } from '../../../model/questionnaire';
 import { QuestionnaireEditorComponent } from '../../../components/questionnaire-editor/questionnaire-editor';
 import { QuestionnairesProvider } from '../../../providers/questionnaires/questionnaires';
+import { SchedulesEditorComponent } from '../schedules-editor/schedules-editor';
 
 @Component({
   selector: 'page-questionnaires-editor',
@@ -43,5 +44,11 @@ export class QuestionnairesEditorPage {
       else this.questionnaires.splice(index, 1);
     });
     overlay.present();
+  }
+
+  editSchedules(questionnaire: Questionnaire) {
+    this.modal.create(SchedulesEditorComponent, {
+      questionnaire: questionnaire
+    }).present();
   }
 }

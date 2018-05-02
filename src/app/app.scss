@@ -48,3 +48,9 @@ ion-navbar button,
 .bar-button-md[icon-only] {
   padding: 0 0.5em;
 }
+
+.hide-sm {
+  @media screen and (max-width: map-get($grid-max-widths, sm)) {
+    display: none;
+  }
+}
