@@ -106,7 +106,7 @@ export class QuestionsPage implements OnInit {
     this.submitting = true;
     this.answersProvider.sendAll(this.answers).subscribe(createdAnswers => {
       this.submitting = false;
-      this.toast.show(`${createdAnswers.length} answers successfully submitted`);
+      this.toast.show(`${createdAnswers.length} answer(s) successfully submitted`);
       this.loadQuestions();
     }, error => {
       this.submitting = false;

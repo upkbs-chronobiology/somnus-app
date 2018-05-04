@@ -73,10 +73,10 @@ export class AuthRestProvider {
     return Observable.empty();
   }
 
-  private fetchResponse(
+  private fetchResponse<T>(
     method: string, endpoint: string, authenticate: boolean = true, options = {}
-  ): Observable<HttpResponse<Object>> {
-    const loginAndRetry = () => this.logIn().concatMap(() => this.fetchResponse(method, endpoint, authenticate, options));
+  ): Observable<HttpResponse<T>> {
+    const loginAndRetry: () => Observable<HttpResponse<T>> = () => this.logIn().concatMap(() => this.fetchResponse(method, endpoint, authenticate, options));
 
     if (authenticate && !this.authToken)
       return loginAndRetry();
@@ -104,15 +104,19 @@ export class AuthRestProvider {
     });
   }
 
-  private fetchBody(
+  private fetchBody<T>(
     method: string, endpoint: string, authenticate: boolean = true, options = {}
-  ): Observable<Object> {
+  ): Observable<T> {
     return this.fetchResponse(method, endpoint, authenticate, options)
-      .concatMap(response => Observable.of(response.body));
+      .concatMap((response: HttpResponse<T>) => Observable.of(response.body));
   }
 
   public get(endpoint: string, authenticate: boolean = true): Observable<Object> {
     return ensure(this.fetchBody(GET, endpoint, authenticate));
+  }
+
+  public getBlob(endpoint: string, authenticate: boolean = true): Observable<Blob> {
+    return ensure(this.fetchBody(GET, endpoint, authenticate, { responseType: 'blob' }));
   }
 
   public post(endpoint: string, body: any): Observable<Object> {

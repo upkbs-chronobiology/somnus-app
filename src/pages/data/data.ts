@@ -1,9 +1,8 @@
-import { Answer } from '../../model/answer';
-import { AnswersProvider } from '../../providers/answers/answers';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Question } from '../../model/question';
-import { QuestionsProvider } from '../../providers/questions/questions';
+import { DataProvider } from '../../providers/data/data';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { StudiesProvider } from '../../providers/studies/studies';
+import { Study } from '../../model/study';
 
 @Component({
   selector: 'page-data',
@@ -11,24 +10,32 @@ import { QuestionsProvider } from '../../providers/questions/questions';
 })
 export class DataPage {
 
-  answers: Answer[];
-  questions: Question[];
+  studies: Study[];
+  studyToExport: Study;
+  blobUrl: SafeUrl;
 
-  constructor(answersProvider: AnswersProvider, questionsProvider: QuestionsProvider) {
-    const answerObservable = answersProvider.listAll();
-    const questionsObservable = questionsProvider.listAll();
-    // make sure we have both results before assigning them
-    Observable.combineLatest(answerObservable, questionsObservable)
-      .subscribe((results: [Answer[], Question[]]) => {
-        this.answers = results[0];
-        this.questions = results[1];
-      });
+  loading: boolean;
+
+  constructor(
+    studiesProvider: StudiesProvider,
+    private data: DataProvider,
+    private domSanitizer: DomSanitizer
+  ) {
+    studiesProvider.listAll().subscribe(s => this.studies = s);
   }
 
   ionViewDidLoad() {
   }
 
-  getAnswersTo(question: Question) {
-    return this.answers.filter(a => a.questionId === question.id);
+  fetch(study: Study) {
+    this.loading = true;
+    this.data.fetch(study.id).subscribe(blob => {
+      this.loading = false;
+      this.blobUrl = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+    });
+  }
+
+  flush() {
+    delete this.blobUrl;
   }
 }

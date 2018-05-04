@@ -23,6 +23,7 @@ import { StudiesProvider } from '../providers/studies/studies';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
+import { DataProvider } from '../providers/data/data';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { UsersProvider } from '../providers/users/users';
     QuestionnairesProvider,
     ConfirmationProvider,
     SchedulesProvider,
+    DataProvider,
   ]
 })
 export class AppModule { }
