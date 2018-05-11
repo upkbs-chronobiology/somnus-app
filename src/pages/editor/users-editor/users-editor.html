@@ -1,5 +1,8 @@
-<ion-content padding>
-  <user-editor *ngFor="let user of users" [user]="user"></user-editor>
+<ion-content>
+  <button ion-item *ngFor="let user of users" (click)="edit(user)">
+    <ion-label>{{user.name}}</ion-label>
+    <ion-badge item-end>{{user.role}}</ion-badge>
+  </button>
 
   <ion-fab bottom right>
     <button ion-fab (click)="createUser()">

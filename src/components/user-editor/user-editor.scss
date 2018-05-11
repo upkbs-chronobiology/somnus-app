@@ -5,4 +5,14 @@ user-editor {
     pointer-events: none;
     animation: pulsate 2*$medium-transition-duration linear infinite;
   }
+
+  .token {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    font-weight: bold;
+    background-color: transparentize($primary, 0.75);
+    padding: 0.5ex;
+  }
 }

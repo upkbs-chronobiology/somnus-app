@@ -1,9 +1,10 @@
-import { AlertController } from 'ionic-angular';
+import { AlertController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs';
 import { ToastProvider } from '../../../providers/toast/toast';
 import { User } from '../../../model/user';
+import { UserEditorComponent } from '../../../components/user-editor/user-editor';
 import { UsersProvider } from '../../../providers/users/users';
 
 @Component({
@@ -17,12 +18,19 @@ export class UsersEditorPage {
   constructor(
     private usersProvider: UsersProvider,
     private alertController: AlertController,
+    private modal: ModalController,
     private toast: ToastProvider
   ) {
     usersProvider.listAll().subscribe(users => this.users = users);
   }
 
   ionViewDidLoad() {
+  }
+
+  edit(user: User) {
+    this.modal.create(UserEditorComponent, {
+      user: user
+    }).present();
   }
 
   createUser() {

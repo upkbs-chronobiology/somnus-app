@@ -1,7 +1,27 @@
-<ion-item>
-  <ion-label>{{user.name}}</ion-label>
-  <ion-select class="role" item-end interface="popover" [(ngModel)]="user.role" (ionChange)="onChange()">
-    <ion-option></ion-option>
-    <ion-option *ngFor="let role of roles" [value]="role">{{role}}</ion-option>
-  </ion-select>
-</ion-item>
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{user.name}}</ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label>Role</ion-label>
+    <ion-select class="role" item-end interface="popover" [(ngModel)]="user.role" (ionChange)="onChange()"
+      [disabled]="!currentUserIsAdmin">
+      <ion-option></ion-option>
+      <ion-option *ngFor="let role of roles" [value]="role">{{role}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <h4>Password reset</h4>
+
+  <button ion-button block *ngIf="!pwReset && !loadingReset" [disabled]="userIsEditor && !currentUserIsAdmin"
+    (click)="generatePwResetToken()">Generate new token</button>
+  <ion-spinner *ngIf="loadingReset" color="primary"></ion-spinner>
+  <p *ngIf="pwReset">
+    Token:
+    <code class="token">{{pwReset.token}}</code> (expires {{fromNow(pwReset.expiry)}})
+  </p>
+</ion-content>

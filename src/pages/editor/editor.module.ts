@@ -10,6 +10,7 @@ import { ScheduleEditorComponent } from '../../components/schedule-editor/schedu
 import { SchedulesEditorComponent } from './schedules-editor/schedules-editor';
 import { StudiesEditorPage } from './studies-editor/studies-editor';
 import { StudyEditorComponent } from '../../components/study-editor/study-editor';
+import { UserEditorComponent } from '../../components/user-editor/user-editor';
 import { UsersEditorPage } from './users-editor/users-editor';
 
 
@@ -30,6 +31,7 @@ import { UsersEditorPage } from './users-editor/users-editor';
     QuestionsEditorPage,
     StudiesEditorPage,
     UsersEditorPage,
+    UserEditorComponent,
     QuestionEditorComponent,
     StudyEditorComponent,
     QuestionnairesEditorPage,

@@ -1,6 +1,10 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import * as moment from 'moment';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { Component, HostBinding } from '@angular/core';
 import { enumAsArray } from '../../util/enums';
+import { NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { PwReset } from '../../model/pw-reset';
 import { Role } from '../../model/role';
 import { ToastProvider } from '../../providers/toast/toast';
 import { User } from '../../model/user';
@@ -12,15 +16,28 @@ import { UsersProvider } from '../../providers/users/users';
 })
 export class UserEditorComponent {
 
+  currentUserIsAdmin: boolean;
+  userIsEditor: boolean;
+
   @HostBinding('class.saving')
   saving: boolean;
 
-  @Input()
   user: User;
+  pwReset: PwReset;
+  loadingReset: boolean;
 
   roles: string[] = enumAsArray(Role);
 
-  constructor(private usersProvider: UsersProvider, private toast: ToastProvider) {
+  constructor(
+    private usersProvider: UsersProvider,
+    private toast: ToastProvider,
+    auth: AuthenticationProvider,
+    private view: ViewController,
+    params: NavParams,
+  ) {
+    this.currentUserIsAdmin = auth.userIsAdmin();
+    this.user = params.data.user;
+    this.userIsEditor = auth.userCanEdit(this.user);
   }
 
   onChange() {
@@ -32,5 +49,21 @@ export class UserEditorComponent {
       }).subscribe(() => {
         this.saving = false;
       });
+  }
+
+  generatePwResetToken() {
+    this.loadingReset = true;
+    this.usersProvider.generatePwResetToken(this.user).subscribe(pwReset => {
+      this.loadingReset = false;
+      this.pwReset = pwReset;
+    });
+  }
+
+  close() {
+    this.view.dismiss();
+  }
+
+  fromNow(timestamp: number): string {
+    return moment(timestamp).fromNow();
   }
 }
