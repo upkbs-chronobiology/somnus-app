@@ -27,7 +27,7 @@ export class UserEditorComponent {
     this.saving = true;
     this.usersProvider.update(this.user)
       .catch((error, caught) => {
-        this.toast.show(`Failed to update user "${this.user.name}: ${error.message || error}"`, true);
+        this.toast.show(`Failed to update user "${this.user.name}": ${error.message || error}`, true);
         return Observable.throw(caught);
       }).subscribe(() => {
         this.saving = false;

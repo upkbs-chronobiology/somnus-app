@@ -16,4 +16,8 @@ export class UsersProvider {
   update(user: User): Observable<any> {
     return this.rest.put(`users/${user.id}`, user);
   }
+
+  create(user: User): Observable<User> {
+    return this.rest.post('users', user).map(u => u as User);
+  }
 }
