@@ -16,8 +16,14 @@
       <ion-input type="password" [(ngModel)]="credentials.password" name="password" required [minlength]="PW_MIN_LENGTH"></ion-input>
     </ion-item>
 
+    <ion-item *ngIf="registration">
+      <ion-label>Password confirmation</ion-label>
+      <ion-input type="password" [(ngModel)]="pwConfirmation" name="pwConfirmation" required [minlength]="PW_MIN_LENGTH"></ion-input>
+    </ion-item>
+
     <button *ngIf="!registration" ion-button type="submit" [disabled]="!form.valid" block>Log in</button>
-    <button *ngIf="registration" ion-button type="submit" [disabled]="!form.valid" block color="secondary">Create account</button>
+    <button *ngIf="registration" ion-button type="submit" [disabled]="!form.valid || !passwordsMatch()"
+      block color="secondary">Create account</button>
   </form>
 
   <button ion-button color="light" (click)="registration = !registration">

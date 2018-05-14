@@ -17,6 +17,7 @@ export class LoginComponent {
 
   public registration = false;
   public readonly credentials = new Credentials('', '');
+  public pwConfirmation: string;
 
   constructor(
     private authentication: AuthenticationProvider,
@@ -54,5 +55,9 @@ export class LoginComponent {
 
   resetPassword() {
     this.modal.create(ResetPasswordComponent).present();
+  }
+
+  passwordsMatch(): boolean {
+    return this.credentials.password === this.pwConfirmation;
   }
 }

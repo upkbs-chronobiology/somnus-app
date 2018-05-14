@@ -20,6 +20,7 @@ export class ResetPasswordComponent {
   tokenError: string;
 
   password: string;
+  pwConfirmation: string;
   submitting: boolean;
   resetSuccess: boolean;
 
@@ -51,5 +52,9 @@ export class ResetPasswordComponent {
 
   close() {
     this.view.dismiss();
+  }
+
+  passwordsMatch(): boolean {
+    return this.password === this.pwConfirmation;
   }
 }
