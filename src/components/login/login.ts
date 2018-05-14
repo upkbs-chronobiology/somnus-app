@@ -1,14 +1,19 @@
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component } from '@angular/core';
 import { Credentials } from '../../model/credentials';
-import { ViewController } from 'ionic-angular';
+import { ModalController, ViewController } from 'ionic-angular';
+import { ResetPasswordComponent } from '../reset-password/reset-password';
 import { ToastProvider } from '../../providers/toast/toast';
+
+export const PW_MIN_LENGTH = 8;
 
 @Component({
   selector: 'login',
   templateUrl: 'login.html'
 })
 export class LoginComponent {
+
+  readonly PW_MIN_LENGTH = PW_MIN_LENGTH;
 
   public registration = false;
   public readonly credentials = new Credentials('', '');
@@ -17,6 +22,7 @@ export class LoginComponent {
     private authentication: AuthenticationProvider,
     private view: ViewController,
     private toast: ToastProvider,
+    private modal: ModalController,
   ) {
   }
 
@@ -44,5 +50,9 @@ export class LoginComponent {
 
   private showToast(message: string, success: boolean) {
     this.toast.show(message, !success);
+  }
+
+  resetPassword() {
+    this.modal.create(ResetPasswordComponent).present();
   }
 }

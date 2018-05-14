@@ -33,6 +33,10 @@ export class RestProvider {
     });
   }
 
+  public get(endpoint: string): Observable<Object> {
+    return ensure(this.fetchResponse('get', endpoint)).map(r => r.body);
+  }
+
   public post(endpoint: string, body: any): Observable<Object> {
     return ensure(this.fetchResponse('post', endpoint, {
       body: body

@@ -1,20 +1,32 @@
-<form #form="ngForm" (ngSubmit)="submit()">
-  <ion-item>
-    <ion-label>Username</ion-label>
-    <ion-input type="text" [(ngModel)]="credentials.name" name="name" required></ion-input>
-  </ion-item>
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
 
-  <ion-item>
-    <ion-label>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="credentials.password" name="password" required minlength="8"></ion-input>
-  </ion-item>
+<ion-content padding>
+  <form #form="ngForm" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input type="text" [(ngModel)]="credentials.name" name="name" required></ion-input>
+    </ion-item>
 
-  <button *ngIf="!registration" ion-button type="submit" [disabled]="!form.valid" block>Log in</button>
-  <button *ngIf="registration" ion-button type="submit" [disabled]="!form.valid" block color="secondary">Create account</button>
-</form>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="credentials.password" name="password" required [minlength]="PW_MIN_LENGTH"></ion-input>
+    </ion-item>
 
-<button ion-button color="light" (click)="registration = !registration">
-  <ng-container *ngIf="!registration">No account yet? Register</ng-container>
-  <ng-container *ngIf="registration">Already registered? Log in</ng-container>
-  <ion-icon name="arrow-forward" class="switch-button-icon"></ion-icon>
-</button>
+    <button *ngIf="!registration" ion-button type="submit" [disabled]="!form.valid" block>Log in</button>
+    <button *ngIf="registration" ion-button type="submit" [disabled]="!form.valid" block color="secondary">Create account</button>
+  </form>
+
+  <button ion-button color="light" (click)="registration = !registration">
+    <ng-container *ngIf="!registration">No account yet? Register</ng-container>
+    <ng-container *ngIf="registration">Already registered? Log in</ng-container>
+    <ion-icon name="arrow-forward" class="switch-button-icon"></ion-icon>
+  </button>
+
+  <hr>
+
+  <button ion-button clear (click)="resetPassword()">I have a token</button>
+</ion-content>

@@ -71,4 +71,14 @@ export class AuthenticationProvider {
   forgetUser() {
     this.currentUser = null;
   }
+
+  getUserForToken(token: String): Observable<User> {
+    return this.rest.get(`auth/password/reset/${token}/user`).map(u => u as User);
+  }
+
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.rest.post(`auth/password/reset/${token}`, {
+      password: password
+    });
+  }
 }
