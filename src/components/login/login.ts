@@ -19,6 +19,8 @@ export class LoginComponent {
   public readonly credentials = new Credentials('', '');
   public pwConfirmation: string;
 
+  submitting: boolean;
+
   constructor(
     private authentication: AuthenticationProvider,
     private view: ViewController,
@@ -28,25 +30,30 @@ export class LoginComponent {
   }
 
   public submit() {
+    this.submitting = true;
     if (this.registration) this.register();
     else this.login();
   }
 
   private register() {
     // currently works because particulars have the same form as credentials
-    this.authentication.register(this.credentials).subscribe(() => {
-      this.showToast('Registration successful', true);
-      this.registration = false;
-    },
-      error => this.showToast('Registration failed', false));
+    this.authentication.register(this.credentials)
+      .finally(() => this.submitting = false)
+      .subscribe(() => {
+        this.showToast('Registration successful', true);
+        this.registration = false;
+      },
+        error => this.showToast('Registration failed', false));
   }
 
   private login() {
-    this.authentication.login(this.credentials).subscribe((token: string) => {
-      this.showToast('Login successful', true);
-      this.view.dismiss(token);
-    },
-      error => this.showToast('Login failed', false));
+    this.authentication.login(this.credentials)
+      .finally(() => this.submitting = false)
+      .subscribe((token: string) => {
+        this.showToast('Login successful', true);
+        this.view.dismiss(token);
+      },
+        error => this.showToast('Login failed', false));
   }
 
   private showToast(message: string, success: boolean) {

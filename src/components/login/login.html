@@ -6,24 +6,30 @@
 
 <ion-content padding>
   <form #form="ngForm" (ngSubmit)="submit()">
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" [(ngModel)]="credentials.name" name="name" required></ion-input>
-    </ion-item>
+    <div class="form-fields">
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input type="text" [(ngModel)]="credentials.name" name="name" required></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="credentials.password" name="password" required [minlength]="PW_MIN_LENGTH"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="credentials.password" name="password" required [minlength]="PW_MIN_LENGTH"></ion-input>
+      </ion-item>
 
-    <ion-item *ngIf="registration">
-      <ion-label floating>Password confirmation</ion-label>
-      <ion-input type="password" [(ngModel)]="pwConfirmation" name="pwConfirmation" required [minlength]="PW_MIN_LENGTH"></ion-input>
-    </ion-item>
+      <ion-item *ngIf="registration">
+        <ion-label floating>Password confirmation</ion-label>
+        <ion-input type="password" [(ngModel)]="pwConfirmation" name="pwConfirmation" required [minlength]="PW_MIN_LENGTH"></ion-input>
+      </ion-item>
+    </div>
 
-    <button *ngIf="!registration" ion-button type="submit" [disabled]="!form.valid" block>Log in</button>
-    <button *ngIf="registration" ion-button type="submit" [disabled]="!form.valid || !passwordsMatch()"
+    <button *ngIf="!registration && !submitting" ion-button type="submit" [disabled]="!form.valid"
+      block>Log in</button>
+    <button *ngIf="registration && !submitting" ion-button type="submit" [disabled]="!form.valid || !passwordsMatch()"
       block color="secondary">Create account</button>
+    <centrizer [vertical]="false" *ngIf="submitting">
+      <ion-spinner [color]="registration ? 'secondary' : 'primary'"></ion-spinner>
+    </centrizer>
   </form>
 
   <button ion-button color="light" (click)="registration = !registration" class="register-toggle">

@@ -1,6 +1,7 @@
 import { ApplicationModule } from '@angular/core';
 import { async, ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { CentrizerComponent } from '../centrizer/centrizer';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ViewController } from 'ionic-angular';
 import { LoginComponent } from './login';
@@ -15,7 +16,8 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        LoginComponent
+        LoginComponent,
+        CentrizerComponent
       ],
       imports: [
         ApplicationModule,

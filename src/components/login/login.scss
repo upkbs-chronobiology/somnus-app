@@ -1,6 +1,10 @@
 login {
   padding: $content-padding;
 
+  .form-fields {
+    margin-bottom: 1em;
+  }
+
   .switch-button-icon {
     margin-left: 0.5ex;
   }
