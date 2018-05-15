@@ -32,7 +32,7 @@
     </centrizer>
   </form>
 
-  <button ion-button color="light" (click)="registration = !registration" class="register-toggle">
+  <button ion-button clear color="dark" (click)="registration = !registration" class="register-toggle">
     <ng-container *ngIf="!registration">No account yet? Register</ng-container>
     <ng-container *ngIf="registration">Already registered? Log in</ng-container>
     <ion-icon name="arrow-forward" class="switch-button-icon"></ion-icon>
