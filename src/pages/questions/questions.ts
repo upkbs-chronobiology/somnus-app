@@ -5,6 +5,7 @@ import { AnswerType } from '../../model/answer-type';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { InclusiveRange } from '../../model/inclusive-range';
 import { Moment } from 'moment';
+import { Observable } from 'rxjs/Observable';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Prompt, ScheduleManager } from '../../util/schedule-manager';
 import { Question } from '../../model/question';
@@ -23,6 +24,7 @@ export class QuestionsPage implements OnInit {
   questions: Question[];
   answers: Answer[];
   nextDue: Moment;
+  promptBacklog: Prompt[] = [];
 
   submitting: boolean = false;
 
@@ -45,28 +47,48 @@ export class QuestionsPage implements OnInit {
   private loadQuestions() {
     delete this.questions;
 
-    const recent = this.scheduleManager.mostRecentDue();
-    const next = this.scheduleManager.nextDue();
-    if (!recent) {
-      this.noneDueUntil(next);
+    const recents = this.scheduleManager.mostRecentsDue();
+    if (!recents.length) {
+      this.noneDue();
       return;
     }
-    this.answersProvider.listMineByQuestionnaire(recent.schedule.questionnaireId).subscribe(answers => {
-      if (!answers.length) {
-        this.prepareQuestions(recent);
-        return;
-      }
-      const sorted = answers.sort((a, b) => a.created - b.created);
-      const latestAnswer = moment(sorted[sorted.length - 1].created);
-      if (latestAnswer > recent.moment)
-        this.noneDueUntil(next);
-      else
-        this.prepareQuestions(recent);
-    });
+
+    Observable.from(recents).flatMap(recent =>
+      this.answersProvider.listMineByQuestionnaire(recent.schedule.questionnaireId)
+        .map(answers => this.hasAnswer(recent, answers) ? null : recent))
+      .filter(recent => !!recent)
+      .toArray()
+      .subscribe(unansweredRecents => {
+        if (!unansweredRecents.length)
+          this.noneDue();
+        else {
+          this.promptBacklog = unansweredRecents;
+          this.consumeBacklog();
+        }
+      });
   }
 
-  private noneDueUntil(next: Prompt) {
+  private hasAnswer(recent: Prompt, answers: Answer[]): boolean {
+    if (!answers.length) return false;
+
+    const sorted = answers.sort((a, b) => a.created - b.created);
+    const latestAnswer = moment(sorted[sorted.length - 1].created);
+    return latestAnswer > recent.moment;
+  }
+
+  private consumeBacklog() {
+    if (!this.promptBacklog.length) {
+      this.loadQuestions();
+      return;
+    }
+
+    this.prepareQuestions(this.promptBacklog.shift());
+  }
+
+  private noneDue() {
     this.questions = [];
+
+    const next = this.scheduleManager.nextDue();
     if (!next) return;
 
     this.nextDue = next.moment;
@@ -88,14 +110,15 @@ export class QuestionsPage implements OnInit {
         const answer = new Answer(null, q.id);
         // default sliders to center
         if (q.answerType === AnswerType.RangeContinuous) answer.content = this.rangeCenter(q.answerRange).toString();
-        if (q.answerType === AnswerType.RangeDiscrete) answer.content = this.rangeCenter(q.answerRange).toString();
+        if (q.answerType === AnswerType.RangeDiscrete) answer.content = this.rangeCenter(q.answerRange, true).toString();
         return answer;
       });
     });
   }
 
-  rangeCenter(range: InclusiveRange): number {
-    return (range.max - range.min) / 2 + range.min;
+  rangeCenter(range: InclusiveRange, round: boolean = false): number {
+    const mean = (range.max - range.min) / 2 + range.min;
+    return round ? Math.round(mean) : mean;
   }
 
   everythingAnswered(): boolean {
@@ -107,7 +130,7 @@ export class QuestionsPage implements OnInit {
     this.answersProvider.sendAll(this.answers).subscribe(createdAnswers => {
       this.submitting = false;
       this.toast.show(`${createdAnswers.length} answer(s) successfully submitted`);
-      this.loadQuestions();
+      this.consumeBacklog();
     }, error => {
       this.submitting = false;
       this.toast.show(`Answer submission failed: ${error.message || error}`, true);

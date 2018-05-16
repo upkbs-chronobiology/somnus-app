@@ -11,12 +11,15 @@ export class Prompt {
 
 export class ScheduleManager {
 
+  private schedulePrompts: Prompt[][];
   private accumulatedPrompts: Prompt[];
 
   constructor(schedules: Schedule[]) {
-    this.accumulatedPrompts = schedules.map(s =>
+    this.schedulePrompts = schedules.map(s =>
       this.getMoments(s).map(m => new Prompt(m, s))
-    ).reduce((acc, item) => acc.concat(item), [])
+        .sort((a, b) => a.moment.diff(b.moment))
+    );
+    this.accumulatedPrompts = this.schedulePrompts.reduce((acc, item) => acc.concat(item), [])
       .sort((a, b) => a.moment.diff(b.moment));
   }
 
@@ -44,10 +47,17 @@ export class ScheduleManager {
     return moment(`${dateString} ${timeString}`);
   }
 
-  mostRecentDue(reference: Moment = moment()): Prompt {
-    const recents = this.accumulatedPrompts.filter(p => p.moment <= reference);
+  mostRecentDue(reference: Moment = moment(), prompts: Prompt[] = this.accumulatedPrompts): Prompt {
+    const recents = prompts.filter(p => p.moment <= reference);
     if (!recents.length) return null;
     return recents[recents.length - 1];
+  }
+
+  /**
+   * List the most recently due prompt of each schedule.
+   */
+  mostRecentsDue(reference: Moment = moment()): Prompt[] {
+    return this.schedulePrompts.map(prompts => this.mostRecentDue(reference, prompts)).filter(p => !!p);
   }
 
   nextDue(reference: Moment = moment()): Prompt {

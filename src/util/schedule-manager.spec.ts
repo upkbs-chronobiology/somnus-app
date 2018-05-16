@@ -83,4 +83,22 @@ describe('ScheduleManager', () => {
     const nextAfter = scheduleManager.nextDue(referenceAfter);
     expect(nextAfter).toBeFalsy();
   });
+
+  it('should report recents for each schedule', () => {
+    const scheduleA = new Schedule(0, 0, 0, '2000-01-01', '2000-01-03', '08:00:00', '21:30:00', 10); // every 1.5 hours
+    const scheduleB = new Schedule(0, 0, 0, '2000-01-01', '2000-01-03', '09:00:00', '22:30:00', 10); // every 1.5 hours
+    const scheduleManager = new ScheduleManager([scheduleA, scheduleB]);
+
+    const mostRecentsLate = scheduleManager.mostRecentsDue(moment('2000-01-01 09:15:00'));
+    expect(mostRecentsLate.length).toBe(2);
+    expect(mostRecentsLate[0].schedule).toBe(scheduleA);
+    expect(mostRecentsLate[1].schedule).toBe(scheduleB);
+    expect(mostRecentsLate[0].moment.diff('2000-01-01 08:00:00')).toBe(0);
+    expect(mostRecentsLate[1].moment.diff('2000-01-01 09:00:00')).toBe(0);
+
+    const mostRecentsEarly = scheduleManager.mostRecentsDue(moment('2000-01-01 08:45:00'));
+    expect(mostRecentsEarly.length).toBe(1);
+    expect(mostRecentsEarly[0].schedule).toBe(scheduleA);
+    expect(mostRecentsEarly[0].moment.diff('2000-01-01 08:00:00')).toBe(0);
+  });
 });
