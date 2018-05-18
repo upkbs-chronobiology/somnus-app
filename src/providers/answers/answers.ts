@@ -20,4 +20,8 @@ export class AnswersProvider {
   listMineByQuestionnaire(questionnaireId: number): Observable<Answer[]> {
     return this.rest.get(`questionnaires/${questionnaireId}/answers/mine`).map(a => a as Answer[]);
   }
+
+  delete(answerId: number): Observable<any> {
+    return this.rest.delete(`answers/${answerId}`);
+  }
 }

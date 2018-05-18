@@ -126,6 +126,9 @@ export class QuestionsPage implements OnInit {
   }
 
   submitAnswers(): void {
+    // update timestamps before sending (might have been generated a while ago)
+    this.answers.forEach(a => a.createdLocal = Answer.localTimestamp());
+
     this.submitting = true;
     this.answersProvider.sendAll(this.answers).subscribe(createdAnswers => {
       this.submitting = false;
