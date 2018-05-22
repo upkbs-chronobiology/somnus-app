@@ -60,3 +60,5 @@ typings/
 # Build-generated directories
 www/
 .sourcemaps/
+plugins/
+platforms/

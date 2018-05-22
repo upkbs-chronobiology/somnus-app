@@ -7,11 +7,14 @@ import { CacheProvider } from '../providers/cache/cache';
 import { ComponentsModule } from '../components/components.module';
 import { ConfirmationProvider } from '../providers/confirmation/confirmation';
 import { DataPage } from '../pages/data/data';
+import { DataProvider } from '../providers/data/data';
 import { EditorPageModule } from '../pages/editor/editor.module';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 import { MyApp } from './app.component';
+import { NotificationsProvider } from '../providers/notifications/notifications';
 import { QuestionnairesProvider } from '../providers/questionnaires/questionnaires';
 import { QuestionsPage } from '../pages/questions/questions';
 import { QuestionsProvider } from '../providers/questions/questions';
@@ -23,7 +26,6 @@ import { StudiesProvider } from '../providers/studies/studies';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
-import { DataProvider } from '../providers/data/data';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { DataProvider } from '../providers/data/data';
     ConfirmationProvider,
     SchedulesProvider,
     DataProvider,
+    LocalNotifications,
+    NotificationsProvider,
   ]
 })
 export class AppModule { }

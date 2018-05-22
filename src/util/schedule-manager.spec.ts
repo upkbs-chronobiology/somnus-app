@@ -101,4 +101,15 @@ describe('ScheduleManager', () => {
     expect(mostRecentsEarly[0].schedule).toBe(scheduleA);
     expect(mostRecentsEarly[0].moment.diff('2000-01-01 08:00:00')).toBe(0);
   });
+
+  it('should report future dues', () => {
+    const scheduleA = new Schedule(0, 0, 0, '2000-01-01', '2000-01-03', '08:00:00', '21:30:00', 10); // every 1.5 hours
+    const scheduleB = new Schedule(0, 0, 0, '2000-01-01', '2000-01-04', '09:00:00', '22:30:00', 10); // every 1.5 hours
+    const scheduleManager = new ScheduleManager([scheduleA, scheduleB]);
+
+    const pivot = moment('2000-01-03 09:45:00');
+    const allFutureDues = scheduleManager.allFutureDues(pivot);
+    expect(allFutureDues.length).toBe(8 + 9 + 10);
+    allFutureDues.forEach(futureDue => expect(futureDue.moment.unix()).toBeGreaterThan(pivot.unix()));
+  });
 });

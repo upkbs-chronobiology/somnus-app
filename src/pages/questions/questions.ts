@@ -5,6 +5,7 @@ import { AnswerType } from '../../model/answer-type';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { InclusiveRange } from '../../model/inclusive-range';
 import { Moment } from 'moment';
+import { NotificationsProvider } from '../../providers/notifications/notifications';
 import { Observable } from 'rxjs/Observable';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Prompt, ScheduleManager } from '../../util/schedule-manager';
@@ -33,13 +34,18 @@ export class QuestionsPage implements OnInit {
     private answersProvider: AnswersProvider,
     private questionsProvider: QuestionsProvider,
     private toast: ToastProvider,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private notifications: NotificationsProvider
   ) {
   }
 
   ngOnInit(): void {
     this.schedulesProvider.listMine().subscribe(schedules => {
       this.scheduleManager = new ScheduleManager(schedules);
+
+      this.scheduleManager.allFutureDues().forEach(prompt =>
+        this.notifications.schedule('You have new questions', prompt.moment));
+
       this.loadQuestions();
     });
   }
