@@ -49,9 +49,10 @@
       </ion-buttons>
     </ion-list-header>
 
-    <ion-item *ngFor="let option of editedQuestion.answerLabels; let i = index; trackBy: trackLabelFor">
+    <ion-item *ngFor="let option of editedQuestion.answerLabels; let i = index; trackBy: trackLabelFor"
+      [class.hidden]="isUnusedLabel(i)">
       <ion-input [(ngModel)]="editedQuestion.answerLabels[i]" placeholder="Label {{i + 1}}"
-        [required]="editedIsMultipleChoice()">
+        [required]="editedIsMultipleChoice()" [disabled]="isUnusedLabel(i)">
       </ion-input>
       <ion-buttons item-end>
         <button ion-button small round icon-only clear color="secondary"

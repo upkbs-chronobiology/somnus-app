@@ -105,6 +105,12 @@ export class QuestionEditorComponent {
     return index;
   }
 
+  isUnusedLabel(index: number) {
+    // intermediate labels on discrete-range questions are currently ignored
+    return this.editedQuestion.answerType === AnswerType.RangeDiscrete &&
+      index > 0 && index < this.editedQuestion.answerLabels.length - 1;
+  }
+
   discard() {
     if (!this.questionEdited())
       this.close(!this.isNew);

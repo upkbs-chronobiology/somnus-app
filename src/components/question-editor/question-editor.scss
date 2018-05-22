@@ -6,4 +6,8 @@ question-editor {
   [ion-button] {
     flex-shrink: 0;
   }
+
+  ion-item.hidden {
+    display: none;
+  }
 }
