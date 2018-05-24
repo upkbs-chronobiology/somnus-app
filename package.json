@@ -24,6 +24,7 @@
     "@angular/platform-browser": "5.2.5",
     "@angular/platform-browser-dynamic": "5.2.5",
     "@ionic-native/core": "4.4.0",
+    "@ionic-native/device": "^4.7.0",
     "@ionic-native/local-notifications": "^4.7.0",
     "@ionic-native/splash-screen": "4.4.0",
     "@ionic-native/status-bar": "4.4.0",
@@ -44,7 +45,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.8",
+    "@ionic/app-scripts": "3.1.9",
     "@types/jasmine": "^2.8.6",
     "@types/node": "^9.4.6",
     "angular2-template-loader": "^0.6.2",
@@ -74,5 +75,8 @@
     "platforms": [
       "android"
     ]
+  },
+  "config": {
+    "ionic_source_map_type": "#inline-source-map"
   }
 }

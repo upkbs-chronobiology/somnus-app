@@ -8,6 +8,7 @@ import { ComponentsModule } from '../components/components.module';
 import { ConfirmationProvider } from '../providers/confirmation/confirmation';
 import { DataPage } from '../pages/data/data';
 import { DataProvider } from '../providers/data/data';
+import { Device } from '@ionic-native/device';
 import { EditorPageModule } from '../pages/editor/editor.module';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -71,6 +72,7 @@ import { UsersProvider } from '../providers/users/users';
     DataProvider,
     LocalNotifications,
     NotificationsProvider,
+    Device,
   ]
 })
 export class AppModule { }
