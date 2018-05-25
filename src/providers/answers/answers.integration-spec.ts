@@ -2,7 +2,7 @@ import { Answer } from '../../model/answer';
 import { AnswersProvider } from './answers';
 import { AnswerType } from '../../model/answer-type';
 import { AppModule } from '../../app/app.module';
-import { loginAsTestUser } from '../../test/test-utils';
+import { loginAsTestUser, triggerReady } from '../../test/test-utils';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../questions/questions';
@@ -33,6 +33,8 @@ describe('Answers', () => {
       questions = TestBed.get(QuestionsProvider);
       done();
     });
+
+    triggerReady();
   });
 
   it('should instantiate answers provider', () => {

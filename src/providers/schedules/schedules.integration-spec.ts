@@ -1,6 +1,6 @@
 import { AppModule } from '../../app/app.module';
 import { AuthenticationProvider } from '../authentication/authentication';
-import { loginAsTestUser } from '../../test/test-utils';
+import { loginAsTestUser, triggerReady } from '../../test/test-utils';
 import { Questionnaire } from '../../model/questionnaire';
 import { QuestionnairesProvider } from '../questionnaires/questionnaires';
 import { Schedule } from '../../model/schedule';
@@ -21,6 +21,8 @@ describe('SchedulesProvider', () => {
 
       done();
     });
+
+    triggerReady();
   });
 
   it('should create schedules provider', () => {

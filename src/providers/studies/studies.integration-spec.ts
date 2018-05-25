@@ -1,5 +1,5 @@
 import { AppModule } from '../../app/app.module';
-import { loginAsTestUser } from '../../test/test-utils';
+import { loginAsTestUser, triggerReady } from '../../test/test-utils';
 import { StudiesProvider } from './studies';
 import { Study } from '../../model/study';
 import { TestBed } from '@angular/core/testing';
@@ -17,6 +17,8 @@ describe('Studies', () => {
       studies = TestBed.get(StudiesProvider);
       done();
     });
+
+    triggerReady();
   });
 
   it('should instatiate studies provider', () => {
