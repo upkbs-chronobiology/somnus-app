@@ -7,8 +7,16 @@ export class Optional<T> {
     return this.element !== undefined && this.element !== null;
   }
 
-  map<R>(fn: (t: T) => R): Optional<R> {
+  map<R>(fn: (element: T) => R): Optional<R> {
     return this.exists() ? new Optional(fn(this.element)) : Optional.empty();
+  }
+
+  flatMap<R>(fn: (element: T) => Optional<R>): Optional<R> {
+    return this.map(fn).map(optional => optional.get());
+  }
+
+  get(): T {
+    return this.element;
   }
 
   getOrElse(alternative: T): T {

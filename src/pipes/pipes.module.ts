@@ -1,9 +1,12 @@
 import { KeysPipe } from './keys/keys';
 import { NgModule } from '@angular/core';
+import { SortPipe } from './sort/sort';
 
 @NgModule({
-  declarations: [KeysPipe],
+  declarations: [KeysPipe,
+    SortPipe],
   imports: [],
-  exports: [KeysPipe]
+  exports: [KeysPipe,
+    SortPipe]
 })
 export class PipesModule { }

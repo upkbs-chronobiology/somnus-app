@@ -39,7 +39,7 @@ export class QuestionnairesEditorPage {
   private updateGroups() {
     this.studies.listAll().subscribe(studies => {
       this.groupedQuestionnaires = groupArray(this.questionnaires, q => new Optional(studies.find(s => s.id === q.studyId))
-        .map(s => s.name).getOrElse('(no study)'));
+        .map(s => s.name).getOrElse('<no study>'));
     });
   }
 

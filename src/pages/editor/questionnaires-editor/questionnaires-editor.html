@@ -2,7 +2,7 @@
   <ng-container *ngIf="groupedQuestionnaires; else loadingIndicator">
     <i *ngIf="!(groupedQuestionnaires | keys).length">No questionnaires yet</i>
 
-    <ion-item-group *ngFor="let key of groupedQuestionnaires | keys">
+    <ion-item-group *ngFor="let key of groupedQuestionnaires | keys | sort">
       <ion-item-divider>
         <ion-icon name="flask" item-start></ion-icon> {{key}}
       </ion-item-divider>

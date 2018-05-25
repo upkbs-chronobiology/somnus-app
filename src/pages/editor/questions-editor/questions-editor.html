@@ -1,13 +1,22 @@
 <ion-content>
-  <ng-container *ngIf="questions; else loadingIndicator">
+  <ng-container *ngIf="groupedQuestions; else loadingIndicator">
     <i *ngIf="!questions.length">No questions yet</i>
 
-    <button ion-item *ngFor="let question of questions; let i = index" (click)="editQuestion(i)">
-      <ion-label>{{question.content}}</ion-label>
-    </button>
+    <ion-item-group *ngFor="let key of groupedQuestions | keys | sort">
+      <ion-item-divider>
+        <ion-icon name="list-box" item-start></ion-icon>
+        <ion-label>{{key}}</ion-label>
+      </ion-item-divider>
+
+      <button ion-item *ngFor="let question of groupedQuestions[key]" (click)="editQuestion(question)">
+        <ion-label>{{question.content}}</ion-label>
+      </button>
+    </ion-item-group>
 
     <ion-fab bottom right>
-      <button ion-fab (click)="createQuestion()"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab (click)="createQuestion()">
+        <ion-icon name="add"></ion-icon>
+      </button>
     </ion-fab>
   </ng-container>
 
