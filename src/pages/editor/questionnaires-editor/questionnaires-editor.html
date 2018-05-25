@@ -1,15 +1,21 @@
 <ion-content>
-  <ng-container *ngIf="questionnaires; else loadingIndicator">
-    <i *ngIf="!questionnaires.length">No questionnaires yet</i>
+  <ng-container *ngIf="groupedQuestionnaires; else loadingIndicator">
+    <i *ngIf="!(groupedQuestionnaires | keys).length">No questionnaires yet</i>
 
-    <ion-item *ngFor="let questionnaire of questionnaires; let i = index">
-      <p item-start>{{questionnaire.id}}</p>
-      <ion-label tappable (click)="edit(i)">{{questionnaire.name}}</ion-label>
-      <button ion-button item-end icon-start *ngIf="questionnaire.studyId" (click)="editSchedules(questionnaire)">
-        <ion-icon name="calendar" class="hide-sm"></ion-icon>
-        <span>Schedules</span>
-      </button>
-    </ion-item>
+    <ion-item-group *ngFor="let key of groupedQuestionnaires | keys">
+      <ion-item-divider>
+        <ion-icon name="flask" item-start></ion-icon> {{key}}
+      </ion-item-divider>
+
+      <ion-item *ngFor="let questionnaire of groupedQuestionnaires[key]">
+        <p item-start>{{questionnaire.id}}</p>
+        <ion-label tappable (click)="edit(questionnaire)">{{questionnaire.name}}</ion-label>
+        <button ion-button item-end icon-start *ngIf="questionnaire.studyId" (click)="editSchedules(questionnaire)">
+          <ion-icon name="calendar" class="hide-sm"></ion-icon>
+          <span>Schedules</span>
+        </button>
+      </ion-item>
+    </ion-item-group>
 
     <ion-fab bottom right>
       <button ion-fab (click)="create()">

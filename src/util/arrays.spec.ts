@@ -1,4 +1,4 @@
-import { arraysEqual } from './arrays';
+import { arraysEqual, groupArray } from './arrays';
 
 describe('arraysEqual', () => {
   it('should match empty arrays', () => {
@@ -32,5 +32,19 @@ describe('arraysEqual', () => {
     expect(arraysEqual(undefined, [])).toBeFalsy();
     expect(arraysEqual(undefined, undefined)).toBeTruthy();
     expect(arraysEqual(null, null)).toBeTruthy();
+  });
+});
+
+describe('groupArray', () => {
+  it('should map an empty array to an empty object', () => {
+    expect(groupArray([], x => '')).toEqual({});
+  });
+
+  it('should correctly group an array', () => {
+    expect(groupArray(['foo', 'bar', 'baz'], word => word.substring(0, 1)))
+      .toEqual({
+        'f': ['foo'],
+        'b': ['bar', 'baz']
+      });
   });
 });
