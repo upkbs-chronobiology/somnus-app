@@ -20,3 +20,7 @@ In order to execute Karma/Jasmine (unit) tests, run `npm test`.
 Before running integration tests, make sure a non-critical instance of the back end Somnus application is running, reachable, and has appropriate test users (with appropriate rights) in place; check *test-utils.ts* for details.
 **Do not run integration tests against a production back end, since they alter data.**
 Integration tests can then be executed with `npm test-integration`.
+
+## Release
+
+In order to build a production release, do `ionic cordova build <platform> --release --prod`.

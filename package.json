@@ -42,7 +42,8 @@
     "moment": "^2.22.1",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-browser": "~5.0.3"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
@@ -74,10 +75,11 @@
       "cordova-plugin-ionic-keyboard": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   },
   "config": {
-    "ionic_source_map_type": "#inline-source-map"
+    "ionic_webpack": "./src/config/webpack.config.js"
   }
 }

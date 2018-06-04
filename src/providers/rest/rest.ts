@@ -2,6 +2,7 @@ import { Device } from '@ionic-native/device';
 import { ensure } from '../../util/streams';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IS_PROD } from '@environment';
 import { Observable } from 'rxjs/Observable';
 import { Platform } from 'ionic-angular';
 import { ReplaySubject } from 'rxjs';
@@ -23,7 +24,10 @@ export class RestProvider {
     const subject = new ReplaySubject<string>(1);
     this.baseUrlObs = subject;
 
-    // TODO: Prod URL for release builds
+    if (IS_PROD) {
+      subject.next('https://somnus.ch/v1');
+      return;
+    }
 
     platform.ready().then(() => {
       const baseUrl = platform.platforms().indexOf('mobile') >= 0 && device.isVirtual ?
