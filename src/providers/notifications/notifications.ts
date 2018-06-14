@@ -9,7 +9,6 @@ export class NotificationsProvider {
   private alreadyScheduled = 0;
 
   constructor(private localNotifications: LocalNotifications) {
-    window['nn'] = localNotifications;
   }
 
   schedule(message: string, time: Moment) {
