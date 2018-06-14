@@ -53,9 +53,16 @@
     <ion-datetime displayFormat="HH:mm:ss" [(ngModel)]="editedSchedule.endTime"></ion-datetime>
   </ion-item>
 
-  <ion-item>
+  <ion-item no-lines>
     <ion-label>Frequency</ion-label>
     <ion-input [(ngModel)]="editedSchedule.frequency" type="number" min="0"></ion-input>
+  </ion-item>
+  <ion-item text-wrap>
+    <i>
+      Number of times the questionnaire is prompted per day, including one at start
+      <strong>and</strong> end time, each. For example, start at 8:00 and end at 20:00 with frequency
+      13 would result in one prompt each hour (8:00, 9:00, ... , 22:00).
+    </i>
   </ion-item>
 </ion-content>
 
