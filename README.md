@@ -24,3 +24,7 @@ Integration tests can then be executed with `npm test-integration`.
 ## Release
 
 In order to build a production release, do `ionic cordova build <platform> --release --prod`.
+
+### Versioning
+
+We currently don't use an automated releasing/versioning system, so bump versions manually and add a git tag.
