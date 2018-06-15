@@ -26,6 +26,7 @@ export class RestProvider {
 
     if (IS_PROD) {
       subject.next('https://somnus.ch/v1');
+      subject.complete();
       return;
     }
 

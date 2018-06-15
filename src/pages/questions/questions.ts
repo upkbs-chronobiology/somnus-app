@@ -63,6 +63,10 @@ export class QuestionsPage implements OnInit {
       this.answersProvider.listMineByQuestionnaire(recent.schedule.questionnaireId)
         .map(answers => this.hasAnswer(recent, answers) ? null : recent))
       .filter(recent => !!recent)
+      .catch((err, caught) => {
+        this.toast.show(`Loading questions failed: ${err.message || err}`, true);
+        return Observable.empty<Prompt>();
+      })
       .toArray()
       .subscribe(unansweredRecents => {
         if (!unansweredRecents.length)
