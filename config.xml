@@ -55,4 +55,8 @@
     <allow-navigation href="http://172.17.227.72:8100" />
     <engine name="android" spec="~7.0.0" />
     <engine name="browser" spec="~5.0.3" />
+    <engine name="ios" spec="~4.5.4" />
+    <engine name="windows" spec="~5.0.0" />
+    <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="SplashScreenDelay" value="3000" />
 </widget>
