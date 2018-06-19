@@ -62,3 +62,8 @@ ion-navbar button,
     display: none;
   }
 }
+
+ion-slide .slide-zoom {
+  max-height: 100%;
+  overflow: auto;
+}
