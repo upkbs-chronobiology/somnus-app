@@ -28,3 +28,11 @@ In order to build a production release, do `ionic cordova build <platform> --rel
 ### Versioning
 
 We currently don't use an automated releasing/versioning system, so bump versions manually and add a git tag.
+
+### 404 issues
+
+In some cases, the prod-built app on phones fails to make requests to the server; they fail with 404 (allegedly from cache).
+This is caused by `cordova-plugin-whitelist` not being properly installed.
+Just re-add it and everything should work as expected.
+
+Background info: https://forum.ionicframework.com/t/api-request-404-from-cache-on-android-device/110012/3
