@@ -11,6 +11,7 @@ import { DataProvider } from '../providers/data/data';
 import { Device } from '@ionic-native/device';
 import { EditorPageModule } from '../pages/editor/editor.module';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { HeaderColor } from '@ionic-native/header-color';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -54,6 +55,7 @@ import { UsersProvider } from '../providers/users/users';
   ],
   providers: [
     StatusBar,
+    HeaderColor,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthenticationProvider,
