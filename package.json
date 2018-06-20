@@ -45,7 +45,8 @@
     "moment": "^2.22.1",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "cordova-android": "~7.0.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.9",
@@ -78,13 +79,14 @@
       "cordova-plugin-headercolor": {}
     },
     "platforms": [
-      "android",
       "browser",
       "ios",
-      "windows"
+      "windows",
+      "android"
     ]
   },
   "config": {
-    "ionic_webpack": "./src/config/webpack.config.js"
+    "ionic_webpack": "./src/config/webpack.config.js",
+    "ionic_purge_unused_fonts": false
   }
 }

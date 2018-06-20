@@ -45,3 +45,7 @@ This is caused by `cordova-plugin-whitelist` not being properly installed.
 Just re-add it and everything should work as expected.
 
 Background info: https://forum.ionicframework.com/t/api-request-404-from-cache-on-android-device/110012/3
+
+### Unwanted resources generation
+
+By default, Ionic generates resources during platform-add. Prevent this by adding the `--no-resources` flag.
