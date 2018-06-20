@@ -10,17 +10,20 @@
       <question-posing [question]="question" [answer]="answers[i]"></question-posing>
 
       <ion-fab bottom right>
-        <button ion-fab (click)="slides.slideNext()" [disabled]="!isValidAnswer(answers[i].content)">
+        <button ion-fab (click)="slides.slideNext()" *ngIf="i < questions.length - 1" [disabled]="!isValidAnswer(answers[i].content)">
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
+        <button ion-fab (click)="submitAnswers()" *ngIf="i === questions.length - 1 && (everythingAnswered() || !isValidAnswer(answers[i].content))"
+          [disabled]="!isValidAnswer(answers[i].content) || submitting">
+          <ion-icon *ngIf="!submitting" name="send"></ion-icon>
+          <ion-spinner *ngIf="submitting" color="light"></ion-spinner>
+        </button>
+        <ion-chip color="danger" *ngIf="i === questions.length - 1 && isValidAnswer(answers[i].content) && !everythingAnswered()">
+          <ion-label>
+            There are unanswered questions, please go back and edit.
+          </ion-label>
+        </ion-chip>
       </ion-fab>
-    </ion-slide>
-
-    <ion-slide>
-      <p *ngIf="everythingAnswered()">Thanks, answers are ready to be submitted:</p>
-      <p *ngIf="!everythingAnswered()">There are unanswered questions, please go back and edit.</p>
-      <button *ngIf="!submitting" ion-button (click)="submitAnswers()" [disabled]="!everythingAnswered()">Submit</button>
-      <ion-spinner *ngIf="submitting" color="primary"></ion-spinner>
     </ion-slide>
   </ion-slides>
 
