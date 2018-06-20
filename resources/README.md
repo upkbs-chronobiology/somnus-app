@@ -2,7 +2,7 @@ These are Cordova resources. You can replace icon.png and run
 `ionic cordova resources -i` to generate custom icons for your
 app. See `ionic cordova resources --help` for details.
 
-*Do not generate splash screens, as we don't use any in this app.*
+**Do not generate splash screens, as we don't use any in this app.**
 The `-i` flag signals to only generate icons.
 
 Cordova reference documentation:

@@ -22,7 +22,6 @@ import { QuestionsPage } from '../pages/questions/questions';
 import { QuestionsProvider } from '../providers/questions/questions';
 import { RestProvider } from '../providers/rest/rest';
 import { SchedulesProvider } from '../providers/schedules/schedules';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { StudiesProvider } from '../providers/studies/studies';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -56,7 +55,6 @@ import { UsersProvider } from '../providers/users/users';
   providers: [
     StatusBar,
     HeaderColor,
-    SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthenticationProvider,
     RestProvider,

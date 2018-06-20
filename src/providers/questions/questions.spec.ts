@@ -3,9 +3,8 @@ import { AuthRestProvider } from '../auth-rest/auth-rest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Platform } from 'ionic-angular';
 import { QuestionsProvider } from './questions';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
 import { RestProvider } from '../rest/rest';
+import { StatusBar } from '@ionic-native/status-bar';
 
 const mockAuthRestProvider = {} as AuthRestProvider;
 
