@@ -1,27 +1,36 @@
 <h2>{{question.content}}</h2>
 
-<ion-item *ngIf="!isMultipleChoice(question)">
-  <ion-input *ngIf="question.answerType === AnswerType.Text" [(ngModel)]="answer.content" required
-    placeholder="..."></ion-input>
-  <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous" [(ngModel)]="answer.content"
-    [min]="question.answerRange.min" [max]="question.answerRange.max" required>
-    <ion-label range-left>
-      {{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}
-    </ion-label>
-    <ion-label range-right>
-      {{question.answerLabels ? question.answerLabels[1] : question.answerRange.max}}
-    </ion-label>
-  </continuous-range>
-  <ion-range *ngIf="question.answerType === AnswerType.RangeDiscrete" [min]="question.answerRange.min"
-    [max]="question.answerRange.max" step="1" snaps="true" pin="true" [(ngModel)]="answer.content"
-    required>
-    <ion-label range-left>{{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}</ion-label>
-    <!-- XXX: What about intermediate labels? -->
-    <ion-label range-right>
-      {{question.answerLabels ? question.answerLabels[question.answerLabels.length - 1] : question.answerRange.max}}
-    </ion-label>
-  </ion-range>
-</ion-item>
+<ng-container *ngIf="!isMultipleChoice(question)">
+  <ion-item>
+    <ion-input *ngIf="question.answerType === AnswerType.Text" [(ngModel)]="answer.content" required
+      placeholder="..."></ion-input>
+    <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous" [(ngModel)]="answer.content"
+      [min]="question.answerRange.min" [max]="question.answerRange.max" required>
+      <ion-label range-left>
+        {{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}
+      </ion-label>
+      <ion-label range-right>
+        {{question.answerLabels ? question.answerLabels[1] : question.answerRange.max}}
+      </ion-label>
+    </continuous-range>
+    <ion-range *ngIf="question.answerType === AnswerType.RangeDiscrete" [min]="question.answerRange.min"
+      [max]="question.answerRange.max" step="1" snaps="true" pin="true" [(ngModel)]="answer.content"
+      required>
+      <ion-label range-left>{{question.answerLabels ? question.answerLabels[0] : question.answerRange.min}}</ion-label>
+      <!-- XXX: What about intermediate labels? -->
+      <ion-label range-right>
+        {{question.answerLabels ? question.answerLabels[question.answerLabels.length - 1] : question.answerRange.max}}
+      </ion-label>
+    </ion-range>
+  </ion-item>
+
+  <ion-item no-lines text-wrap padding *ngIf="isPortrait()" class="landscape-hint">
+    <ion-icon name="phone-portrait"></ion-icon>
+    <ion-icon name="arrow-round-forward"></ion-icon>
+    <ion-icon name="phone-landscape"></ion-icon>
+    <br> This slider might be easier to use in landscape mode.
+  </ion-item>
+</ng-container>
 
 <ion-list radio-group *ngIf="question.answerType === AnswerType.MultipleChoiceSingle" [(ngModel)]="answer.content">
   <ion-item *ngFor="let option of question.answerLabels; let i = index">

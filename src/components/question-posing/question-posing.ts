@@ -1,6 +1,6 @@
 import { Answer } from '../../model/answer';
 import { AnswerType } from '../../model/answer-type';
-import { Checkbox } from 'ionic-angular';
+import { Checkbox, Platform } from 'ionic-angular';
 import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { Question } from '../../model/question';
 
@@ -22,7 +22,7 @@ export class QuestionPosingComponent {
   @ViewChildren(Checkbox)
   checkboxes: QueryList<Checkbox>;
 
-  constructor() {
+  constructor(private platform: Platform) {
   }
 
   isMultipleChoice(): boolean {
@@ -34,5 +34,9 @@ export class QuestionPosingComponent {
     const indices: number[] = this.checkboxes.filter(checkbox => checkbox.value)
       .map(checkbox => checkbox.getNativeElement().getAttribute('data-index'));
     this.answer.content = indices.join(',');
+  }
+
+  isPortrait(): boolean {
+    return this.platform.isPortrait();
   }
 }
