@@ -21,6 +21,8 @@
         <ion-label floating>Password confirmation</ion-label>
         <ion-input type="password" [(ngModel)]="pwConfirmation" name="pwConfirmation" required [minlength]="PW_MIN_LENGTH"></ion-input>
       </ion-item>
+
+      <ion-item *ngIf="registration" text-wrap no-lines>The password must contain at least {{PW_MIN_LENGTH}} characters.</ion-item>
     </div>
 
     <button *ngIf="!registration && !submitting" ion-button type="submit" [disabled]="!form.valid"
