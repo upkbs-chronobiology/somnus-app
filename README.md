@@ -29,9 +29,18 @@ In order to build a production release, do `ionic cordova build <platform> --rel
 
 We currently don't use an automated releasing/versioning system, so bump versions manually and add a git tag.
 
-### 404 issues
+### Cordova plugin issues
 
-In some cases, the prod-built app on phones fails to make requests to the server; they fail with 404 (allegedly from cache).
+For some reason, cordova plugins are sometimes not properly installed, leading to faulty behavior.
+Look out for errors during plugin installation (e.g. during `ionic cordova platform add <platform>`).
+
+Things that *might* help (each on its own, not necessarily in sequence):
+
+- `ionic cordova platform remove <platform>`, then `ionic cordova platform add <platform>`
+- `ionic cordova prepare`
+- Re-add each plugin individually
+
+For example, in some cases, the prod-built app on phones fails to make requests to the server; they fail with 404 (allegedly from cache).
 This is caused by `cordova-plugin-whitelist` not being properly installed.
 Just re-add it and everything should work as expected.
 
