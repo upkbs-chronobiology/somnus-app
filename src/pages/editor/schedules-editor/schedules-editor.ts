@@ -50,7 +50,9 @@ export class SchedulesEditorComponent {
 
     const overlay = this.modal.create(ScheduleEditorComponent, {
       schedule: schedule,
+      allSchedules: this.schedules,
       participant: participant,
+      allParticipants: this.participants,
       questionnaire: this.questionnaire
     }, { enableBackdropDismiss: false });
 

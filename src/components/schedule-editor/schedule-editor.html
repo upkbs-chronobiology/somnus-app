@@ -5,6 +5,9 @@
       <strong>{{questionnaire.name}}</strong> for
       <strong>{{participant.name}}</strong>
     </ion-title>
+    <ion-buttons right>
+      <button ion-button (click)="copyFromUser()" color="primary">Copy from other user</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -58,7 +61,7 @@
     <ion-input [(ngModel)]="editedSchedule.frequency" type="number" min="0"></ion-input>
     <ion-buttons item-end>
       <button ion-button round icon-only clear (click)="toggleFrequencyInfo()">
-        <ion-icon name="information-circle"></ion-icon>
+        <ion-icon name="information-circle" color="dark" class="info-button-icon"></ion-icon>
       </button>
     </ion-buttons>
   </ion-item>

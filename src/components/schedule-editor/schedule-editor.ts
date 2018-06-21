@@ -1,8 +1,8 @@
+import { AlertController, NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
 import { getDailyTimes } from '../../util/schedules';
 import { Moment } from 'moment';
-import { NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from '../../model/questionnaire';
 import { Schedule } from '../../model/schedule';
@@ -17,8 +17,10 @@ import { User } from '../../model/user';
 export class ScheduleEditorComponent {
 
   schedule: Schedule;
+  allSchedules: Schedule[];
   editedSchedule: Schedule;
   participant: User;
+  allParticipants: User[];
   questionnaire: Questionnaire;
 
   isNew: boolean;
@@ -30,10 +32,13 @@ export class ScheduleEditorComponent {
     private view: ViewController,
     private confirmation: ConfirmationProvider,
     private schedules: SchedulesProvider,
-    private toast: ToastProvider
+    private toast: ToastProvider,
+    private alertController: AlertController
   ) {
     this.schedule = params.data.schedule;
+    this.allSchedules = params.data.allSchedules;
     this.participant = params.data.participant;
+    this.allParticipants = params.data.allParticipants;
     this.questionnaire = params.data.questionnaire;
 
     this.isNew = !this.schedule;
@@ -92,5 +97,40 @@ export class ScheduleEditorComponent {
 
   toggleFrequencyInfo() {
     this.showFrequencyInfo = !this.showFrequencyInfo;
+  }
+
+  copyFromUser() {
+    const alert = this.alertController.create({
+      title: 'What user to copy from?',
+      inputs: this.allParticipants.filter(p => p !== this.participant)
+        .map(p => ({
+          type: 'radio',
+          label: p.name,
+          value: p.name
+        })),
+      buttons: [
+        'Cancel',
+        {
+          text: 'Copy',
+          handler: data => this.insertFromUser(this.allParticipants.find(p => p.name === data))
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  private insertFromUser(user: User) {
+    if (!user) {
+      this.alertController.create({
+        title: 'No user selected',
+        subTitle: 'Nothing has been copied.',
+        buttons: ['Ok']
+      }).present();
+      return;
+    }
+
+    this.editedSchedule = Schedule.clone(this.allSchedules.find(s => s.userId === user.id));
+    this.editedSchedule.userId = this.participant.id;
   }
 }
