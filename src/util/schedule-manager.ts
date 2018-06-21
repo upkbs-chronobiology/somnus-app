@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { getDailyTimes } from './schedules';
 import { Moment } from 'moment';
 import { Schedule } from '../model/schedule';
 
@@ -26,18 +27,14 @@ export class ScheduleManager {
   private getMoments(schedule: Schedule): Moment[] {
     const startDate = moment(schedule.startDate);
     const endDate = moment(schedule.endDate);
-    const startTimeRef = moment(`2000-01-01 ${schedule.startTime}`);
-    const endTimeRef = moment(`2000-01-01 ${schedule.endTime}`);
 
-    if (endDate < startDate || endTimeRef < startTimeRef) return [];
+    if (endDate < startDate) return [];
 
-    // XXX: Can we make `end - start` notation work with TS?
-    const interval = moment.duration(endTimeRef.diff(startTimeRef) / (schedule.frequency - 1));
+    const times = getDailyTimes(schedule);
 
     const result = [];
     for (let date = startDate; date <= endDate; date = date.clone().add(1, 'day'))
-      for (let i = 0, time = startTimeRef; i < schedule.frequency; i++ , time = time.clone().add(interval))
-        result.push(this.combineDateAndTime(date, time));
+      times.forEach(time => result.push(this.combineDateAndTime(date, time)));
     return result;
   }
 

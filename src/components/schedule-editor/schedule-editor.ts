@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
+import { getDailyTimes } from '../../util/schedules';
+import { Moment } from 'moment';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from '../../model/questionnaire';
@@ -20,6 +22,8 @@ export class ScheduleEditorComponent {
   questionnaire: Questionnaire;
 
   isNew: boolean;
+
+  showFrequencyInfo: boolean;
 
   constructor(
     params: NavParams,
@@ -80,5 +84,13 @@ export class ScheduleEditorComponent {
 
   close(result?: Schedule) {
     this.view.dismiss({ schedule: result });
+  }
+
+  calculatePromptTimes(): Moment[] {
+    return getDailyTimes(this.editedSchedule);
+  }
+
+  toggleFrequencyInfo() {
+    this.showFrequencyInfo = !this.showFrequencyInfo;
   }
 }

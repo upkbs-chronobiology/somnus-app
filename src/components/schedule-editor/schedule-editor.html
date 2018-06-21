@@ -56,13 +56,21 @@
   <ion-item no-lines>
     <ion-label>Frequency</ion-label>
     <ion-input [(ngModel)]="editedSchedule.frequency" type="number" min="0"></ion-input>
+    <ion-buttons item-end>
+      <button ion-button round icon-only clear (click)="toggleFrequencyInfo()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-item>
-  <ion-item text-wrap>
+  <ion-item no-lines text-wrap *ngIf="showFrequencyInfo">
     <i>
-      Number of times the questionnaire is prompted per day, including one at start
+      Frequency is the number of times the questionnaire is prompted per day, including one at start
       <strong>and</strong> end time, each. For example, start at 8:00 and end at 20:00 with frequency
       13 would result in one prompt each hour (8:00, 9:00, ... , 22:00).
     </i>
+  </ion-item>
+  <ion-item text-wrap>
+    <ion-badge *ngFor="let time of calculatePromptTimes()" class="prompt-time" color="light">{{time.format("HH:mm")}}</ion-badge>
   </ion-item>
 </ion-content>
 
