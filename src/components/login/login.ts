@@ -21,6 +21,8 @@ export class LoginComponent {
 
   submitting: boolean;
 
+  showLostPwHint: boolean;
+
   constructor(
     private authentication: AuthenticationProvider,
     private view: ViewController,

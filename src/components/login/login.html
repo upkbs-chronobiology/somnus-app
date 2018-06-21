@@ -34,6 +34,13 @@
     </centrizer>
   </form>
 
+  <button ion-button clear color="dark" *ngIf="!showLostPwHint" (click)="showLostPwHint = true"
+    class="forgot-pw-button">I forgot my password</button>
+  <p *ngIf="showLostPwHint">
+    If you forgot your password (or username), please send a mail to your contact person at the
+    Chronobiology research group. They will send you a token to set a new password.
+  </p>
+
   <button ion-button clear color="dark" (click)="registration = !registration" class="register-toggle">
     <ng-container *ngIf="!registration">No account yet? Register</ng-container>
     <ng-container *ngIf="registration">Already registered? Log in</ng-container>
