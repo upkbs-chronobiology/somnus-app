@@ -9,11 +9,12 @@ export class ToastProvider {
   constructor(private toastController: ToastController) {
   }
 
-  show(message: string, isError: boolean = false): void {
+  show(message: string, isError: boolean = false, position: string = 'top'): void {
     this.toastController.create({
       message: message,
       duration: TOAST_DURATION,
-      cssClass: isError ? 'failure-toast' : 'success-toast'
+      cssClass: isError ? 'failure-toast' : 'success-toast',
+      position: position
     }).present();
   }
 }
