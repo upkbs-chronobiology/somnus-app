@@ -29,6 +29,7 @@
         <icon density="xxhdpi" src="resources/android/icon/rounded/drawable-xxhdpi-icon.png" />
         <icon density="xxxhdpi" src="resources/android/icon/rounded/drawable-xxxhdpi-icon.png" />
         <preference name="StatusBarBackgroundColor" value="#E5E5E5" />
+        <resource-file src="resources/icon-tiny.png" target="app/src/main/res/drawable/tiny_icon.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

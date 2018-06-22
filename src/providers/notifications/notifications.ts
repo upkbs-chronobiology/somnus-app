@@ -18,7 +18,8 @@ export class NotificationsProvider {
       trigger: {
         at: time.toDate()
       },
-      led: PRIMARY_HEX
+      led: PRIMARY_HEX,
+      smallIcon: 'res://tiny_icon.png'
     });
   }
 }
