@@ -10,10 +10,16 @@
       <ion-item *ngFor="let questionnaire of groupedQuestionnaires[key]">
         <p item-start>{{questionnaire.id}}</p>
         <ion-label tappable (click)="edit(questionnaire)">{{questionnaire.name}}</ion-label>
-        <button ion-button item-end icon-start *ngIf="questionnaire.studyId" (click)="editSchedules(questionnaire)">
-          <ion-icon name="calendar" class="hide-sm"></ion-icon>
-          <span>Schedules</span>
-        </button>
+        <ion-buttons item-end>
+          <button ion-button icon-start clear (click)="duplicate(questionnaire)">
+            <ion-icon name="copy" class="line-button-icon"></ion-icon>
+            <span class="hide-sm">Duplicate</span>
+          </button>
+          <button ion-button icon-start *ngIf="questionnaire.studyId" (click)="editSchedules(questionnaire)">
+            <ion-icon name="calendar" class="line-button-icon"></ion-icon>
+            <span class="hide-sm">Schedules</span>
+          </button>
+        </ion-buttons>
       </ion-item>
     </ion-item-group>
 

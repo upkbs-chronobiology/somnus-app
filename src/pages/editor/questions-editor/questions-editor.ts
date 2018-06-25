@@ -40,10 +40,10 @@ export class QuestionsEditorPage {
         const questionnaire = new Optional(questionnaires.find(qe => qe.id === question.questionnaireId));
         const study = questionnaire.map(qe => studies.find(s => s.id === qe.studyId));
 
-        const questionnaireName = questionnaire.map(qe => qe.name).getOrElse('<no questionnaire>');
-        const studyName = study.map(s => s.name).getOrElse('<no study>');
+        const questionnaireLabel = questionnaire.map(qe => `${qe.id}: ${qe.name}`).getOrElse('<no questionnaire>');
+        const studyLabel = study.map(s => `${s.id}: ${s.name}`).getOrElse('<no study>');
 
-        return `${studyName} / ${questionnaireName}`;
+        return `${studyLabel} / ${questionnaireLabel}`;
       });
     });
   }

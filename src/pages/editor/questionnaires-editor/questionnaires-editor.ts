@@ -1,6 +1,9 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { ConfirmationProvider } from '../../../providers/confirmation/confirmation';
+import { ensure } from '../../../util/streams';
 import { groupArray } from '../../../util/arrays';
-import { ModalController } from 'ionic-angular';
+import { LoadingController, ModalController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 import { Optional } from '../../../util/optional';
 import { Questionnaire } from '../../../model/questionnaire';
 import { QuestionnaireEditorComponent } from '../../../components/questionnaire-editor/questionnaire-editor';
@@ -29,17 +32,23 @@ export class QuestionnairesEditorPage {
   newPlaceholder: ViewContainerRef;
 
   constructor(
-    questionnaires: QuestionnairesProvider,
+    private questionnairesProvider: QuestionnairesProvider,
     private modal: ModalController,
-    private studies: StudiesProvider
+    private studies: StudiesProvider,
+    private loadingController: LoadingController,
+    private confirmation: ConfirmationProvider
   ) {
-    questionnaires.listAll().subscribe(q => this.questionnaires = q);
+    this.loadData();
+  }
+
+  private loadData(): Observable<any> {
+    return ensure(this.questionnairesProvider.listAll().map(q => this.questionnaires = q));
   }
 
   private updateGroups() {
     this.studies.listAll().subscribe(studies => {
       this.groupedQuestionnaires = groupArray(this.questionnaires, q => new Optional(studies.find(s => s.id === q.studyId))
-        .map(s => s.name).getOrElse('<no study>'));
+        .map(s => `${s.id}: ${s.name}`).getOrElse('<no study>'));
     });
   }
 
@@ -48,7 +57,7 @@ export class QuestionnairesEditorPage {
     overlay.onWillDismiss(data => {
       if (data.questionnaire)
         this.questionnaires[this.questionnaires.length] = data.questionnaire;
-        this.updateGroups();
+      this.updateGroups();
     });
     overlay.present();
   }
@@ -69,6 +78,22 @@ export class QuestionnairesEditorPage {
     });
 
     overlay.present();
+  }
+
+  duplicate(questionnaire: Questionnaire) {
+    this.confirmation.confirm('This will duplicate this questionnaire and all its questions. Continue?').subscribe(confirmed => {
+      if (!confirmed) return;
+
+      const loading = this.loadingController.create();
+      loading.present();
+
+      this.questionnairesProvider.duplicate(questionnaire.id).subscribe(dupe => {
+        this.loadData().subscribe(() => {
+          this.edit(this.questionnaires.find(q => q.id === dupe.id));
+          loading.dismiss();
+        });
+      });
+    });
   }
 
   editSchedules(questionnaire: Questionnaire) {

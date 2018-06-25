@@ -24,4 +24,8 @@ export class QuestionnairesProvider {
   delete(id: number): Observable<any> {
     return this.rest.delete(`questionnaires/${id}`);
   }
+
+  duplicate(id: number): Observable<Questionnaire> {
+    return this.rest.post(`questionnaires/${id}/duplicate`, null).map(q => q as Questionnaire);
+  }
 }
