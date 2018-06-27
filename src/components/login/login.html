@@ -41,7 +41,8 @@
     Centre for Chronobiology. You will receive a new token to set a new password.
   </p>
 
-  <button ion-button clear color="dark" (click)="registration = !registration" class="register-toggle">
+  <!-- XXX: hiding registration button for now, as it's not useful (yet) -->
+  <button *ngIf="false" ion-button clear color="dark" (click)="registration = !registration" class="register-toggle">
     <ng-container *ngIf="!registration">No account yet? Register</ng-container>
     <ng-container *ngIf="registration">Already registered? Log in</ng-container>
     <ion-icon name="arrow-forward" class="switch-button-icon"></ion-icon>
