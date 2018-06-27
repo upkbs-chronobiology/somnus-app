@@ -12,12 +12,6 @@
         <ion-label>{{question.content}}</ion-label>
       </button>
     </ion-item-group>
-
-    <ion-fab bottom right>
-      <button ion-fab (click)="createQuestion()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-fab>
   </ng-container>
 
   <ng-template #loadingIndicator>
@@ -26,3 +20,9 @@
     </centrizer>
   </ng-template>
 </ion-content>
+
+<ion-fab bottom right *ngIf="groupedQuestions">
+  <button ion-fab (click)="createQuestion()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>
