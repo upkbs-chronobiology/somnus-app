@@ -1,8 +1,21 @@
 <ion-content>
-  <ng-container *ngFor="let study of studies">
-    <study-editor [study]="study"></study-editor>
-    <hr>
+  <ng-container *ngIf="studies; else loadingIndicator">
+    <button ion-button icon-left block clear (click)="loadData()">
+      <ion-icon name="refresh"></ion-icon>
+      Refresh
+    </button>
+
+    <ng-container *ngFor="let study of studies">
+      <study-editor [study]="study"></study-editor>
+      <hr>
+    </ng-container>
+    <study-editor new (create)="appendNew()"></study-editor>
+    <ng-container #newPlaceholder></ng-container>
   </ng-container>
-  <study-editor new (create)="appendNew()"></study-editor>
-  <ng-container #newPlaceholder></ng-container>
+
+  <ng-template #loadingIndicator>
+    <centrizer>
+      <ion-spinner name="dots"></ion-spinner>
+    </centrizer>
+  </ng-template>
 </ion-content>

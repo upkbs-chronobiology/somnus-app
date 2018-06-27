@@ -1,5 +1,10 @@
 <ion-content>
   <ng-container *ngIf="groupedQuestions; else loadingIndicator">
+    <button ion-button icon-left block clear (click)="loadData()">
+      <ion-icon name="refresh"></ion-icon>
+      Refresh
+    </button>
+
     <i *ngIf="!questions.length">No questions yet</i>
 
     <ion-item-group *ngFor="let key of groupedQuestions | keys | sort">
@@ -16,7 +21,7 @@
 
   <ng-template #loadingIndicator>
     <centrizer>
-      <ion-spinner></ion-spinner>
+      <ion-spinner name="dots"></ion-spinner>
     </centrizer>
   </ng-template>
 </ion-content>

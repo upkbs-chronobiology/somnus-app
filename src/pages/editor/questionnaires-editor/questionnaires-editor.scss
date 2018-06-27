@@ -1,4 +1,11 @@
 page-questionnaires-editor {
+  // leave some space to prevent fab from covering last item
+  ion-content .scroll-content::after {
+    content: "";
+    display: block;
+    height: 3em;
+  }
+
   .line-button-icon {
     @media screen and (max-width: map-get($grid-max-widths, sm)) {
       padding-right: 0;

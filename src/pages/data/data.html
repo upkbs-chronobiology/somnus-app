@@ -11,6 +11,12 @@
     <ion-select [(ngModel)]="studyToExport" interface="popover" [disabled]="loading" (ionChange)="flush()">
       <ion-option *ngFor="let study of studies" [value]="study">{{study.name}}</ion-option>
     </ion-select>
+    <ion-buttons item-end>
+      <button ion-button icon-left clear *ngIf="studies" (click)="loadData()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+      <ion-spinner *ngIf="!studies" color="primary"></ion-spinner>
+    </ion-buttons>
   </ion-item>
   <div>
     <button ion-button block *ngIf="studyToExport && !loading && !blobUrl" [disabled]="!studyToExport"

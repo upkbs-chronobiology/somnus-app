@@ -14,8 +14,13 @@ export class StudiesEditorPage {
   @ViewChild('newPlaceholder', { read: ViewContainerRef })
   content: ViewContainerRef;
 
-  constructor(studiesProvider: StudiesProvider, private componentFactoryResolver: ComponentFactoryResolver) {
-    studiesProvider.listAll().subscribe(s => this.studies = s);
+  constructor(private studiesProvider: StudiesProvider, private componentFactoryResolver: ComponentFactoryResolver) {
+    this.loadData();
+  }
+
+  private loadData() {
+    delete this.studies;
+    this.studiesProvider.listAll().subscribe(s => this.studies = s);
   }
 
   ionViewDidLoad() {

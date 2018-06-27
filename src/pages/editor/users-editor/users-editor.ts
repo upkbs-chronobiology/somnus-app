@@ -21,7 +21,12 @@ export class UsersEditorPage {
     private modal: ModalController,
     private toast: ToastProvider
   ) {
-    usersProvider.listAll().subscribe(users => this.users = users);
+    this.loadData();
+  }
+
+  private loadData() {
+    delete this.users;
+    this.usersProvider.listAll().subscribe(users => this.users = users);
   }
 
   ionViewDidLoad() {

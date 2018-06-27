@@ -17,11 +17,16 @@ export class DataPage {
   loading: boolean;
 
   constructor(
-    studiesProvider: StudiesProvider,
+    private studiesProvider: StudiesProvider,
     private data: DataProvider,
     private domSanitizer: DomSanitizer
   ) {
-    studiesProvider.listAll().subscribe(s => this.studies = s);
+    this.loadData();
+  }
+
+  private loadData() {
+    delete this.studies;
+    this.studiesProvider.listAll().subscribe(s => this.studies = s);
   }
 
   ionViewDidLoad() {

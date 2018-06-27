@@ -1,12 +1,25 @@
 <ion-content>
-  <button ion-item *ngFor="let user of users" (click)="edit(user)">
-    <ion-label>{{user.name}}</ion-label>
-    <ion-badge item-end>{{user.role}}</ion-badge>
-  </button>
-
-  <ion-fab bottom right>
-    <button ion-fab (click)="createUser()">
-      <ion-icon name="add"></ion-icon>
+  <ng-container *ngIf="users; else loadingIndicator">
+    <button ion-button icon-left block clear (click)="loadData()">
+      <ion-icon name="refresh"></ion-icon>
+      Refresh
     </button>
-  </ion-fab>
+
+    <button ion-item *ngFor="let user of users" (click)="edit(user)">
+      <ion-label>{{user.name}}</ion-label>
+      <ion-badge item-end>{{user.role}}</ion-badge>
+    </button>
+  </ng-container>
+
+  <ng-template #loadingIndicator>
+    <centrizer>
+      <ion-spinner name="dots"></ion-spinner>
+    </centrizer>
+  </ng-template>
 </ion-content>
+
+<ion-fab bottom right *ngIf="users">
+  <button ion-fab (click)="createUser()">
+    <ion-icon name="add"></ion-icon>
+  </button>
+</ion-fab>

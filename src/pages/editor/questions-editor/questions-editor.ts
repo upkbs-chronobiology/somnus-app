@@ -20,12 +20,17 @@ export class QuestionsEditorPage {
   groupedQuestions: { [key: string]: Question[] };
 
   constructor(
-    questionsProvider: QuestionsProvider,
+    private questionsProvider: QuestionsProvider,
     private studiesProvider: StudiesProvider,
     private questionnairesProvider: QuestionnairesProvider,
     private modal: ModalController
   ) {
-    questionsProvider.listAll().subscribe(list => {
+    this.loadData();
+  }
+
+  loadData() {
+    delete this.groupedQuestions;
+    this.questionsProvider.listAll().subscribe(list => {
       this.questions = list;
       this.updateGroupedQuestions();
     });

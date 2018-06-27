@@ -42,6 +42,7 @@ export class QuestionnairesEditorPage {
   }
 
   private loadData(): Observable<any> {
+    delete this.groupedQuestionnaires;
     return ensure(this.questionnairesProvider.listAll().map(q => this.questionnaires = q));
   }
 
@@ -88,10 +89,8 @@ export class QuestionnairesEditorPage {
       loading.present();
 
       this.questionnairesProvider.duplicate(questionnaire.id).subscribe(dupe => {
-        this.loadData().subscribe(() => {
-          this.edit(this.questionnaires.find(q => q.id === dupe.id));
-          loading.dismiss();
-        });
+        loading.dismiss();
+        this.loadData().subscribe(() => this.edit(this.questionnaires.find(q => q.id === dupe.id)));
       });
     });
   }

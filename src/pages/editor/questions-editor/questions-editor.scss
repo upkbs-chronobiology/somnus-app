@@ -1,4 +1,11 @@
 questions-editor {
+  // leave some space to prevent fab from covering last item
+  ion-content .scroll-content::after {
+    content: "";
+    display: block;
+    height: 3em;
+  }
+
   .new-question {
     display: flex;
     align-items: flex-end;
