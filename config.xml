@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="000002" id="ch.somnus.app" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="000100" id="ch.somnus.app" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Somnus</name>
     <description>A research survey app centered around chronobiology.</description>
     <author email="info@chronobiology.ch" href="http://somnus.ch/">Somnus by chronobiology.ch</author>
