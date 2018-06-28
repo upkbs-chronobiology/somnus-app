@@ -8,6 +8,7 @@ import { Moment } from 'moment';
 import { NotificationsProvider } from '../../providers/notifications/notifications';
 import { Observable } from 'rxjs/Observable';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Platform } from 'ionic-angular';
 import { Prompt, ScheduleManager } from '../../util/schedule-manager';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
@@ -35,7 +36,8 @@ export class QuestionsPage implements OnInit {
     private questionsProvider: QuestionsProvider,
     private toast: ToastProvider,
     private changeDetectorRef: ChangeDetectorRef,
-    private notifications: NotificationsProvider
+    private notifications: NotificationsProvider,
+    private platform: Platform
   ) {
   }
 
@@ -43,10 +45,21 @@ export class QuestionsPage implements OnInit {
     this.schedulesProvider.listMine().subscribe(schedules => {
       this.scheduleManager = new ScheduleManager(schedules);
 
-      this.scheduleManager.allFutureDues().forEach(prompt =>
-        this.notifications.schedule('You have new questions', prompt.moment));
+      this.updateNotifications();
+      this.platform.resume.subscribe(() => this.updateNotifications());
 
       this.loadQuestions();
+    });
+  }
+
+  private updateNotifications() {
+    this.notifications.cancelAll().then(() => {
+      // only schedule a few to prevent issues with limits (at least on iOS)
+      const items = this.scheduleManager.nextNDues(5).map(prompt => ({
+        message: 'You have new questions',
+        time: prompt.moment
+      }));
+      this.notifications.schedule(items);
     });
   }
 
@@ -144,6 +157,8 @@ export class QuestionsPage implements OnInit {
       this.submitting = false;
       this.toast.show(`${createdAnswers.length} answer${createdAnswers.length === 1 ? '' : 's'} successfully submitted`);
       this.consumeBacklog();
+
+      this.updateNotifications();
     }, error => {
       this.submitting = false;
       this.toast.show(`Answer submission failed: ${error.message || error}`, true);

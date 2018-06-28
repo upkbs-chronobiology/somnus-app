@@ -61,6 +61,10 @@ export class ScheduleManager {
     return this.accumulatedPrompts.find(p => p.moment > reference);
   }
 
+  nextNDues(number: number, reference: Moment = moment()): Prompt[] {
+    return this.accumulatedPrompts.filter(p => p.moment > reference).slice(0, number);
+  }
+
   allFutureDues(reference: Moment = moment()): Prompt[] {
     return this.accumulatedPrompts.filter(prompt => prompt.moment.isAfter(reference));
   }
