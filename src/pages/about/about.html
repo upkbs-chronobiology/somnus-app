@@ -20,4 +20,6 @@
   <p>You are currently logged in as
     <strong>{{currentUserName}}</strong>.</p>
   <button ion-button (click)="logOut()">Log out</button>
+
+  <p *ngIf="appVersion" class="version-info">Somnus app {{appVersion}}</p>
 </ion-content>

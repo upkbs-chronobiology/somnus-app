@@ -23,6 +23,7 @@
     "@angular/http": "5.2.10",
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
+    "@ionic-native/app-version": "^4.9.0",
     "@ionic-native/core": "4.7.0",
     "@ionic-native/device": "^4.7.0",
     "@ionic-native/header-color": "^4.7.0",
@@ -32,6 +33,7 @@
     "cordova-android": "~7.0.0",
     "cordova-browser": "~5.0.3",
     "cordova-ios": "~4.5.4",
+    "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-headercolor": "^1.0.0",
@@ -78,7 +80,8 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-headercolor": {},
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-app-version": {}
     },
     "platforms": [
       "browser",

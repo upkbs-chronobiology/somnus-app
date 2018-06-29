@@ -1,5 +1,6 @@
 import { AboutPage } from '../pages/about/about';
 import { AnswersProvider } from '../providers/answers/answers';
+import { AppVersion } from '@ionic-native/app-version';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
 import { BrowserModule } from '@angular/platform-browser';
@@ -73,6 +74,7 @@ import { UsersProvider } from '../providers/users/users';
     LocalNotifications,
     NotificationsProvider,
     Device,
+    AppVersion,
   ]
 })
 export class AppModule { }
