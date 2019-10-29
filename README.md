@@ -63,3 +63,11 @@ And further up errors stemming from C++ code compilation (probably referring to 
 
 This can be caused by API mismatches between v8 and node-sass, meaning that the versions of node and node-sass are not compatible.
 If the same build used to work before and/or on other machines, it probably had a different node version installed.
+
+### Cryptic errors in @types/jasmine
+
+Transpilation fails with errors in `@types/jasmine/index.d.ts` where error lines and columns don't quite seem to match actual code.
+Error messages typically claim to miss some syntax elements, like ';', '(', or ']'.
+
+Cause for this is likely a mismatch between node and @types/jasmine versions.
+E.g. @types/jasmine 2.8.6 seems to work with node 10.x.
