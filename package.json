@@ -1,8 +1,8 @@
 {
   "name": "somnus",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Somnus",
+  "homepage": "https://somnus.ch/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -65,12 +65,11 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.9",
-    "node-sass": "^4.9.0",
     "null-loader": "^0.1.1",
     "ts-loader": "^3.5.0",
     "typescript": "2.6.2"
   },
-  "description": "An Ionic project",
+  "description": "Cross-platform client app of Somnus",
   "cordova": {
     "plugins": {
       "cordova-plugin-local-notification": {},

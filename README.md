@@ -49,3 +49,17 @@ Background info: https://forum.ionicframework.com/t/api-request-404-from-cache-o
 ### Unwanted resources generation
 
 By default, Ionic generates resources during platform-add. Prevent this by adding the `--no-resources` flag.
+
+## Troubleshooting
+
+### node-sass build fails
+
+This might surface as a failing ionic build, npm install or node-sass rebuild.
+The error message contains something along the lines of:
+
+> Error: `make` failed with exit code: 2
+
+And further up errors stemming from C++ code compilation (probably referring to v8).
+
+This can be caused by API mismatches between v8 and node-sass, meaning that the versions of node and node-sass are not compatible.
+If the same build used to work before and/or on other machines, it probably had a different node version installed.
