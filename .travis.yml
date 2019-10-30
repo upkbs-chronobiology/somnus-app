@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "node" # latest stable release
+  - "lts/*" # latest lts version
 
 branches:
   only:
