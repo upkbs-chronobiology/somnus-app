@@ -62,3 +62,6 @@ www/
 .sourcemaps/
 plugins/
 platforms/
+
+# despite recommendations, keeping package-lock.json versioned is silly
+package-lock.json
