@@ -3,7 +3,7 @@ import { AnswersProvider } from './answers';
 import { AnswerType } from '../../model/answer-type';
 import { AppModule } from '../../app/app.module';
 import { loginAsTestUser, triggerReady } from '../../test/test-utils';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../questions/questions';
 import { TestBed } from '@angular/core/testing';

@@ -1,6 +1,6 @@
-import { AlertController, ModalController } from 'ionic-angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { ToastProvider } from '../../../providers/toast/toast';
 import { User } from '../../../model/user';

@@ -1,6 +1,6 @@
 import { AuthRestProvider } from '../auth-rest/auth-rest';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Questionnaire } from '../../model/questionnaire';
 
 @Injectable()

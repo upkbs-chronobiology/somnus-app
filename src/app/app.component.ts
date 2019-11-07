@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { HeaderColor } from '@ionic-native/header-color';
-import { Platform } from 'ionic-angular';
+import { HeaderColor } from '@ionic-native/header-color/ngx';
+import { Platform } from '@ionic/angular';
 import { PRIMARY_HEX } from '../util/theme';
-import { StatusBar } from '@ionic-native/status-bar';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({

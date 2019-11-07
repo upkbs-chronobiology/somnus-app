@@ -1,7 +1,7 @@
 import { Credentials, Particulars } from '../../model/credentials';
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { RestProvider } from '../rest/rest';
 import { Subject } from 'rxjs';
 import { User } from '../../model/user';

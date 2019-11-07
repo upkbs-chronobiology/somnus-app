@@ -4,9 +4,10 @@ import { ErrorResponse, RestProvider } from '../rest/rest';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginComponent } from '../../components/login/login';
-import { ModalController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { ModalController } from '@ionic/angular';
+import { Observable, empty, of, throwError } from 'rxjs';
+import { Subject } from 'rxjs';
+import { concatMap, catchError, map } from 'rxjs/operators';
 
 const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 
@@ -70,13 +71,17 @@ export class AuthRestProvider {
     // TODO: Notify server to forget token
     // XXX: A bit hacky, maybe `this.logIn()` and manual cleanup instead?
     location.reload();
-    return Observable.empty();
+    return empty();
   }
 
   private fetchResponse<T>(
     method: string, endpoint: string, authenticate: boolean = true, options = {}
   ): Observable<HttpResponse<T>> {
-    const loginAndRetry: () => Observable<HttpResponse<T>> = () => this.logIn().concatMap(() => this.fetchResponse(method, endpoint, authenticate, options));
+    const loginAndRetry: () => Observable<HttpResponse<T>> = () => this.logIn().pipe(
+      concatMap(() => this.fetchResponse(method, endpoint, authenticate, options)),
+      // XXX: This blind casting might be dangerous - we should do some type checking
+      map(x => x as HttpResponse<T>)
+    );
 
     if (authenticate && !this.authToken)
       return loginAndRetry();
@@ -84,24 +89,29 @@ export class AuthRestProvider {
     return this.rest.fetchResponse(method, endpoint, {
       headers: this.buildHeaders(authenticate),
       ...options
-    }).concatMap((response: HttpResponse<Object>): Observable<HttpResponse<Object>> => {
-      if (response.status === UNAUTHORIZED)
-        return loginAndRetry();
+    }).pipe(
+      concatMap((response: HttpResponse<Object>): Observable<HttpResponse<Object>> => {
+        if (response.status === UNAUTHORIZED)
+          return loginAndRetry();
 
-      return Observable.of(response);
-    }).catch(error => {
-      if (error.status === UNAUTHORIZED)
-        return loginAndRetry();
+        return of(response);
+      }),
+      catchError(error => {
+        if (error.status === UNAUTHORIZED)
+          return loginAndRetry();
 
-      // XXX: Why is this?
-      const body = error.error;
-      if (body.message) {
-        const message = (body as ErrorResponse).message;
-        return Observable.throw(new Error(message));
-      }
+        // XXX: Why is this?
+        const body = error.error;
+        if (body.message) {
+          const message = (body as ErrorResponse).message;
+          return throwError(new Error(message));
+        }
 
-      return Observable.throw(error);
-    });
+        return throwError(error);
+      }),
+      // XXX: This blind casting might be dangerous - we should do some type checking
+      map(x => x as HttpResponse<T>)
+    );
   }
 
   private fetchBody<T>(

@@ -1,19 +1,19 @@
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import * as moment from 'moment';
-import { Answer } from '../../model/answer';
-import { AnswersProvider } from '../../providers/answers/answers';
-import { AnswerType } from '../../model/answer-type';
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { InclusiveRange } from '../../model/inclusive-range';
 import { Moment } from 'moment';
-import { NotificationsProvider } from '../../providers/notifications/notifications';
-import { Observable } from 'rxjs/Observable';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Platform } from 'ionic-angular';
-import { Prompt, ScheduleManager } from '../../util/schedule-manager';
+import { empty, from } from 'rxjs';
+import { catchError, filter, flatMap, map, toArray } from 'rxjs/operators';
+import { Answer } from '../../model/answer';
+import { AnswerType } from '../../model/answer-type';
+import { InclusiveRange } from '../../model/inclusive-range';
 import { Question } from '../../model/question';
+import { AnswersProvider } from '../../providers/answers/answers';
+import { NotificationsProvider } from '../../providers/notifications/notifications';
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { SchedulesProvider } from '../../providers/schedules/schedules';
 import { ToastProvider } from '../../providers/toast/toast';
+import { Prompt, ScheduleManager } from '../../util/schedule-manager';
 
 @Component({
   selector: 'page-questions',
@@ -72,15 +72,15 @@ export class QuestionsPage implements OnInit {
       return;
     }
 
-    Observable.from(recents).flatMap(recent =>
-      this.answersProvider.listMineByQuestionnaire(recent.schedule.questionnaireId)
-        .map(answers => this.hasAnswer(recent, answers) ? null : recent))
-      .filter(recent => !!recent)
-      .catch((err, caught) => {
+    from(recents).pipe(flatMap(recent =>
+      this.answersProvider.listMineByQuestionnaire(recent.schedule.questionnaireId).pipe(
+        map(answers => this.hasAnswer(recent, answers) ? null : recent))),
+      filter(recent => !!recent),
+      catchError((err, caught) => {
         this.toast.show(`Loading questions failed: ${err.message || err}`, true);
-        return Observable.empty<Prompt>();
-      })
-      .toArray()
+        return empty();
+      }),
+      toArray())
       .subscribe(unansweredRecents => {
         if (!unansweredRecents.length)
           this.noneDue();

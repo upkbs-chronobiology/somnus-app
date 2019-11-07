@@ -11,7 +11,7 @@ export class StudiesEditorPage {
 
   studies: Study[];
 
-  @ViewChild('newPlaceholder', { read: ViewContainerRef })
+  @ViewChild('newPlaceholder', { read: ViewContainerRef, static: true })
   content: ViewContainerRef;
 
   constructor(private studiesProvider: StudiesProvider, private componentFactoryResolver: ComponentFactoryResolver) {

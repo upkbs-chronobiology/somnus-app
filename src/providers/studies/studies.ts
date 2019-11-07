@@ -1,7 +1,7 @@
 import { AuthRestProvider } from '../auth-rest/auth-rest';
 import { CacheProvider } from '../cache/cache';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Study } from '../../model/study';
 import { User } from '../../model/user';
 

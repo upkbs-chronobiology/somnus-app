@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LocalNotifications } from '@ionic-native/local-notifications';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Moment } from 'moment';
-import { Platform } from 'ionic-angular';
+import { Platform } from '@ionic/angular';
 import { PRIMARY_HEX } from '../../util/theme';
 
 @Injectable()

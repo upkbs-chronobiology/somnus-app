@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { PW_MIN_LENGTH } from '../login/login';
 import { ToastProvider } from '../../providers/toast/toast';
 import { User } from '../../model/user';
-import { ViewController } from 'ionic-angular';
+import { ViewController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'reset-password',
@@ -36,7 +37,7 @@ export class ResetPasswordComponent {
     this.loadingUser = true;
 
     this.auth.getUserForToken(this.token)
-      .finally(() => this.loadingUser = false)
+      .pipe(finalize(() => this.loadingUser = false))
       .subscribe(user => {
         this.user = user;
       }, err => this.tokenError = 'Token is not valid');

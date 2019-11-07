@@ -1,6 +1,6 @@
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage } from '@ionic/angular';
 import { QuestionnairesEditorPage } from './questionnaires-editor/questionnaires-editor';
 import { QuestionsEditorPage } from './questions-editor/questions-editor';
 import { StudiesEditorPage } from './studies-editor/studies-editor';

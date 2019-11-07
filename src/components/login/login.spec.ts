@@ -3,9 +3,9 @@ import { async, ComponentFixture, getTestBed, TestBed } from '@angular/core/test
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CentrizerComponent } from '../centrizer/centrizer';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ViewController } from 'ionic-angular';
+import { IonicModule, ViewController } from '@ionic/angular';
 import { LoginComponent } from './login';
-import { mockView } from 'ionic-angular/util/mock-providers';
+import { mockView } from '@ionic/angular/util/mock-providers';
 import { ToastProvider } from '../../providers/toast/toast';
 
 describe('LoginComponent', () => {

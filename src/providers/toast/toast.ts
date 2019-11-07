@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController } from '@ionic/angular';
 
 const TOAST_DURATION = 4000;
 

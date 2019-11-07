@@ -1,5 +1,5 @@
 import { CacheProvider } from './cache';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 describe('CacheProvider', () => {
 

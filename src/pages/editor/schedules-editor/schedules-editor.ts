@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ModalController, NavParams, ViewController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { ModalController, NavParams, ViewController } from '@ionic/angular';
+import { combineLatest } from 'rxjs';
 import { Questionnaire } from '../../../model/questionnaire';
 import { Schedule } from '../../../model/schedule';
 import { ScheduleEditorComponent } from '../../../components/schedule-editor/schedule-editor';
@@ -35,7 +35,7 @@ export class SchedulesEditorComponent {
 
     const participants = this.studiesProvider.listParticipants(this.questionnaire.studyId);
     const schedules = this.schedulesProvider.listForQuestionnaire(this.questionnaire.id);
-    Observable.combineLatest(participants, schedules).subscribe((results: [User[], Schedule[]]) => {
+    combineLatest(participants, schedules).subscribe((results: [User[], Schedule[]]) => {
       this.participants = results[0];
       this.schedules = results[1];
     });

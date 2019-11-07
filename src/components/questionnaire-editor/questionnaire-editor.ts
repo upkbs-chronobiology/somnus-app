@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
-import { NavParams, ViewController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { NavParams, ViewController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { Questionnaire } from '../../model/questionnaire';
 import { QuestionnairesProvider } from '../../providers/questionnaires/questionnaires';
 import { StudiesProvider } from '../../providers/studies/studies';

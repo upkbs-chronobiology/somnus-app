@@ -1,5 +1,5 @@
 import { ensure } from './streams';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 describe('ensure', () => {
   it('should execute an observable without external subscriber', done => {

@@ -1,8 +1,8 @@
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
 import { Credentials } from '../model/credentials';
-import { Observable } from 'rxjs/Observable';
-import { Platform } from 'ionic-angular';
+import { Observable } from 'rxjs';
+import { Platform } from '@ionic/angular';
 import { TestBed } from '@angular/core/testing';
 
 // expected to be admin

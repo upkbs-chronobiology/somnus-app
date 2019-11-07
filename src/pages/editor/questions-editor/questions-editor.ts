@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { groupArray } from '../../../util/arrays';
-import { ModalController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { ModalController } from '@ionic/angular';
+import { combineLatest } from 'rxjs';
 import { Optional } from '../../../util/optional';
 import { Question } from '../../../model/question';
 import { QuestionEditorComponent } from '../../../components/question-editor/question-editor';
@@ -37,7 +37,7 @@ export class QuestionsEditorPage {
   }
 
   private updateGroupedQuestions() {
-    Observable.combineLatest(
+    combineLatest(
       this.studiesProvider.listAll(),
       this.questionnairesProvider.listAll()
     ).subscribe(([studies, questionnaires]) => {

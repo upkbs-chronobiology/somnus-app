@@ -1,10 +1,6 @@
-import { AppModule } from '../../app/app.module';
+import { TestBed } from '@angular/core/testing';
 import { AuthRestProvider } from '../auth-rest/auth-rest';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from 'ionic-angular';
 import { QuestionsProvider } from './questions';
-import { RestProvider } from '../rest/rest';
-import { StatusBar } from '@ionic-native/status-bar';
 
 const mockAuthRestProvider = {} as AuthRestProvider;
 

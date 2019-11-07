@@ -1,9 +1,10 @@
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component } from '@angular/core';
 import { Credentials } from '../../model/credentials';
-import { ModalController, ViewController } from 'ionic-angular';
+import { ModalController, ViewController } from '@ionic/angular';
 import { ResetPasswordComponent } from '../reset-password/reset-password';
 import { ToastProvider } from '../../providers/toast/toast';
+import { finalize } from 'rxjs/operators';
 
 export const PW_MIN_LENGTH = 8;
 
@@ -40,7 +41,7 @@ export class LoginComponent {
   private register() {
     // currently works because particulars have the same form as credentials
     this.authentication.register(this.credentials)
-      .finally(() => this.submitting = false)
+      .pipe(finalize(() => this.submitting = false))
       .subscribe(() => {
         this.showToast('Registration successful', true);
         this.registration = false;
@@ -50,7 +51,7 @@ export class LoginComponent {
 
   private login() {
     this.authentication.login(this.credentials)
-      .finally(() => this.submitting = false)
+      .pipe(finalize(() => this.submitting = false))
       .subscribe((token: string) => {
         this.showToast('Login successful', true);
         this.view.dismiss(token);

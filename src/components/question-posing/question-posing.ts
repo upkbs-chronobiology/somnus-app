@@ -1,6 +1,6 @@
 import { Answer } from '../../model/answer';
 import { AnswerType } from '../../model/answer-type';
-import { Checkbox, Platform } from 'ionic-angular';
+import { Checkbox, Platform } from '@ionic/angular';
 import { Component, Input, QueryList, ViewChildren } from '@angular/core';
 import { Question } from '../../model/question';
 

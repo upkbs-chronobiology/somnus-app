@@ -1,6 +1,6 @@
 import { ComponentsModule } from '../../components/components.module';
 import { EditorPage } from './editor';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { PipesModule } from '../../pipes/pipes.module';
 import { QuestionEditorComponent } from '../../components/question-editor/question-editor';

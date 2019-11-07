@@ -1,13 +1,14 @@
 import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
-import { ModalController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
+import { ModalController } from '@ionic/angular';
+import { Observable, empty } from 'rxjs';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
 import { ToastProvider } from '../../providers/toast/toast';
 import { User } from '../../model/user';
 import { UserPickerComponent } from '../user-picker/user-picker';
 import 'rxjs/operator/finally';
+import { finalize, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'study-editor',
@@ -95,16 +96,17 @@ export class StudyEditorComponent implements OnInit {
 
       this.sending = true;
       this.studiesProvider.delete(this.editedStudy.id)
-        .finally(() => this.sending = false)
-        .catch((error, caught) => {
-          if (error.message) {
-            this.toast.show(`Study deletion failed: ${error.message}`, true);
-            return Observable.empty();
-          }
+        .pipe(
+          finalize(() => this.sending = false),
+          catchError((error, caught) => {
+            if (error.message) {
+              this.toast.show(`Study deletion failed: ${error.message}`, true);
+              return empty();
+            }
 
-          return Observable.throw(error);
-        })
-        .subscribe(() => {
+            return Observable.throw(error);
+          })
+        ).subscribe(() => {
           this.sending = false;
           // XXX: Workaround for weird animation/transition-interference:
           // https://stackoverflow.com/questions/49651265/transition-right-after-animation?noredirect=1#comment86310950_49651265

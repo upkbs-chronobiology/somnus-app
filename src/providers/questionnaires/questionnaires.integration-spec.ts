@@ -1,6 +1,6 @@
 import { AppModule } from '../../app/app.module';
 import { loginAsTestUser, triggerReady } from '../../test/test-utils';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Questionnaire } from '../../model/questionnaire';
 import { QuestionnairesProvider } from './questionnaires';
 import { TestBed } from '@angular/core/testing';

@@ -1,33 +1,32 @@
-import { AboutPage } from '../pages/about/about';
-import { AnswersProvider } from '../providers/answers/answers';
-import { AppVersion } from '@ionic-native/app-version';
-import { AuthenticationProvider } from '../providers/authentication/authentication';
-import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
-import { BrowserModule } from '@angular/platform-browser';
-import { CacheProvider } from '../providers/cache/cache';
-import { ComponentsModule } from '../components/components.module';
-import { ConfirmationProvider } from '../providers/confirmation/confirmation';
-import { DataPage } from '../pages/data/data';
-import { DataProvider } from '../providers/data/data';
-import { Device } from '@ionic-native/device';
-import { EditorPageModule } from '../pages/editor/editor.module';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { HeaderColor } from '@ionic-native/header-color';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { LocalNotifications } from '@ionic-native/local-notifications';
-import { MyApp } from './app.component';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Device } from '@ionic-native/device/ngx';
+import { HeaderColor } from '@ionic-native/header-color/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ComponentsModule } from '../components/components.module';
+import { AboutPage } from '../pages/about/about';
+import { DataPage } from '../pages/data/data';
+import { EditorPageModule } from '../pages/editor/editor.module';
+import { QuestionsPage } from '../pages/questions/questions';
+import { TabsPage } from '../pages/tabs/tabs';
+import { AnswersProvider } from '../providers/answers/answers';
+import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
+import { CacheProvider } from '../providers/cache/cache';
+import { ConfirmationProvider } from '../providers/confirmation/confirmation';
+import { DataProvider } from '../providers/data/data';
 import { NotificationsProvider } from '../providers/notifications/notifications';
 import { QuestionnairesProvider } from '../providers/questionnaires/questionnaires';
-import { QuestionsPage } from '../pages/questions/questions';
 import { QuestionsProvider } from '../providers/questions/questions';
 import { RestProvider } from '../providers/rest/rest';
 import { SchedulesProvider } from '../providers/schedules/schedules';
-import { StatusBar } from '@ionic-native/status-bar';
 import { StudiesProvider } from '../providers/studies/studies';
-import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
+import { MyApp } from './app.component';
 
 
 @NgModule({
@@ -41,11 +40,10 @@ import { UsersProvider } from '../providers/users/users';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
     ComponentsModule,
     EditorPageModule
   ],
-  bootstrap: [IonicApp],
+  bootstrap: [MyApp],
   entryComponents: [
     MyApp,
     AboutPage,
@@ -56,7 +54,6 @@ import { UsersProvider } from '../providers/users/users';
   providers: [
     StatusBar,
     HeaderColor,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthenticationProvider,
     RestProvider,
     HttpClientModule,

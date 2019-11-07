@@ -1,15 +1,16 @@
-import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { ConfirmationProvider } from '../../../providers/confirmation/confirmation';
-import { ensure } from '../../../util/streams';
-import { groupArray } from '../../../util/arrays';
-import { LoadingController, ModalController } from 'ionic-angular';
-import { Observable } from 'rxjs/Observable';
-import { Optional } from '../../../util/optional';
-import { Questionnaire } from '../../../model/questionnaire';
+import { Component } from '@angular/core';
+import { LoadingController, ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { QuestionnaireEditorComponent } from '../../../components/questionnaire-editor/questionnaire-editor';
+import { Questionnaire } from '../../../model/questionnaire';
+import { ConfirmationProvider } from '../../../providers/confirmation/confirmation';
 import { QuestionnairesProvider } from '../../../providers/questionnaires/questionnaires';
-import { SchedulesEditorComponent } from '../schedules-editor/schedules-editor';
 import { StudiesProvider } from '../../../providers/studies/studies';
+import { groupArray } from '../../../util/arrays';
+import { Optional } from '../../../util/optional';
+import { ensure } from '../../../util/streams';
+import { SchedulesEditorComponent } from '../schedules-editor/schedules-editor';
 
 @Component({
   selector: 'page-questionnaires-editor',
@@ -28,9 +29,6 @@ export class QuestionnairesEditorPage {
 
   groupedQuestionnaires: { [key: string]: Questionnaire[] };
 
-  @ViewChild('newPlaceholder', { read: ViewContainerRef })
-  newPlaceholder: ViewContainerRef;
-
   constructor(
     private questionnairesProvider: QuestionnairesProvider,
     private modal: ModalController,
@@ -43,7 +41,7 @@ export class QuestionnairesEditorPage {
 
   private loadData(): Observable<any> {
     delete this.groupedQuestionnaires;
-    return ensure(this.questionnairesProvider.listAll().map(q => this.questionnaires = q));
+    return ensure(this.questionnairesProvider.listAll().pipe(map(q => this.questionnaires = q)));
   }
 
   private updateGroups() {

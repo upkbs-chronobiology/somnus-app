@@ -1,15 +1,16 @@
-import { Device } from '@ionic-native/device';
+import { Device } from '@ionic-native/device/ngx';
 import { ensure } from '../../util/streams';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IS_PROD } from '@environment';
-import { Observable } from 'rxjs/Observable';
-import { Platform } from 'ionic-angular';
+import { Observable } from 'rxjs';
+import { Platform } from '@ionic/angular';
 import { ReplaySubject } from 'rxjs';
 import { ToastProvider } from '../toast/toast';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/catch';
+import { flatMap, catchError } from 'rxjs/operators';
 
 export interface ErrorResponse {
   message: string;
@@ -42,15 +43,18 @@ export class RestProvider {
   public fetchResponse(
     method: string, endpoint: string, options = {}
   ): Observable<HttpResponse<Object>> {
-    return this.baseUrlObs.flatMap(baseUrl =>
-      this.http.request(method, `${baseUrl}/${endpoint}`, {
-        observe: 'response',
-        ...options
-      }).catch((error, caught) => {
+    return this.baseUrlObs.pipe(
+      flatMap(baseUrl =>
+        this.http.request(method, `${baseUrl}/${endpoint}`, {
+          observe: 'response',
+          ...options
+        })),
+      catchError((error, caught) => {
         if (error.status === 0)
           this.toast.show('The service cannot be reached at the moment', true);
         return Observable.throw(error);
-      }));
+      })
+    );
   }
 
   public get(endpoint: string): Observable<Object> {

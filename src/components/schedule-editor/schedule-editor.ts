@@ -1,9 +1,9 @@
-import { AlertController, NavParams, ViewController } from 'ionic-angular';
+import { AlertController, NavParams, ViewController } from '@ionic/angular';
 import { Component } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
 import { getDailyTimes } from '../../util/schedules';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Questionnaire } from '../../model/questionnaire';
 import { Schedule } from '../../model/schedule';
 import { SchedulesProvider } from '../../providers/schedules/schedules';
