@@ -1,6 +1,7 @@
 study-editor {
   display: block;
-  max-height: 50em;
+  max-height: 100em;
+  overflow: auto;
 
   // TODO: collect in file shared with other editor components
   &.deleted {
