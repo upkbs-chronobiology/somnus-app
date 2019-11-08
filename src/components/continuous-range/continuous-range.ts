@@ -1,6 +1,8 @@
 import { BaseInput } from 'ionic-angular/util/base-input';
 import { Component, Input } from '@angular/core';
-import { Config, Form, Item } from 'ionic-angular';
+import { Config } from 'ionic-angular/config/config';
+import { Form } from 'ionic-angular/util/form';
+import { Item } from 'ionic-angular/components/item/item';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ElementRef, Renderer } from '@angular/core';
 
