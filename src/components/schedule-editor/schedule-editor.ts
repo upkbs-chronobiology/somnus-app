@@ -100,14 +100,20 @@ export class ScheduleEditorComponent {
   }
 
   copyFromUser() {
+    const psNoSchedule =
+      this.allParticipants.filter(p => p !== this.participant && !this.getScheduleForUser(p))
+      .map(p => p.name);
     const alert = this.alertController.create({
       title: 'What user to copy from?',
       inputs: this.allParticipants.filter(p => p !== this.participant)
+        .filter(p => !!this.getScheduleForUser(p))
         .map(p => ({
           type: 'radio',
           label: p.name,
           value: p.name
         })),
+      message: psNoSchedule.length &&
+        `${psNoSchedule.join(', ')} ${psNoSchedule.length === 1 ? 'has' : 'have'} no schedule`,
       buttons: [
         'Cancel',
         {
@@ -130,7 +136,12 @@ export class ScheduleEditorComponent {
       return;
     }
 
-    this.editedSchedule = Schedule.clone(this.allSchedules.find(s => s.userId === user.id));
+    this.editedSchedule = Schedule.clone(this.getScheduleForUser(user));
     this.editedSchedule.userId = this.participant.id;
+  }
+
+  private getScheduleForUser(user: User): Schedule {
+    // XXX: Inefficient lookup - consider a map if this is too slow
+    return this.allSchedules.find(s => s.userId === user.id);
   }
 }
