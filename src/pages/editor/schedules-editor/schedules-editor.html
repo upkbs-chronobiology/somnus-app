@@ -20,8 +20,8 @@
       <button ion-item *ngFor="let participant of participants" (click)="editSchedule(participant)">
         <ion-label item-start>{{ participant.name }}</ion-label>
         <p item-content *ngIf="getScheduleFor(participant) as schedule; else noParticipant">
-          {{ schedule.startDate }} - {{ schedule.endDate }}, {{ schedule.startTime }} - {{ schedule.endTime
-          }}, {{ schedule.frequency }}⨉
+          {{ schedule.startDate }}&nbsp;⭬&nbsp;{{ schedule.endDate }} · {{ schedule.startTime }}&nbsp;⭬&nbsp;{{ schedule.endTime
+          }} · {{ schedule.frequency }}×
         </p>
         <ng-template #noParticipant>
           <ion-label>
