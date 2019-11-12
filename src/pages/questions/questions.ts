@@ -166,6 +166,8 @@ export class QuestionsPage implements OnInit {
   }
 
   isValidAnswer(value: any): boolean {
+    if (typeof value === 'string') return value && !!value.trim();
+
     return typeof value === 'number' || !!value;
   }
 }
