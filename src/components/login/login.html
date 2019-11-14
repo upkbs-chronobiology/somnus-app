@@ -25,6 +25,13 @@
       <ion-item *ngIf="registration" text-wrap no-lines>The password must contain at least {{PW_MIN_LENGTH}} characters.</ion-item>
     </div>
 
+    <ion-item *ngIf="biometricAvailable">
+      <ion-label>
+        <ion-icon name="finger-print"></ion-icon> Remember for biometric login
+      </ion-label>
+      <ion-checkbox [(ngModel)]="saveBiometrics" [ngModelOptions]="{standalone: true}" color="dark"></ion-checkbox>
+    </ion-item>
+
     <button *ngIf="!registration && !submitting" ion-button type="submit" [disabled]="!form.valid"
       block>Log in</button>
     <button *ngIf="registration && !submitting" ion-button type="submit" [disabled]="!form.valid || !passwordsMatch()"
@@ -49,6 +56,11 @@
   </button>
 
   <hr>
+
+  <button ion-button round icon-start *ngIf="!registration && !submitting && canLoginBiometric()"
+    (click)="loginBiometric()" class="bio-login-button">
+    <ion-icon name="finger-print"></ion-icon> Biometric login
+  </button>
 
   <button ion-button clear (click)="resetPassword()" class="pw-reset-button">I have a token</button>
 </ion-content>

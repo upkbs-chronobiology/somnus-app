@@ -15,6 +15,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { HeaderColor } from '@ionic-native/header-color';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { KeychainTouchId } from '@ionic-native/keychain-touch-id';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { MyApp } from './app.component';
 import { NotificationsProvider } from '../providers/notifications/notifications';
@@ -75,6 +76,7 @@ import { UsersProvider } from '../providers/users/users';
     NotificationsProvider,
     Device,
     AppVersion,
+    KeychainTouchId,
   ]
 })
 export class AppModule { }

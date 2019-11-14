@@ -4,9 +4,14 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { CentrizerComponent } from '../centrizer/centrizer';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ViewController } from 'ionic-angular';
+import { KeychainTouchId } from '@ionic-native/keychain-touch-id';
 import { LoginComponent } from './login';
 import { mockView } from 'ionic-angular/util/mock-providers';
 import { ToastProvider } from '../../providers/toast/toast';
+
+const fakeKeychainTouchId: KeychainTouchId = {
+  isAvailable: () => Promise.reject('this is just fake')
+} as KeychainTouchId;
 
 describe('LoginComponent', () => {
 
@@ -28,6 +33,7 @@ describe('LoginComponent', () => {
         { provide: AuthenticationProvider, useValue: {} as AuthenticationProvider },
         { provide: ViewController, useValue: mockView() },
         { provide: ToastProvider, useValue: {} as ToastProvider },
+        { provide: KeychainTouchId, useValue: fakeKeychainTouchId },
       ]
     });
   }));
