@@ -27,6 +27,8 @@ export class ScheduleEditorComponent {
 
   showFrequencyInfo: boolean;
 
+  submitting: boolean;
+
   constructor(
     params: NavParams,
     private view: ViewController,
@@ -78,8 +80,10 @@ export class ScheduleEditorComponent {
   }
 
   save() {
+    this.submitting = true;
     const operation = s => this.isNew ? this.schedules.create(s) : this.schedules.update(s);
     operation(this.editedSchedule)
+      .finally(() => this.submitting = false)
       .catch((err, caught) => {
         const reason = err && err.message || '(unknown reason)';
         this.toast.show(`Failed to save schedule: ${reason}`, true);
@@ -148,7 +152,11 @@ export class ScheduleEditorComponent {
   confirmDelete() {
     this.confirmation.confirm('Really delete?')
       .filter(confirmed => confirmed)
-      .flatMap(() => this.schedules.delete(this.schedule.id))
+      .flatMap(() => {
+        this.submitting = true;
+        return this.schedules.delete(this.schedule.id);
+      })
+      .finally(() => this.submitting = false)
       .subscribe(() => this.close(this.schedule, true));
   }
 }

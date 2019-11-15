@@ -6,7 +6,7 @@
       <strong>{{participant.name}}</strong>
     </ion-title>
     <ion-buttons right>
-      <button ion-button (click)="copyFromUser()" color="primary">Copy from other user</button>
+      <button ion-button (click)="copyFromUser()" color="primary" [disabled]="submitting">Copy from other user</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -80,11 +80,11 @@
 <ion-footer>
   <ion-navbar>
     <ion-buttons left>
-      <button ion-button color="danger" (click)="confirmDelete()">Delete</button>
+      <button ion-button color="danger" (click)="confirmDelete()" [disabled]="submitting">Delete</button>
     </ion-buttons>
     <ion-buttons right>
-      <button ion-button (click)="discard()">Cancel</button>
-      <button ion-button solid color="primary" (click)="save()" [disabled]="!isValid()">Save</button>
+      <button ion-button (click)="discard()" [disabled]="submitting">Cancel</button>
+      <button ion-button solid color="primary" (click)="save()" [disabled]="submitting || !isValid()">Save</button>
     </ion-buttons>
   </ion-navbar>
 </ion-footer>
