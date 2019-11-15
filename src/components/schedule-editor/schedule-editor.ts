@@ -87,8 +87,8 @@ export class ScheduleEditorComponent {
       }).subscribe((createdSchedule: Schedule) => this.close(createdSchedule));
   }
 
-  close(result?: Schedule) {
-    this.view.dismiss({ schedule: result });
+  close(result?: Schedule, deletion?: boolean) {
+    this.view.dismiss({ schedule: result, deletion: deletion });
   }
 
   calculatePromptTimes(): Moment[] {
@@ -102,7 +102,7 @@ export class ScheduleEditorComponent {
   copyFromUser() {
     const psNoSchedule =
       this.allParticipants.filter(p => p !== this.participant && !this.getScheduleForUser(p))
-      .map(p => p.name);
+        .map(p => p.name);
     const alert = this.alertController.create({
       title: 'What user to copy from?',
       inputs: this.allParticipants.filter(p => p !== this.participant)
@@ -143,5 +143,12 @@ export class ScheduleEditorComponent {
   private getScheduleForUser(user: User): Schedule {
     // XXX: Inefficient lookup - consider a map if this is too slow
     return this.allSchedules.find(s => s.userId === user.id);
+  }
+
+  confirmDelete() {
+    this.confirmation.confirm('Really delete?')
+      .filter(confirmed => confirmed)
+      .flatMap(() => this.schedules.delete(this.schedule.id))
+      .subscribe(() => this.close(this.schedule, true));
   }
 }

@@ -46,7 +46,7 @@ export class SchedulesEditorComponent {
   }
 
   editSchedule(participant: User) {
-    let schedule = this.schedules.find(s => s.userId === participant.id);
+    const schedule = this.schedules.find(s => s.userId === participant.id);
 
     const overlay = this.modal.create(ScheduleEditorComponent, {
       schedule: schedule,
@@ -57,6 +57,12 @@ export class SchedulesEditorComponent {
     }, { enableBackdropDismiss: false });
 
     overlay.onWillDismiss(data => {
+      if (data.deletion) {
+        const toDelete = this.schedules.indexOf(schedule);
+        this.schedules.splice(toDelete);
+        return;
+      }
+
       if (!data.schedule) return;
 
       // newly created

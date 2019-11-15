@@ -19,11 +19,11 @@
     <ng-container *ngIf="participants; else participantsLoading">
       <button ion-item *ngFor="let participant of participants" (click)="editSchedule(participant)">
         <ion-label item-start>{{ participant.name }}</ion-label>
-        <p item-content *ngIf="getScheduleFor(participant) as schedule; else noParticipant">
+        <p item-content *ngIf="getScheduleFor(participant) as schedule; else noSchedule">
           {{ schedule.startDate }}&nbsp;⭬&nbsp;{{ schedule.endDate }} · {{ schedule.startTime }}&nbsp;⭬&nbsp;{{ schedule.endTime
           }} · {{ schedule.frequency }}×
         </p>
-        <ng-template #noParticipant>
+        <ng-template #noSchedule>
           <ion-label>
             <i>No schedule</i>
           </ion-label>

@@ -79,6 +79,9 @@
 
 <ion-footer>
   <ion-navbar>
+    <ion-buttons left>
+      <button ion-button color="danger" (click)="confirmDelete()">Delete</button>
+    </ion-buttons>
     <ion-buttons right>
       <button ion-button (click)="discard()">Cancel</button>
       <button ion-button solid color="primary" (click)="save()" [disabled]="!isValid()">Save</button>
