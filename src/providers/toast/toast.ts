@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from 'ionic-angular';
+import { ToastController, ToastOptions } from 'ionic-angular';
 
 const TOAST_DURATION = 4000;
 
@@ -16,5 +16,15 @@ export class ToastProvider {
       cssClass: isError ? 'failure-toast' : 'success-toast',
       position: position
     }).present();
+  }
+
+  showCustom(message: string, isError: boolean = false, customOptions: ToastOptions) {
+    const defaultOptions = {
+      message: message,
+      duration: TOAST_DURATION,
+      cssClass: isError ? 'failure-toast' : 'success-toast',
+      position: 'top'
+    };
+    this.toastController.create({ ...defaultOptions, ...customOptions }).present();
   }
 }

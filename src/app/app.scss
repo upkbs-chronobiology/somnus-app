@@ -27,7 +27,7 @@ ion-app:not(:empty) ~ .loading-preview {
   background-color: $background-color;
 }
 
-.failure-toast .toast-message {
+.failure-toast .toast-wrapper {
   background-color: $danger;
 }
 

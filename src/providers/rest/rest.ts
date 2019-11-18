@@ -1,6 +1,6 @@
 import { Device } from '@ionic-native/device';
 import { ensure } from '../../util/streams';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IS_PROD } from '@environment';
 import { Observable } from 'rxjs/Observable';
@@ -55,6 +55,10 @@ export class RestProvider {
 
   public get(endpoint: string): Observable<Object> {
     return ensure(this.fetchResponse('get', endpoint)).map(r => r.body);
+  }
+
+  public getHeaders(endpoint: string): Observable<HttpHeaders> {
+    return ensure(this.fetchResponse('get', endpoint)).map(r => r.headers);
   }
 
   public post(endpoint: string, body: any): Observable<Object> {
