@@ -23,7 +23,9 @@ export class QuestionEditorComponent {
     [AnswerType.RangeContinuous]: 'Continuous range',
     [AnswerType.RangeDiscrete]: 'Discrete range',
     [AnswerType.MultipleChoiceSingle]: 'Multiple choice (single)',
-    [AnswerType.MultipleChoiceMany]: 'Multiple choice (many)'
+    [AnswerType.MultipleChoiceMany]: 'Multiple choice (many)',
+    [AnswerType.TimeOfDay]: 'Time of day',
+    [AnswerType.Date]: 'Date'
   };
 
   questionnaires: Questionnaire[];

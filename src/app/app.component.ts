@@ -28,6 +28,8 @@ export class MyApp {
       statusBar.styleDefault();
       headerColor.tint(`#${PRIMARY_HEX}`);
 
+      moment.locale(window.navigator.language);
+
       this.checkTime();
     });
   }

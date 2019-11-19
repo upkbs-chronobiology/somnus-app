@@ -1,9 +1,11 @@
 <h2>{{question.content}}</h2>
 
-<ng-container *ngIf="!isMultipleChoice(question)">
+<ion-item *ngIf="question.answerType === AnswerType.Text">
+  <ion-input [(ngModel)]="answer.content" required placeholder="..."></ion-input>
+</ion-item>
+
+<ng-container *ngIf="isRangeQuestion(question)">
   <ion-item>
-    <ion-input *ngIf="question.answerType === AnswerType.Text" [(ngModel)]="answer.content" required
-      placeholder="..."></ion-input>
     <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous" [(ngModel)]="answer.content"
       [min]="question.answerRange.min" [max]="question.answerRange.max" required>
       <ion-label range-left>
@@ -45,3 +47,13 @@
     <ion-checkbox (ionChange)="checkboxChange()" [attr.data-index]="i"></ion-checkbox>
   </ion-item>
 </ion-list>
+
+<ion-item *ngIf="question.answerType === AnswerType.TimeOfDay">
+  <ion-datetime [displayFormat]="TimeFormat" [placeholder]="TimePlaceholder" [(ngModel)]="answer.content">
+  </ion-datetime>
+</ion-item>
+
+<ion-item *ngIf="question.answerType === AnswerType.Date">
+  <ion-datetime [displayFormat]="DateFormat" [placeholder]="DatePlaceholder"
+    [(ngModel)]="answer.content" [max]="MaxDate"></ion-datetime>
+</ion-item>

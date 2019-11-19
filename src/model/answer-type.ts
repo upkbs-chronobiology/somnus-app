@@ -5,5 +5,7 @@ export enum AnswerType {
   // [min, max] over ℕ
   RangeDiscrete = 'range-discrete',
   MultipleChoiceSingle = 'multiple-choice-single',
-  MultipleChoiceMany = 'multiple-choice-many'
+  MultipleChoiceMany = 'multiple-choice-many',
+  TimeOfDay = 'time-of-day',
+  Date = 'date'
 }

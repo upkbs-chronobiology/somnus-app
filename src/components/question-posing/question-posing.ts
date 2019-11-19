@@ -2,6 +2,7 @@ import { Answer } from '../../model/answer';
 import { AnswerType } from '../../model/answer-type';
 import { Checkbox, Platform } from 'ionic-angular';
 import { Component, Input, QueryList, ViewChildren } from '@angular/core';
+import moment from 'moment';
 import { Question } from '../../model/question';
 
 @Component({
@@ -11,6 +12,14 @@ import { Question } from '../../model/question';
 export class QuestionPosingComponent {
 
   AnswerType = AnswerType;
+
+  MaxDate = `${new Date().getFullYear() + 100}-12-31`;
+
+  TimeFormat = moment.localeData().longDateFormat('LT');
+  TimePlaceholder = this.TimeFormat;
+
+  DateFormat = moment.localeData().longDateFormat('L');
+  DatePlaceholder = this.DateFormat;
 
   @Input()
   question: Question;
@@ -25,8 +34,8 @@ export class QuestionPosingComponent {
   constructor(private platform: Platform) {
   }
 
-  isMultipleChoice(): boolean {
-    return [AnswerType.MultipleChoiceSingle, AnswerType.MultipleChoiceMany]
+  isRangeQuestion(): boolean {
+    return [AnswerType.RangeContinuous, AnswerType.RangeDiscrete]
       .indexOf(this.question.answerType) >= 0;
   }
 
