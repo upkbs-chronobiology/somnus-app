@@ -20,7 +20,7 @@
     <ion-label>
       <ion-icon name="calendar"></ion-icon>
     </ion-label>
-    <ion-datetime displayFormat="DDD, DD MMM YYYY" [(ngModel)]="editedSchedule.startDate"></ion-datetime>
+    <ion-datetime displayFormat="DDD, DD MMM YYYY" max="2100-12-31" [(ngModel)]="editedSchedule.startDate"></ion-datetime>
   </ion-item>
 
   <ion-item no-lines>
@@ -31,7 +31,7 @@
     <ion-label>
       <ion-icon name="calendar"></ion-icon>
     </ion-label>
-    <ion-datetime displayFormat="DDD, DD MMM YYYY" [(ngModel)]="editedSchedule.endDate"></ion-datetime>
+    <ion-datetime displayFormat="DDD, DD MMM YYYY" max="2100-12-31" [(ngModel)]="editedSchedule.endDate"></ion-datetime>
   </ion-item>
 
   <ion-item no-lines>
