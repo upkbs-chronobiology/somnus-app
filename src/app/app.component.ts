@@ -50,7 +50,7 @@ export class MyApp {
         };
         this.toast.showCustom(
           `Local device time differs from server (by ${serverTime.preciseDiff(now)}), ` +
-          'which can lead to unexpected behavior. Please adjust you clock',
+          'which can lead to unexpected behavior. Please adjust your clock',
           true, options);
       }
     });
