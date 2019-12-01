@@ -28,7 +28,9 @@ export class MyApp {
       statusBar.styleDefault();
       headerColor.tint(`#${PRIMARY_HEX}`);
 
-      moment.locale(window.navigator.language);
+      // Somnus is English-only for now. Once localize, we should do instead:
+      // moment.locale(window.navigator.language);
+      moment.locale('en');
 
       this.checkTime();
     });

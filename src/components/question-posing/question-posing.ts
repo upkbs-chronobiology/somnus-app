@@ -15,10 +15,10 @@ export class QuestionPosingComponent {
 
   MaxDate = `${new Date().getFullYear() + 100}-12-31`;
 
-  TimeFormat = moment.localeData().longDateFormat('LT');
+  TimeFormat = moment.localeData(window.navigator.language).longDateFormat('LT');
   TimePlaceholder = this.TimeFormat;
 
-  DateFormat = moment.localeData().longDateFormat('L');
+  DateFormat = moment.localeData(window.navigator.language).longDateFormat('L');
   DatePlaceholder = this.DateFormat;
 
   @Input()
