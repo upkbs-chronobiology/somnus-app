@@ -7,10 +7,14 @@
     <ion-label *ngIf="newStudy" floating>New Study</ion-label>
     <ion-input name="name" [(ngModel)]="editedStudy.name" required class="title"></ion-input>
 
-    <button ion-button *ngIf="isAltered()" item-end type="submit" (click)="submit()" [disabled]="!form.valid" icon-only>
-      <ion-icon *ngIf="!newStudy" name="cloud-upload"></ion-icon>
-      <ion-icon *ngIf="newStudy" name="add"></ion-icon>
-    </button>
+    <ion-buttons item-end>
+      <button ion-button icon-start *ngIf="isAltered()" type="submit" (click)="submit()" [disabled]="!form.valid">
+        <ion-icon *ngIf="!newStudy" name="cloud-upload" class="line-button-icon"></ion-icon>
+        <ion-icon *ngIf="newStudy" name="add" class="line-button-icon"></ion-icon>
+        <span *ngIf="!newStudy" class="hide-sm">Save title</span>
+        <span *ngIf="newStudy" class="hide-sm">Create</span>
+      </button>
+    </ion-buttons>
   </ion-item>
 </form>
 

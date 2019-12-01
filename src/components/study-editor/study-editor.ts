@@ -56,7 +56,7 @@ export class StudyEditorComponent implements OnInit {
     if (this.newStudy)
       this.study = new Study(0, null);
 
-    if (this.study)
+    if (this.study && !this.newStudy)
       this.studiesProvider.listParticipants(this.study.id)
         .subscribe(users => this.participants = users);
     else

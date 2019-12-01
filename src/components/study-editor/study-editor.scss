@@ -39,4 +39,10 @@ study-editor {
       flex-grow: 1;
     }
   }
+
+  .line-button-icon {
+    @media screen and (max-width: map-get($grid-max-widths, sm)) {
+      padding-right: 0;
+    }
+  }
 }
