@@ -37,7 +37,7 @@ export class StudyEditorComponent implements OnInit {
   }
 
   @Output()
-  create: EventEmitter<any> = new EventEmitter();
+  create: EventEmitter<Study> = new EventEmitter();
 
   constructor(
     @Attribute('new') newAttr: string,
@@ -76,7 +76,7 @@ export class StudyEditorComponent implements OnInit {
         this.newStudy = false;
         this.sending = false;
 
-        this.create.emit(null);
+        this.create.emit(this.study);
       });
   }
 

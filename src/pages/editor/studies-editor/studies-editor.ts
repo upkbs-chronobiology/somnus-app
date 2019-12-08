@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef, ElementRef } from '@angular/core';
 import { StudiesProvider } from '../../../providers/studies/studies';
 import { Study } from '../../../model/study';
 import { StudyEditorComponent } from '../../../components/study-editor/study-editor';
@@ -14,6 +14,9 @@ export class StudiesEditorPage {
   @ViewChild('newPlaceholder', { read: ViewContainerRef })
   content: ViewContainerRef;
 
+  @ViewChild('newStudy', { read: ElementRef })
+  newStudy: ElementRef;
+
   constructor(private studiesProvider: StudiesProvider, private componentFactoryResolver: ComponentFactoryResolver) {
     this.loadData();
   }
@@ -26,10 +29,17 @@ export class StudiesEditorPage {
   ionViewDidLoad() {
   }
 
-  appendNew() {
+  appendNew(study: Study) {
+    this.studies.push(study);
+    this.newStudy.nativeElement.remove();
+
     const factory = this.componentFactoryResolver.resolveComponentFactory(StudyEditorComponent);
     const newItem = this.content.createComponent(factory);
+
     newItem.instance.newStudy = true;
-    newItem.instance.create.subscribe(this.appendNew.bind(this));
+    newItem.instance.create.subscribe(s => {
+      this.appendNew(s);
+      newItem.destroy();
+    });
   }
 }

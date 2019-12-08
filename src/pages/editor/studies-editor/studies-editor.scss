@@ -1,3 +1,15 @@
 page-studies-editor {
+    .study-card {
+        padding: 1ex;
+        margin-bottom: 1em;
 
+        &.deleted {
+            opacity: 0;
+            visibility: hidden;
+            padding: 0;
+            margin: 0;
+            transition-property: opacity, visibility, padding, margin;
+            transition-duration: $medium-transition-duration;
+        }
+    }
 }

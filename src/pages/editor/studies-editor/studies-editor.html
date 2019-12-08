@@ -6,10 +6,11 @@
     </button>
 
     <ng-container *ngFor="let study of studies">
-      <study-editor [study]="study"></study-editor>
-      <hr>
+      <ion-card class="study-card" [class.deleted]="editor.deleted">
+        <study-editor #editor [study]="study"></study-editor>
+      </ion-card>
     </ng-container>
-    <study-editor new (create)="appendNew()"></study-editor>
+    <study-editor #newStudy new (create)="appendNew($event)"></study-editor>
     <ng-container #newPlaceholder></ng-container>
   </ng-container>
 
