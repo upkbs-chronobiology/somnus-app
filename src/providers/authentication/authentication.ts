@@ -3,6 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { RestProvider } from '../rest/rest';
+import { Role, Roles } from '../../model/role';
 import { Subject } from 'rxjs';
 import { User } from '../../model/user';
 import 'rxjs/add/operator/map';
@@ -13,9 +14,6 @@ const REGISTER_ENDPOINT = 'auth/signup';
 const LOGIN_ENDPOINT = 'auth/login';
 
 const AUTH_TOKEN_HEADER = 'X-Auth-Token';
-
-const RESEARCHER = 'researcher';
-const ADMIN = 'admin';
 
 @Injectable()
 export class AuthenticationProvider {
@@ -51,13 +49,12 @@ export class AuthenticationProvider {
       });
   }
 
-  // XXX: Does this belong here? Or maybe create sth like UserProvider?
   public userCanEdit(user: User = this.currentUser): boolean {
-    return user && [RESEARCHER, ADMIN].some(r => r === user.role);
+    return user && Roles.isEditor(user.role);
   }
 
   userIsAdmin(user: User = this.currentUser): boolean {
-    return user && user.role === ADMIN;
+    return user && user.role === Role.Admin;
   }
 
   getCurrentUser(): User {

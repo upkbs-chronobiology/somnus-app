@@ -30,6 +30,10 @@ study-editor {
     flex-shrink: 0;
   }
 
+  .list-header {
+    margin-bottom: 0;
+  }
+
   .participants-area {
     display: flex;
     justify-content: space-between;
@@ -44,5 +48,13 @@ study-editor {
     @media screen and (max-width: map-get($grid-max-widths, sm)) {
       padding-right: 0;
     }
+  }
+
+  .item-select .researcher-label {
+    color: $dark;
+  }
+
+  .add-researcher {
+    color: $primary;
   }
 }
