@@ -1,11 +1,16 @@
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Attribute, Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
+import { enumAsArray } from '../../util/enums';
 import { ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { RichStudyAccess, StudyAccess, AccessLevel } from '../../model/study-access';
+import { Role } from '../../model/role';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { Study } from '../../model/study';
 import { ToastProvider } from '../../providers/toast/toast';
 import { User } from '../../model/user';
+import { UsersProvider } from '../../providers/users/users';
 import { UserPickerComponent } from '../user-picker/user-picker';
 import 'rxjs/operator/finally';
 
@@ -28,6 +33,15 @@ export class StudyEditorComponent implements OnInit {
   newStudy: boolean;
 
   participants: User[];
+  studyAcls: RichStudyAccess[];
+
+  get currentUser(): User {
+    return this.authentication.getCurrentUser();
+  }
+
+  accessUpdating: StudyAccess[] = [];
+
+  accessLevels: AccessLevel[] = enumAsArray(AccessLevel);
 
   @Input()
   get study(): Study { return this._study; }
@@ -44,7 +58,9 @@ export class StudyEditorComponent implements OnInit {
     private studiesProvider: StudiesProvider,
     private toast: ToastProvider,
     private modal: ModalController,
-    private confirmation: ConfirmationProvider
+    private confirmation: ConfirmationProvider,
+    private users: UsersProvider,
+    private authentication: AuthenticationProvider,
   ) {
     this.newStudy = newAttr === '';
   }
@@ -56,11 +72,22 @@ export class StudyEditorComponent implements OnInit {
     if (this.newStudy)
       this.study = new Study(0, null);
 
-    if (this.study && !this.newStudy)
+    if (this.study && !this.newStudy) {
       this.studiesProvider.listParticipants(this.study.id)
         .subscribe(users => this.participants = users);
-    else
+
+      // XXX: Inefficient - consider:
+      // - having a rest endpoint serving "rich" acls (with expanded users)
+      // - looking up more selectively
+      // - caching client-side
+      this.users.listAll().subscribe(allUsers =>
+        this.studiesProvider.listAcls(this.study.id)
+          .map(sas => sas.map(sa => new RichStudyAccess(sa, allUsers.find(u => u.id === sa.userId))))
+          .subscribe(rsas => this.studyAcls = rsas));
+    } else {
       this.participants = [];
+      this.studyAcls = [];
+    }
   }
 
   submit() {
@@ -142,5 +169,55 @@ export class StudyEditorComponent implements OnInit {
     this.sending = true;
     this.studiesProvider.removeParticipant(this.study.id, user.id)
       .subscribe(() => this.sending = false);
+  }
+
+  updateAccess(access: StudyAccess) {
+    this.accessUpdating.push(access);
+
+    console.log(access.level);
+    if (access.level)
+      this.studiesProvider.updateAccess(access)
+        .subscribe(() => this.accessUpdating.splice(this.accessUpdating.indexOf(access)));
+    else
+      this.studiesProvider.removeAccess(access)
+        .subscribe(() => {
+          this.studyAcls.splice(this.studyAcls.findIndex(a => a.userId === access.userId));
+          this.accessUpdating.splice(this.accessUpdating.indexOf(access));
+        });
+  }
+
+  addResearcher() {
+    const overlay = this.modal.create(UserPickerComponent,
+      { editorsOnly: true, exclude: this.studyAcls.map(a => a.user) });
+    overlay.onWillDismiss((user: User) => {
+      if (!user) return;
+
+      // TODO: Prompt which level (rather than read-level initially)?
+      const access = new StudyAccess(user.id, this.study.id, AccessLevel.Read);
+      this.studiesProvider
+        .updateAccess(access)
+        .subscribe(() => this.studyAcls.push(new RichStudyAccess(access, user)));
+    });
+    overlay.present();
+  }
+
+  isUpdating(access: StudyAccess): boolean {
+    return this.accessUpdating.indexOf(access) >= 0;
+  }
+
+  currentUserCanEditResearchers(): boolean {
+    const access = this.currentUserAccess();
+    return this.currentUser.role === Role.Admin ||
+      access && access.level === AccessLevel.Own;
+  }
+
+  currentUserCanEditParticipants(): boolean {
+    const access = this.currentUserAccess();
+    return this.currentUser.role === Role.Admin ||
+      access && [AccessLevel.Own, AccessLevel.Write].some(l => l === access.level);
+  }
+
+  private currentUserAccess(): StudyAccess {
+    return this.studyAcls && this.studyAcls.find(a => a.userId === this.currentUser.id);
   }
 }

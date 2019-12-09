@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
+import { Roles } from '../../model/role';
 import { User } from '../../model/user';
 import { UsersProvider } from '../../providers/users/users';
 
@@ -11,10 +12,15 @@ export class UserPickerComponent {
 
   users: User[];
   private exclude: User[];
+  private editorsOnly: boolean;
 
   constructor(private view: ViewController, usersProvider: UsersProvider, params: NavParams) {
-    usersProvider.listAll().subscribe(users => this.users = users);
     this.exclude = params.get('exclude');
+    this.editorsOnly = params.get('editorsOnly');
+
+    usersProvider.listAll()
+      .map(users => !this.editorsOnly ? users : users.filter(u => Roles.isEditor(u.role)))
+      .subscribe(users => this.users = users);
   }
 
   close() {

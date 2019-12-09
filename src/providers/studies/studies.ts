@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Study } from '../../model/study';
 import { User } from '../../model/user';
+import { StudyAccess } from 'model/study-access';
 
 @Injectable()
 export class StudiesProvider {
@@ -38,5 +39,17 @@ export class StudiesProvider {
 
   removeParticipant(studyId: number, userId: number): Observable<any> {
     return this.rest.delete(`studies/${studyId}/participants/${userId}`);
+  }
+
+  listAcls(studyId: number): Observable<StudyAccess[]> {
+    return this.rest.get(`studies/${studyId}/acls`).map(sa => sa as StudyAccess[]);
+  }
+
+  updateAccess(studyAccess: StudyAccess): Observable<any> {
+    return this.rest.put(`studies/${studyAccess.studyId}/acls/${studyAccess.userId}`, studyAccess);
+  }
+
+  removeAccess(studyAccess: StudyAccess): Observable<any> {
+    return this.rest.delete(`studies/${studyAccess.studyId}/acls/${studyAccess.userId}`);
   }
 }
