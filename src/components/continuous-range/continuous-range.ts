@@ -1,10 +1,8 @@
 import { BaseInput } from 'ionic-angular/util/base-input';
-import { Component, Input } from '@angular/core';
-import { Config } from 'ionic-angular/config/config';
-import { Form } from 'ionic-angular/util/form';
-import { Item } from 'ionic-angular/components/item/item';
+import { cast } from '../../util/shenanigans';
+import { Component, ElementRef, Input, Renderer } from '@angular/core';
+import { Config, Form, Item } from 'ionic-angular';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { ElementRef, Renderer } from '@angular/core';
 
 @Component({
   selector: 'continuous-range',
@@ -43,7 +41,7 @@ export class ContinuousRangeComponent extends BaseInput<number> implements Contr
   }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, _form: Form, _item: Item, _ngControl: NgControl) {
-    super(config, elementRef, renderer, 'continuous-range', 0, _form, _item, _ngControl);
+    super(cast(config), elementRef, renderer, 'continuous-range', 0, cast(_form), cast(_item), _ngControl);
   }
 
   registerOnChange(callback: any): void {
