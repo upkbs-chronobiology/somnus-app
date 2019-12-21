@@ -65,3 +65,6 @@ platforms/
 
 # despite recommendations, keeping package-lock.json versioned is silly
 package-lock.json
+
+# nasty Mac/OS X stuff
+.DS_Store
