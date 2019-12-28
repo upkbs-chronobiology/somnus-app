@@ -145,7 +145,7 @@ export class QuestionsPage implements OnInit {
   }
 
   everythingAnswered(): boolean {
-    return this.answers && this.answers.every(a => !!a.content);
+    return this.answers && this.answers.every(a => this.isValidAnswer(a.content));
   }
 
   submitAnswers(): void {
