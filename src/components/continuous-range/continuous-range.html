@@ -1,4 +1,4 @@
-<ion-range min="0" [max]="resolution" step="1" [(ngModel)]="valueInternal">
+<ion-range min="0" [max]="resolution" step="1" [(ngModel)]="valueInternal" [disabled]="disabled">
   <!-- because transclusion select is not propagated through multiple
     levels, so we need to "replicate" each case -->
   <ng-content select="[range-left]" range-left></ng-content>

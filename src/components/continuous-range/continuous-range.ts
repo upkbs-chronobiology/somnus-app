@@ -1,14 +1,12 @@
-import { BaseInput } from 'ionic-angular/util/base-input';
-import { cast } from '../../util/shenanigans';
 import { Component, ElementRef, Input, Renderer } from '@angular/core';
-import { Config, Form, Item } from 'ionic-angular';
+import { Config, Ion } from 'ionic-angular';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'continuous-range',
   templateUrl: 'continuous-range.html'
 })
-export class ContinuousRangeComponent extends BaseInput<number> implements ControlValueAccessor {
+export class ContinuousRangeComponent extends Ion implements ControlValueAccessor {
 
   readonly resolution = 100;
 
@@ -19,6 +17,8 @@ export class ContinuousRangeComponent extends BaseInput<number> implements Contr
 
   @Input()
   max: number = 1;
+
+  disabled: boolean = false;
 
   _valueInternal: number;
 
@@ -40,8 +40,21 @@ export class ContinuousRangeComponent extends BaseInput<number> implements Contr
     this.valueInternal = this.transformToUnit(newValue) * this.resolution;
   }
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, _form: Form, _item: Item, _ngControl: NgControl) {
-    super(cast(config), elementRef, renderer, 'continuous-range', 0, cast(_form), cast(_item), _ngControl);
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, _ngControl: NgControl) {
+    super(config, elementRef, renderer, 'continuous-range');
+
+    // (see Ionic's BaseInput on why we need this)
+    if (_ngControl) {
+      _ngControl.valueAccessor = this;
+    }
+  }
+
+  registerOnTouched(fn: any): void {
+    // ignore for now
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   registerOnChange(callback: any): void {
