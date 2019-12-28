@@ -1,4 +1,5 @@
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import moment from 'moment';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component, HostBinding } from '@angular/core';
 import { enumAsArray } from '../../util/enums';

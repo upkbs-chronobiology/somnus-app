@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import { Answer } from '../../model/answer';
 import { AnswersProvider } from '../../providers/answers/answers';
 import { AnswerType } from '../../model/answer-type';

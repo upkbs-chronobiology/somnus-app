@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import { getDailyTimes } from './schedules';
 import { Moment } from 'moment';
 import { Schedule } from '../model/schedule';
