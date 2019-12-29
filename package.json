@@ -34,7 +34,7 @@
     "@types/moment-precise-range-plugin": "^0.2.0",
     "cordova-android": "^8.1.0",
     "cordova-browser": "~5.0.3",
-    "cordova-ios": "~4.5.4",
+    "cordova-ios": "5.1.1",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-device": "^2.0.1",
@@ -71,7 +71,7 @@
     "karma-webpack": "^3.0.5",
     "null-loader": "^0.1.1",
     "ts-loader": "^3.5.0",
-    "typescript": "2.9.2"
+    "typescript": "^2.8.4"
   },
   "description": "Cross-platform client app of Somnus",
   "cordova": {
@@ -91,9 +91,9 @@
     },
     "platforms": [
       "browser",
-      "ios",
       "windows",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "config": {
