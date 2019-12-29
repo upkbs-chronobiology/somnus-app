@@ -1,7 +1,7 @@
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component, OnInit } from '@angular/core';
 import { Credentials } from '../../model/credentials';
-import { ModalController, ViewController } from 'ionic-angular';
+import { ModalController, ViewController, Platform } from 'ionic-angular';
 import { ResetPasswordComponent } from '../reset-password/reset-password';
 import { ToastProvider } from '../../providers/toast/toast';
 import { KeychainTouchId } from '@ionic-native/keychain-touch-id';
@@ -34,14 +34,17 @@ export class LoginComponent implements OnInit {
     private toast: ToastProvider,
     private modal: ModalController,
     private bioAuth: KeychainTouchId,
+    private platform: Platform,
   ) {
   }
 
   ngOnInit() {
-    this.bioAuth.isAvailable().then(result => {
-      this.biometricAvailable = result;
-    }).catch(error =>
-      console.info('Biometric login not avilable: ', error));
+    this.platform.ready().then(() => {
+      this.bioAuth.isAvailable().then(result => {
+        this.biometricAvailable = result;
+      }).catch(error =>
+        console.info('Biometric login not avilable: ', error));
+    });
   }
 
   public submit() {
