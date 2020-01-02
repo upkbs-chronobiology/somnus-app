@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
         // https://github.com/sjhoeksma/cordova-plugin-keychain-touch-id/issues/61
         localStorage.bioCredentials = true;
 
-        console.warn('Error saving credentials: ' + err)
+        console.warn('Error saving credentials: ' + err);
       });
   }
 
