@@ -47,6 +47,9 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="StatusBarOverlaysWebView" value="true" />
+        <config-file parent="NSFaceIDUsageDescription" target="*-Info.plist">
+            <string>FaceID is used for securely storing user login credentials on-device.</string>
+        </config-file>
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="40" src="resources/ios/icon/icon-40.png" width="40" />

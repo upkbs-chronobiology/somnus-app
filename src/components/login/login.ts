@@ -85,6 +85,12 @@ export class LoginComponent implements OnInit {
     this.bioAuth.save(CREDENTIALS_KEY, this.credentials.combine())
       .then(() => {
         localStorage.bioCredentials = true;
+      }).catch(err => {
+        // FIXME: iPhone X reports error, but still saves, so we claim success anyway.
+        // https://github.com/sjhoeksma/cordova-plugin-keychain-touch-id/issues/61
+        localStorage.bioCredentials = true;
+
+        console.warn('Error saving credentials: ' + err)
       });
   }
 
@@ -98,7 +104,10 @@ export class LoginComponent implements OnInit {
       this.credentials.name = bioCredentials.name;
       this.credentials.password = bioCredentials.password;
       this.login();
-    }).catch(err => this.showToast('Biometric authentication failed', false));
+    }).catch(err => {
+      this.showToast('Biometric authentication failed', false);
+      console.error('Biometric authentication failed', err);
+    });
   }
 
   private showToast(message: string, success: boolean) {
