@@ -39,6 +39,7 @@ Things that *might* help (each on its own, not necessarily in sequence):
 - `ionic cordova platform remove <platform>`, then `ionic cordova platform add <platform>`
 - `ionic cordova prepare`
 - Re-add each plugin individually
+- Explicitly specify (android) plugin version, e.g. `ionic cordova platform add android@8.1.0`, as otherwise an older one may be auto-selected
 
 For example, in some cases, the prod-built app on phones fails to make requests to the server; they fail with 404 (allegedly from cache).
 This is caused by `cordova-plugin-whitelist` not being properly installed.
