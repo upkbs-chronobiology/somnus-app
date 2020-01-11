@@ -72,3 +72,10 @@ Error messages typically claim to miss some syntax elements, like ';', '(', or '
 
 Cause for this is likely a mismatch between node (or typescript?) and @types/jasmine versions.
 E.g. @types/jasmine 2.8.6 seems to work with node 10.x.
+
+### Prod build succeeds but page in app stays empty
+
+In the JavaScript console, an error is logged `Uncaught Error: Cannot find module "."`.
+
+It's not entirely clear how this happens, and there's a range of [possible causes](https://github.com/webpack/webpack/issues/4921).
+In some cases, changing TypeScript version fixes the issue, as has been observed with 2.8.3 (working) vs. 2.8.4 (not working).
