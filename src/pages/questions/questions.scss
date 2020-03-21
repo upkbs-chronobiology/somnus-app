@@ -8,4 +8,9 @@ page-questions {
       font-size: 200%;
     }
   }
+
+  // Workaround for disappearing slides content when on-screen keyboard is on: https://stackoverflow.com/questions/49422711/ionic-3-ion-slides-disappear-on-keyboard-open
+  .scroll-content {
+    padding-bottom: 0px !important;
+  }
 }
