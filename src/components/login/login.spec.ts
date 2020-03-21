@@ -10,7 +10,7 @@ import { mockView } from 'ionic-angular/util/mock-providers';
 import { ToastProvider } from '../../providers/toast/toast';
 
 const fakeKeychainTouchId: KeychainTouchId = {
-  isAvailable: () => Promise.reject('this is just fake')
+  isAvailable: () => Promise.reject('this is just fake') as Promise<any>,
 } as KeychainTouchId;
 
 describe('LoginComponent', () => {
