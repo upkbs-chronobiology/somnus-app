@@ -1,7 +1,7 @@
 import { AlertController, NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
-import { getDailyTimes } from '../../util/schedules';
+import { ScheduleAnalyzer } from '../../util/schedule-analyzer';
 import { Moment } from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from '../../model/questionnaire';
@@ -22,6 +22,7 @@ export class ScheduleEditorComponent {
   participant: User;
   allParticipants: User[];
   questionnaire: Questionnaire;
+  scheduleAnalyzer: ScheduleAnalyzer;
 
   isNew: boolean;
 
@@ -48,6 +49,7 @@ export class ScheduleEditorComponent {
       this.schedule = new Schedule(0, this.questionnaire.id, this.participant.id,
         null, null, null, null, null);
     this.editedSchedule = Schedule.clone(this.schedule);
+    this.scheduleAnalyzer = new ScheduleAnalyzer(this.editedSchedule);
   }
 
   isValid(): boolean {
@@ -96,7 +98,7 @@ export class ScheduleEditorComponent {
   }
 
   calculatePromptTimes(): Moment[] {
-    return getDailyTimes(this.editedSchedule);
+    return this.scheduleAnalyzer.getDailyTimes();
   }
 
   toggleFrequencyInfo() {

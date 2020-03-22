@@ -141,7 +141,8 @@ export class QuestionsPage implements OnInit {
       });
 
       // jump to first slide for a new questionaire to prevent UI glitches
-      this.slidesInstances.forEach(slides => slides.slideTo(0, 0));
+      // FIXME: this.slidesInstances is undefined during tests, hence this guard
+      this.slidesInstances && this.slidesInstances.forEach(slides => slides.slideTo(0, 0));
     });
   }
 

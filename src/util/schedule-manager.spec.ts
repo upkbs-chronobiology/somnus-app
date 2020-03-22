@@ -35,7 +35,7 @@ describe('ScheduleManager', () => {
 
   it('should merge multiple schedules', () => {
     const scheduleA = new Schedule(0, 0, 0, '2000-01-01', '2000-01-03', '08:00:00', '21:30:00', 10); // every 1.5 hours
-    const scheduleB = new Schedule(0, 0, 0, '2000-01-02', '2000-01-02', '09:00:00', '21:00:00', 13); // every hour
+    const scheduleB = new Schedule(1, 0, 0, '2000-01-02', '2000-01-02', '09:00:00', '21:00:00', 13); // every hour
     const scheduleManager = new ScheduleManager([scheduleA, scheduleB]);
     const reference = moment('2000-01-02 15:04:12');
 

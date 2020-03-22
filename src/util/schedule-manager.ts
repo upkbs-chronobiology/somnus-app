@@ -1,51 +1,26 @@
 import * as moment from 'moment';
-import { getDailyTimes } from './schedules';
+import { ScheduleAnalyzer } from './schedule-analyzer';
 import { Moment } from 'moment';
 import { Schedule } from '../model/schedule';
-
-const DATE_FORMAT = 'YYYY-MM-DD';
-const TIME_FORMAT = 'HH:mm:ss';
 
 export class Prompt {
   constructor(public readonly moment: Moment, public readonly schedule: Schedule) { }
 }
 
+function promptComparator(a: Prompt, b: Prompt): number {
+  return a.moment.diff(b.moment);
+}
+
 export class ScheduleManager {
 
-  private schedulePrompts: Prompt[][];
-  private accumulatedPrompts: Prompt[];
+  private scheduleAnalyzers: ScheduleAnalyzer[];
 
   constructor(schedules: Schedule[]) {
-    this.schedulePrompts = schedules.map(s =>
-      this.getMoments(s).map(m => new Prompt(m, s))
-        .sort((a, b) => a.moment.diff(b.moment))
-    );
-    this.accumulatedPrompts = this.schedulePrompts.reduce((acc, item) => acc.concat(item), [])
-      .sort((a, b) => a.moment.diff(b.moment));
+    this.scheduleAnalyzers = schedules.map(s => new ScheduleAnalyzer(s));
   }
 
-  private getMoments(schedule: Schedule): Moment[] {
-    const startDate = moment(schedule.startDate);
-    const endDate = moment(schedule.endDate);
-
-    if (endDate < startDate) return [];
-
-    const times = getDailyTimes(schedule);
-
-    const result = [];
-    for (let date = startDate; date <= endDate; date = date.clone().add(1, 'day'))
-      times.forEach(time => result.push(this.combineDateAndTime(date, time)));
-    return result;
-  }
-
-  private combineDateAndTime(date: Moment, time: Moment): Moment {
-    const dateString = date.format(DATE_FORMAT);
-    const timeString = time.format(TIME_FORMAT);
-    return moment(`${dateString} ${timeString}`);
-  }
-
-  mostRecentDue(reference: Moment = moment(), prompts: Prompt[] = this.accumulatedPrompts): Prompt {
-    const recents = prompts.filter(p => p.moment <= reference);
+  mostRecentDue(reference: Moment = moment()): Prompt {
+    const recents = this.mostRecentsDue(reference).sort(promptComparator);
     if (!recents.length) return null;
     return recents[recents.length - 1];
   }
@@ -54,18 +29,47 @@ export class ScheduleManager {
    * List the most recently due prompt of each schedule.
    */
   mostRecentsDue(reference: Moment = moment()): Prompt[] {
-    return this.schedulePrompts.map(prompts => this.mostRecentDue(reference, prompts)).filter(p => !!p);
+    return this.scheduleAnalyzers
+      .filter(analyzer => analyzer.getMostRecent(reference))
+      .map(analyzer => new Prompt(analyzer.getMostRecent(reference), analyzer.schedule));
+  }
+
+  private nextDueFor(reference: Moment, analyzer: ScheduleAnalyzer): Prompt {
+    const next = analyzer.getNext(reference);
+    return next && new Prompt(next, analyzer.schedule);
+  }
+
+  private nextDuesForEach(reference: Moment): Prompt[] {
+    return this.scheduleAnalyzers
+      .map(analyzer => this.nextDueFor(reference, analyzer))
+      .filter(prompt => !!prompt)
+      .sort(promptComparator);
   }
 
   nextDue(reference: Moment = moment()): Prompt {
-    return this.accumulatedPrompts.find(p => p.moment > reference);
+    const nexts = this.nextDuesForEach(reference);
+    return nexts.length ? nexts[0] : null;
   }
 
   nextNDues(number: number, reference: Moment = moment()): Prompt[] {
-    return this.accumulatedPrompts.filter(p => p.moment > reference).slice(0, number);
+    const dues = [];
+    let next = this.nextDuesForEach(reference);
+
+    while (number > dues.length && next.length) {
+      // take all same-time first ones...
+      do
+        dues.push(next.shift());
+      while (next.length && next[0].moment.isSame(dues[dues.length - 1]));
+
+      // ...then refresh (strictly going forward, hence + 1 ms)
+      next = this.nextDuesForEach(dues[dues.length - 1].moment.clone().add(1, 'ms'));
+    }
+
+    return dues;
   }
 
   allFutureDues(reference: Moment = moment()): Prompt[] {
-    return this.accumulatedPrompts.filter(prompt => prompt.moment.isAfter(reference));
+    const maxTotal = this.scheduleAnalyzers.map(a => a.totalScheduled()).reduce((a, b) => a + b);
+    return this.nextNDues(maxTotal, reference);
   }
 }
