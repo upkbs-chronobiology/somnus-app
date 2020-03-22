@@ -28,6 +28,7 @@ In order to build a production release, do `ionic cordova build <platform> --rel
 ### Versioning
 
 We currently don't use an automated releasing/versioning system, so bump versions manually and add a git tag.
+The relevant fields are `version` and `android-versionCode` in `config.xml`.
 
 ### Cordova plugin issues
 
