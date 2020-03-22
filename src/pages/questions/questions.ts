@@ -2,13 +2,13 @@ import * as moment from 'moment';
 import { Answer } from '../../model/answer';
 import { AnswersProvider } from '../../providers/answers/answers';
 import { AnswerType } from '../../model/answer-type';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChildren, QueryList } from '@angular/core';
 import { InclusiveRange } from '../../model/inclusive-range';
 import { Moment } from 'moment';
 import { NotificationsProvider } from '../../providers/notifications/notifications';
 import { Observable } from 'rxjs/Observable';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { Platform } from 'ionic-angular';
+import { Platform, Slides } from 'ionic-angular';
 import { Prompt, ScheduleManager } from '../../util/schedule-manager';
 import { Question } from '../../model/question';
 import { QuestionsProvider } from '../../providers/questions/questions';
@@ -20,6 +20,9 @@ import { ToastProvider } from '../../providers/toast/toast';
   templateUrl: 'questions.html'
 })
 export class QuestionsPage implements OnInit {
+
+  @ViewChildren(Slides)
+  private slidesInstances: QueryList<Slides>;
 
   private scheduleManager: ScheduleManager;
 
@@ -136,6 +139,9 @@ export class QuestionsPage implements OnInit {
         if (q.answerType === AnswerType.RangeDiscrete) answer.content = this.rangeCenter(q.answerRange, true).toString();
         return answer;
       });
+
+      // jump to first slide for a new questionaire to prevent UI glitches
+      this.slidesInstances.forEach(slides => slides.slideTo(0, 0));
     });
   }
 
