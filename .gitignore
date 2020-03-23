@@ -68,3 +68,6 @@ package-lock.json
 
 # nasty Mac/OS X stuff
 .DS_Store
+
+# IDEs
+.vscode/
