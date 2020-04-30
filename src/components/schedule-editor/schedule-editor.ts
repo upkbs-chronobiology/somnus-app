@@ -1,14 +1,14 @@
-import { AlertController, NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
-import { ScheduleAnalyzer } from '../../util/schedule-analyzer';
+import { AlertController, NavParams, ViewController } from 'ionic-angular';
 import { Moment } from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { Questionnaire } from '../../model/questionnaire';
 import { Schedule } from '../../model/schedule';
+import { User } from '../../model/user';
+import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
 import { SchedulesProvider } from '../../providers/schedules/schedules';
 import { ToastProvider } from '../../providers/toast/toast';
-import { User } from '../../model/user';
+import { ScheduleAnalyzer } from '../../util/schedule-analyzer';
 
 @Component({
   selector: 'schedule-editor',
@@ -143,6 +143,7 @@ export class ScheduleEditorComponent {
     }
 
     this.editedSchedule = Schedule.clone(this.getScheduleForUser(user));
+    this.editedSchedule.id = this.isNew ? 0 : this.schedule.id;
     this.editedSchedule.userId = this.participant.id;
   }
 
