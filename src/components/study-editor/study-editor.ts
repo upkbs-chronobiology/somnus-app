@@ -174,7 +174,6 @@ export class StudyEditorComponent implements OnInit {
   updateAccess(access: StudyAccess) {
     this.accessUpdating.push(access);
 
-    console.log(access.level);
     if (access.level)
       this.studiesProvider.updateAccess(access)
         .subscribe(() => this.accessUpdating.splice(this.accessUpdating.indexOf(access)));
