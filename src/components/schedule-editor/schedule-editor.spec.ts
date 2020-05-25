@@ -12,7 +12,7 @@ import { SchedulesProvider } from '../../providers/schedules/schedules';
 import { ToastProvider } from '../../providers/toast/toast';
 import { ScheduleEditorComponent } from './schedule-editor';
 
-fdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
 
   const existingId = 7;
   const otherId = 8;
