@@ -11,6 +11,7 @@ import { UsersProvider } from '../../providers/users/users';
 export class UserPickerComponent {
 
   users: User[];
+  filterQuery: string;
   private exclude: User[];
   private editorsOnly: boolean;
 
@@ -33,5 +34,15 @@ export class UserPickerComponent {
 
   shouldExclude(user: User): boolean {
     return !!this.exclude.find(u => u.id === user.id);
+  }
+
+  filter(event: any) {
+    this.filterQuery = event.target.value;
+  }
+
+  filteredUsers(): User[] {
+    return this.filterQuery ?
+      this.users.filter(u => u.name.toLowerCase().includes(this.filterQuery.toLowerCase())) :
+      this.users;
   }
 }

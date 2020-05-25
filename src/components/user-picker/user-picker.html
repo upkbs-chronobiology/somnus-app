@@ -10,7 +10,8 @@
 </ion-header>
 
 <ion-content>
-  <button ion-button full icon-left clear color="dark" *ngFor="let user of users" [disabled]="shouldExclude(user)" (click)="pick(user)">
+  <ion-searchbar (ionInput)="filter($event)"></ion-searchbar>
+  <button ion-button full icon-left clear color="dark" *ngFor="let user of filteredUsers()" [disabled]="shouldExclude(user)" (click)="pick(user)">
     <ion-icon name="person"></ion-icon>
     <ion-label class="user-label">{{user.name}}</ion-label>
   </button>
