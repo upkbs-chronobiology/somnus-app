@@ -5,7 +5,16 @@
       Refresh
     </button>
 
-    <button ion-item *ngFor="let user of users" (click)="edit(user)">
+    <ion-searchbar (ionInput)="filter($event)"></ion-searchbar>
+    <ion-list-header no-lines>
+      <ion-label>Show users with roles:</ion-label>
+      <ion-select [(ngModel)]="roleFilter" multiple="true">
+        <ion-option *ngFor="let role of roles" [value]="role">{{role}}</ion-option>
+        <ion-option [value]="baseUsersRole">{{baseUsersRole}}</ion-option>
+      </ion-select>
+    </ion-list-header>
+
+    <button ion-item *ngFor="let user of filteredUsers()" (click)="edit(user)">
       <ion-label>{{user.name}}</ion-label>
       <ion-badge item-end>{{user.role}}</ion-badge>
     </button>

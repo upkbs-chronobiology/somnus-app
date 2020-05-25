@@ -1,11 +1,13 @@
-import { AlertController, ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { AlertController, ModalController } from 'ionic-angular';
 import { Subject } from 'rxjs';
-import { ToastProvider } from '../../../providers/toast/toast';
-import { User } from '../../../model/user';
+import { Observable } from 'rxjs/Observable';
 import { UserEditorComponent } from '../../../components/user-editor/user-editor';
+import { Role } from '../../../model/role';
+import { User } from '../../../model/user';
+import { ToastProvider } from '../../../providers/toast/toast';
 import { UsersProvider } from '../../../providers/users/users';
+import { enumAsArray } from '../../../util/enums';
 
 @Component({
   selector: 'page-users-editor',
@@ -13,7 +15,12 @@ import { UsersProvider } from '../../../providers/users/users';
 })
 export class UsersEditorPage {
 
+  readonly roles = enumAsArray(Role);
+  readonly baseUsersRole = 'base user';
+
   users: User[];
+  filterQuery: string;
+  roleFilter: string[] = [...this.roles.map(r => r.toString()), this.baseUsersRole];
 
   constructor(
     private usersProvider: UsersProvider,
@@ -24,9 +31,13 @@ export class UsersEditorPage {
     this.loadData();
   }
 
+  private static sort(users: User[]): User[] {
+    return users.sort((a: User, b: User) => a.name.localeCompare(b.name));
+  }
+
   private loadData() {
     delete this.users;
-    this.usersProvider.listAll().subscribe(users => this.users = users);
+    this.usersProvider.listAll().subscribe(users => this.users = UsersEditorPage.sort(users));
   }
 
   ionViewDidLoad() {
@@ -45,7 +56,7 @@ export class UsersEditorPage {
           this.toast.show(`User creation failed: ${err.message || err}`, true);
           return Observable.empty();
         })
-        .subscribe((createdUser: User) => this.users.push(createdUser));
+        .subscribe((createdUser: User) => this.users.push(createdUser) && UsersEditorPage.sort(this.users));
     });
   }
 
@@ -67,5 +78,21 @@ export class UsersEditorPage {
     }).present();
 
     return subject;
+  }
+
+  filter(event: any) {
+    this.filterQuery = event.target.value;
+  }
+
+  filteredUsers(): User[] {
+    const queryFiltered = this.filterQuery ?
+      this.users.filter(u => u.name.toLowerCase().includes(this.filterQuery.toLowerCase())) :
+      this.users;
+
+    if (!this.roleFilter) return queryFiltered;
+    const roleFiltered = queryFiltered.filter(u =>
+      this.roleFilter.indexOf(u.role && u.role.toString() || this.baseUsersRole) >= 0
+    );
+    return roleFiltered;
   }
 }
