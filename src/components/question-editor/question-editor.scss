@@ -10,4 +10,41 @@ question-editor {
   ion-item.hidden {
     display: none;
   }
+
+  ion-grid,
+  ion-row {
+    height: 100%;
+  }
+
+  ion-row {
+    justify-content: center;
+  }
+
+  .preview-container {
+    perspective: 2000px;
+  }
+
+  .preview {
+    width: 20em;
+    height: 96%;
+    margin: 2% 0;
+    min-height: 28em;
+    max-height: 33em;
+    overflow: auto;
+    border: 1em solid $dark;
+    border-bottom-width: 3em;
+    border-radius: 1em;
+    transform: rotateY(-30deg);
+    box-shadow: 1ex 0 0 mix($dark, $light, 70%);
+    pointer-events: none;
+
+    question-posing {
+      width: 100%;
+    }
+  }
+
+  ion-buttons {
+    display: flex;
+    flex-direction: row;
+  }
 }

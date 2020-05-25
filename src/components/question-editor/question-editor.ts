@@ -33,6 +33,8 @@ export class QuestionEditorComponent {
   @HostBinding('class.submitting')
   submitting: boolean = false;
 
+  showPreview: boolean = true;
+
   private _question: Question;
   editedQuestion: Question;
   isNew: boolean;

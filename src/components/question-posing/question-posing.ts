@@ -25,7 +25,7 @@ export class QuestionPosingComponent {
   question: Question;
 
   @Input()
-  answer: Answer;
+  answer: Answer = new Answer(null, null); // default for when unset (e.g. question preview)
 
   // XXX: Maybe extract checkbox-grouping functionality to another component (similar to radio-group)
   @ViewChildren(Checkbox)
