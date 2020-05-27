@@ -7,4 +7,33 @@ question-posing {
     text-align: center;
     opacity: 0.5;
   }
+
+  ion-range {
+    flex-wrap: wrap;
+
+    .range-slider {
+      flex-basis: 100%;
+      order: 0;
+    }
+
+    ion-label {
+      flex-basis: 50%;
+      white-space: normal;
+    }
+
+    &[class*="range-"] ion-label {
+      &[range-left] {
+        order: 1;
+        margin-right: 0;
+        padding-right: 1ex;
+      }
+
+      &[range-right] {
+        order: 2;
+        margin-left: 0;
+        padding-left: 1ex;
+        text-align: right;
+      }
+    }
+  }
 }
