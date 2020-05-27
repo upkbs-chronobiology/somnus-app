@@ -1,14 +1,14 @@
-import { Credentials, Particulars } from '../../model/credentials';
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { RestProvider } from '../rest/rest';
-import { Role, Roles } from '../../model/role';
 import { Subject } from 'rxjs';
-import { User } from '../../model/user';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/observable/empty';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Observable';
+import { Credentials, Particulars } from '../../model/credentials';
+import { Role, Roles } from '../../model/role';
+import { User } from '../../model/user';
+import { RestProvider } from '../rest/rest';
 
 const REGISTER_ENDPOINT = 'auth/signup';
 const LOGIN_ENDPOINT = 'auth/login';
@@ -29,7 +29,9 @@ export class AuthenticationProvider {
 
   userChangeSubject = new Subject<User>();
 
-  constructor(private rest: RestProvider) {
+  constructor(
+    private rest: RestProvider,
+  ) {
   }
 
   public register(particulars: Particulars): Observable<any> {

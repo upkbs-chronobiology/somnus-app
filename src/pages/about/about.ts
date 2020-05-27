@@ -1,8 +1,8 @@
-import { AppVersion } from '@ionic-native/app-version';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { AuthRestProvider } from '../../providers/auth-rest/auth-rest';
 import { Component } from '@angular/core';
+import { AppVersion } from '@ionic-native/app-version';
 import { NavController } from 'ionic-angular';
+import { AuthRestProvider } from '../../providers/auth-rest/auth-rest';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 @Component({
   selector: 'page-about',

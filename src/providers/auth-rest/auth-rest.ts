@@ -1,12 +1,13 @@
-import { AuthenticationProvider } from '../authentication/authentication';
-import { ensure } from '../../util/streams';
-import { ErrorResponse, RestProvider } from '../rest/rest';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginComponent } from '../../components/login/login';
 import { ModalController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { LoginComponent } from '../../components/login/login';
+import { ensure } from '../../util/streams';
+import { AuthenticationProvider } from '../authentication/authentication';
+import { ConfirmationProvider } from '../confirmation/confirmation';
+import { ErrorResponse, RestProvider } from '../rest/rest';
 
 const AUTH_TOKEN_HEADER = 'X-Auth-Token';
 
@@ -37,7 +38,8 @@ export class AuthRestProvider {
   constructor(
     public rest: RestProvider,
     private modal: ModalController,
-    private authentication: AuthenticationProvider
+    private authentication: AuthenticationProvider,
+    private confirmation: ConfirmationProvider,
   ) {
   }
 
@@ -63,14 +65,25 @@ export class AuthRestProvider {
     return finishSubject;
   }
 
-  // XXX: Might semantically better fit to AuthenticationProvider, but lives here for technical reasons
-  logOut(): Observable<any> {
+  // XXX: Might semantically better fit to AuthenticationProvider, but lives here for technical reasons:
+  //  This one depends on LoginComponent (to display the modal on-the-go when necessary), and adding
+  //  having a dependency from AuthenticationProvider to here would cause a circular dependency chain.
+  //  This whole setup could use some refactoring.
+  logOut() {
+    this.get('auth/logout')
+      .subscribe(
+        () => this.forgetSession(),
+        _err => this.confirmation
+          .confirm('Logout failed. Do you want to log in as a different user anyway?')
+          .subscribe(confirmed => confirmed && this.forgetSession()));
+  }
+
+  private forgetSession() {
     this.authToken = null;
     this.authentication.forgetUser();
-    // TODO: Notify server to forget token
+
     // XXX: A bit hacky, maybe `this.logIn()` and manual cleanup instead?
     location.reload();
-    return Observable.empty();
   }
 
   private fetchResponse<T>(
