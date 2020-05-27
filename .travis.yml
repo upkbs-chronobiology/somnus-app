@@ -17,5 +17,6 @@ install:
   - npm install
 
 script:
+  - npm run lint
   - ionic build
   - npm run test-ci
