@@ -13,7 +13,8 @@
     "ionic": "ionic",
     "test": "karma start ./test-config/karma.conf.js",
     "test-ci": "karma start ./test-config/karma.conf.js --single-run",
-    "test-integration": "karma start ./test-config/karma-integration.conf.js"
+    "test-integration": "karma start ./test-config/karma-integration.conf.js",
+    "tsc": "tsc"
   },
   "dependencies": {
     "@angular/common": "5.2.11",
