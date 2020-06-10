@@ -2,7 +2,7 @@
   "name": "somnus",
   "version": "0.0.1",
   "author": "Somnus",
-  "homepage": "https://somnus.ch/",
+  "homepage": "https://somnus.io/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
