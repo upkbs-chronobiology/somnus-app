@@ -6,4 +6,8 @@ schedule-editor {
   .info-button-icon {
     opacity: 0.4;
   }
+
+  ion-input > input {
+    text-align: right;
+  }
 }

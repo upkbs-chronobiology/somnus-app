@@ -1,19 +1,19 @@
-import * as moment from 'moment';
-import { Answer } from '../../model/answer';
-import { AnswersProvider } from '../../providers/answers/answers';
-import { AnswerType } from '../../model/answer-type';
-import { ChangeDetectorRef, Component, ViewChildren, QueryList } from '@angular/core';
-import { InclusiveRange } from '../../model/inclusive-range';
-import { Moment } from 'moment';
-import { NotificationsProvider } from '../../providers/notifications/notifications';
-import { Observable } from 'rxjs/Observable';
+import { ChangeDetectorRef, Component, QueryList, ViewChildren } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Platform, Slides } from 'ionic-angular';
-import { Prompt, ScheduleManager } from '../../util/schedule-manager';
+import * as moment from 'moment';
+import { Moment } from 'moment';
+import { Observable } from 'rxjs/Observable';
+import { Answer } from '../../model/answer';
+import { AnswerType } from '../../model/answer-type';
+import { InclusiveRange } from '../../model/inclusive-range';
 import { Question } from '../../model/question';
+import { AnswersProvider } from '../../providers/answers/answers';
+import { NotificationsProvider } from '../../providers/notifications/notifications';
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { SchedulesProvider } from '../../providers/schedules/schedules';
 import { ToastProvider } from '../../providers/toast/toast';
+import { Prompt, ScheduleManager } from '../../util/schedule-manager';
 
 @Component({
   selector: 'page-questions',
@@ -33,6 +33,8 @@ export class QuestionsPage implements OnInit {
 
   submitting: boolean = false;
 
+  private timeRefreshInterval;
+
   constructor(
     private schedulesProvider: SchedulesProvider,
     private answersProvider: AnswersProvider,
@@ -45,12 +47,19 @@ export class QuestionsPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fetchSchedules();
+
+    this.platform.resume.subscribe(() => {
+      this.fetchSchedules();
+    });
+  }
+
+  private fetchSchedules() {
     this.schedulesProvider.listMine().subscribe(schedules => {
-      this.scheduleManager = new ScheduleManager(schedules);
+      if (!this.scheduleManager || !this.scheduleManager.containsExactly(schedules))
+        this.scheduleManager = new ScheduleManager(schedules);
 
       this.updateNotifications();
-      this.platform.resume.subscribe(() => this.updateNotifications());
-
       this.loadQuestions();
     });
   }
@@ -115,21 +124,26 @@ export class QuestionsPage implements OnInit {
     this.questions = [];
 
     const next = this.scheduleManager.nextDue();
+    this.nextDue = next && next.moment;
     if (!next) return;
 
-    this.nextDue = next.moment;
-    const interval = setInterval(() => {
-      // refresh "time until next" indication
-      this.changeDetectorRef.detectChanges();
+    if (!this.timeRefreshInterval)
+      this.timeRefreshInterval = setInterval(() => this.refreshTime(), 10 * 1000);
+  }
 
-      if (moment() >= next.moment) {
-        this.prepareQuestions(next);
-        clearInterval(interval);
-      }
-    }, 10 * 1000);
+  private refreshTime() {
+    // refresh "time until next" indication
+    this.changeDetectorRef.detectChanges();
+
+    if (moment() >= this.nextDue) {
+      this.prepareQuestions(this.scheduleManager.nextDue());
+    }
   }
 
   private prepareQuestions(prompt: Prompt) {
+    clearInterval(this.timeRefreshInterval);
+    this.timeRefreshInterval = null;
+
     this.questionsProvider.listByQuestionnaire(prompt.schedule.questionnaireId).subscribe(questions => {
       this.questions = questions;
       this.answers = questions.map(q => {
