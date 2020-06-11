@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Credentials, Particulars } from '../../model/credentials';
 import { Role, Roles } from '../../model/role';
 import { User } from '../../model/user';
+import { NotificationsProvider } from '../notifications/notifications';
 import { RestProvider } from '../rest/rest';
 
 const REGISTER_ENDPOINT = 'auth/signup';
@@ -31,6 +32,7 @@ export class AuthenticationProvider {
 
   constructor(
     private rest: RestProvider,
+    private notifications: NotificationsProvider,
   ) {
   }
 
@@ -69,6 +71,7 @@ export class AuthenticationProvider {
 
   forgetUser() {
     this.currentUser = null;
+    this.notifications.cancelAll();
   }
 
   getUserForToken(token: String): Observable<User> {
