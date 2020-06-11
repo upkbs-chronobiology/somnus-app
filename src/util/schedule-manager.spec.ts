@@ -124,4 +124,30 @@ describe('ScheduleManager', () => {
     allFutureDues.forEach(futureDue => expect(futureDue.moment.unix()).toBeGreaterThan(pivot.unix()));
     allFutureDues.forEach(futureDue => expect(futureDue.moment.unix()).toBeLessThan(pivot.add(4, 'hours').unix()));
   });
+
+  it('should detect unchanged schedule lists', () => {
+    const scheduleA = new Schedule(0, 0, 0, '2000-01-01', '2000-01-03', '08:00:00', '21:30:00', 10); // every 1.5 hours
+    const scheduleB = new Schedule(0, 0, 0, '2000-01-01', '2000-01-04', '09:00:00', '22:30:00', 10); // every 1.5 hours
+    const scheduleManager = new ScheduleManager([scheduleA, scheduleB]);
+
+    const scheduleASame = Schedule.clone(scheduleA);
+    const scheduleBSame = Schedule.clone(scheduleB);
+
+    expect(scheduleManager.containsExactly([scheduleASame, scheduleBSame])).toBeTruthy();
+  });
+
+  it('should detect changed schedule lists', () => {
+    const scheduleA = new Schedule(0, 0, 0, '2000-01-01', '2000-01-03', '08:00:00', '21:30:00', 10); // every 1.5 hours
+    const scheduleB = new Schedule(0, 0, 0, '2000-01-01', '2000-01-04', '09:00:00', '22:30:00', 10); // every 1.5 hours
+    const scheduleManager = new ScheduleManager([scheduleA, scheduleB]);
+
+    const scheduleAChanged = Schedule.clone(scheduleA);
+    scheduleAChanged.startDate = '1999-01-01';
+    const scheduleBChanged = Schedule.clone(scheduleB);
+    scheduleBChanged.frequency = 123;
+
+    expect(scheduleManager.containsExactly([scheduleA, scheduleBChanged])).toBeFalsy();
+    expect(scheduleManager.containsExactly([scheduleAChanged, scheduleB])).toBeFalsy();
+    expect(scheduleManager.containsExactly([scheduleAChanged, scheduleBChanged])).toBeFalsy();
+  });
 });

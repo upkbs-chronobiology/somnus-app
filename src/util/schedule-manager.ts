@@ -1,7 +1,8 @@
 import * as moment from 'moment';
-import { ScheduleAnalyzer } from './schedule-analyzer';
 import { Moment } from 'moment';
 import { Schedule } from '../model/schedule';
+import { arraysEqual } from './arrays';
+import { ScheduleAnalyzer } from './schedule-analyzer';
 
 export class Prompt {
   constructor(public readonly moment: Moment, public readonly schedule: Schedule) { }
@@ -15,8 +16,12 @@ export class ScheduleManager {
 
   private scheduleAnalyzers: ScheduleAnalyzer[];
 
-  constructor(schedules: Schedule[]) {
-    this.scheduleAnalyzers = schedules.map(s => new ScheduleAnalyzer(s));
+  constructor(private _schedules: Schedule[]) {
+    this.scheduleAnalyzers = _schedules.map(s => new ScheduleAnalyzer(s));
+  }
+
+  containsExactly(schedules: Schedule[]): boolean {
+    return arraysEqual(this._schedules, schedules, Schedule.equal);
   }
 
   mostRecentDue(reference: Moment = moment()): Prompt {
