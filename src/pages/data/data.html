@@ -5,33 +5,8 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Export to CSV (Zip archive)</h2>
-  <ion-item>
-    <ion-label>Study</ion-label>
-    <ion-select [(ngModel)]="studyToExport" interface="popover" [disabled]="loading" (ionChange)="flush()">
-      <ion-option *ngFor="let study of studies" [value]="study">{{study.name}}</ion-option>
-    </ion-select>
-    <ion-buttons item-end>
-      <button ion-button icon-left clear *ngIf="studies" (click)="loadData()">
-        <ion-icon name="refresh"></ion-icon>
-      </button>
-      <ion-spinner *ngIf="!studies" color="primary"></ion-spinner>
-    </ion-buttons>
-  </ion-item>
-  <div>
-    <button ion-button block *ngIf="studyToExport && !loading && !blobUrl" [disabled]="!studyToExport"
-      (click)="fetch(studyToExport)">
-      Download
-    </button>
-    <p *ngIf="loading">
-      <ion-spinner></ion-spinner> Exporting...
-    </p>
-  </div>
-  <div *ngIf="blobUrl">
-    <p>Export has finished:</p>
-    <a ion-button icon-left [href]="blobUrl" [download]="studyToExport.name + '.zip'">
-      <ion-icon name="archive"></ion-icon>
-      {{studyToExport.name + '.zip'}}
-    </a>
-  </div>
+  <ion-tabs tabsPlacement="top" color="light" tabsHighlight="true">
+    <ion-tab [root]="answers" tabTitle="Answers" tabIcon="text"></ion-tab>
+    <ion-tab [root]="export" tabTitle="Export" tabIcon="cloud-download"></ion-tab>
+  </ion-tabs>
 </ion-content>
