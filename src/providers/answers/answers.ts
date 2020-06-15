@@ -1,7 +1,7 @@
-import { Answer } from '../../model/answer';
-import { AuthRestProvider } from '../auth-rest/auth-rest';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Answer } from '../../model/answer';
+import { AuthRestProvider } from '../auth-rest/auth-rest';
 
 @Injectable()
 export class AnswersProvider {
@@ -15,6 +15,10 @@ export class AnswersProvider {
 
   listAll(): Observable<Answer[]> {
     return this.rest.get('answers').map(a => a as Answer[]);
+  }
+
+  listByQuestionnaire(questionnaireId: number): Observable<Answer[]> {
+    return this.rest.get(`questionnaires/${questionnaireId}/answers`).map(a => a as Answer[]);
   }
 
   listMineByQuestionnaire(questionnaireId: number): Observable<Answer[]> {
