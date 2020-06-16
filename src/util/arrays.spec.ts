@@ -1,4 +1,4 @@
-import { arraysEqual, groupArray, indexBy } from './arrays';
+import { arraysEqual, groupArray, indexBy, flatten } from './arrays';
 
 describe('arraysEqual', () => {
   it('should match empty arrays', () => {
@@ -68,5 +68,15 @@ describe('indexBy', () => {
         3: ['foo', 'baz'],
         4: ['baar']
       }).map(([a, b]) => [parseInt(a), b])));
+  });
+});
+
+fdescribe('flatten', () => {
+  it('should reduce the dimension of an empty 2-dim array', () => {
+    expect(flatten([[]])).toEqual([]);
+  });
+
+  it('should flatten a 2-dim string array', () => {
+    expect(flatten([['foo', 'bar'], ['baz', 'hi']])).toEqual(['foo', 'bar', 'baz', 'hi']);
   });
 });

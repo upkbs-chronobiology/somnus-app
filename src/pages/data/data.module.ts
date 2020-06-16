@@ -5,12 +5,14 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { AnswersPage } from './answers/answers';
 import { DataPage } from './data';
 import { ExportPage } from './export/export';
+import { GraphsPage } from './graphs/graphs';
 
 @NgModule({
   declarations: [
     DataPage,
     AnswersPage,
-    ExportPage
+    ExportPage,
+    GraphsPage
   ],
   imports: [
     IonicPageModule.forChild(DataPage),
@@ -20,7 +22,8 @@ import { ExportPage } from './export/export';
   entryComponents: [
     DataPage,
     AnswersPage,
-    ExportPage
+    ExportPage,
+    GraphsPage
   ]
 })
 export class DataPageModule { }

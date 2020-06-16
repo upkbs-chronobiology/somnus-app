@@ -35,3 +35,7 @@ export function indexBy<K, T>(array: T[], mapping: (t: T) => K): Map<K, T[]> {
     return map;
   }, new Map());
 }
+
+export function flatten<T>(arr: T[][]): T[] {
+  return arr.reduce((acc: T[], item: T[]) => [...acc, ...item]);
+}

@@ -1,20 +1,22 @@
-<ion-content padding>
+<ion-content>
   <answers-filter (answersChange)="onAnswersChange($event)"></answers-filter>
 
-  <h3>Answers</h3>
+  <div padding>
+    <h3>Answers</h3>
 
-  <ion-list *ngIf="answers">
-    <ng-container *ngFor="let qId of questionIdsInScope">
-      <ion-item-divider color="light">
-        {{questionById(qId).content}}
-        <ion-note>{{renderQuestionLabel(qId)}}</ion-note>
-      </ion-item-divider>
-      <ion-item *ngFor="let a of answers.get(qId)">
-        <p item-start>{{userById(a.userId).name}}:</p>
-        {{a.content}}
-        <ion-note>{{renderAnswerLabel(a)}}</ion-note>
-        <p color="light" item-end>{{renderCreationDate(a)}}</p>
-      </ion-item>
-    </ng-container>
-  </ion-list>
+    <ion-list *ngIf="answers">
+      <ng-container *ngFor="let qId of questionIdsInScope">
+        <ion-item-divider color="light">
+          {{questionById(qId).content}}
+          <ion-note>{{renderQuestionLabel(qId)}}</ion-note>
+        </ion-item-divider>
+        <ion-item *ngFor="let a of answers.get(qId)">
+          <p item-start>{{userById(a.userId).name}}:</p>
+          {{a.content}}
+          <ion-note>{{renderAnswerLabel(a)}}</ion-note>
+          <p color="light" item-end>{{renderCreationDate(a)}}</p>
+        </ion-item>
+      </ng-container>
+    </ion-list>
+  </div>
 </ion-content>
