@@ -1,16 +1,21 @@
-import { AuthRestProvider } from '../auth-rest/auth-rest';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Question } from '../../model/question';
+import { AuthRestProvider } from '../auth-rest/auth-rest';
+import { CacheProvider } from '../cache/cache';
 
 @Injectable()
 export class QuestionsProvider {
 
-  constructor(private rest: AuthRestProvider) {
+  private readonly listAllObservable: Observable<Question[]>;
+
+  constructor(private rest: AuthRestProvider, cacheProvider: CacheProvider) {
+    this.listAllObservable = cacheProvider.cachedObservable(() =>
+      rest.get('questions').map(object => object as Question[]));
   }
 
   listAll(): Observable<Question[]> {
-    return this.rest.get('questions').map(object => object as Question[]);
+    return this.listAllObservable.take(1);
   }
 
   listByQuestionnaire(questionnaireId: number): Observable<Question[]> {
