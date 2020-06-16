@@ -25,7 +25,16 @@ export class AnswersFilterComponent {
   questionnaires: Questionnaire[];
   questions: Question[];
 
-  study: Study;
+  private _study: Study;
+  public get study(): Study {
+    return this._study;
+  }
+  public set study(value: Study) {
+    this._study = value;
+
+    this.resetAfterStudyChange();
+  }
+
   questionnaire: Questionnaire;
   participant: User;
 
@@ -55,6 +64,17 @@ export class AnswersFilterComponent {
 
       this.loadAnswers();
     });
+  }
+
+  private resetAfterStudyChange() {
+    const forStudy = this.questionnairesForStudy();
+    if (forStudy.length > 0)
+      this.questionnaire = forStudy[0];
+    else
+      this.questionnaire = null;
+
+    // TODO: Keep participant if also part of this study?
+    this.participant = null;
   }
 
   questionnairesForStudy(): Questionnaire[] {
