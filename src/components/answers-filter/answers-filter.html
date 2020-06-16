@@ -1,0 +1,20 @@
+<ion-item>
+  <ion-label>Study</ion-label>
+  <ion-select [(ngModel)]="study" (ionChange)="loadAnswers()" interface="popover">
+    <ion-option *ngFor="let s of studies" [value]="s">{{s.name}}</ion-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label>Qustionnaire</ion-label>
+  <ion-select [(ngModel)]="questionnaire" (ionChange)="loadAnswers()" [disabled]="questionnairesForStudy().length === 0"
+    interface="popover" placeholder="all">
+    <ion-option *ngFor="let q of questionnairesForStudy()" [value]="q">{{q.name}}</ion-option>
+  </ion-select>
+</ion-item>
+<ion-item>
+  <ion-label>Filter by participant</ion-label>
+  <ion-select [(ngModel)]="participant" (ionChange)="loadAnswers()" interface="popover">
+    <ion-option></ion-option>
+    <ion-option *ngFor="let u of users" [value]="u">{{u.name}} ({{u.id}})</ion-option>
+  </ion-select>
+</ion-item>
