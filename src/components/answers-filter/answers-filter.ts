@@ -37,7 +37,7 @@ export class AnswersFilterComponent {
   }
 
   questionnaire: Questionnaire;
-  participant: User;
+  participants: User[] = [];
 
   constructor(
     usersProvider: UsersProvider,
@@ -74,8 +74,8 @@ export class AnswersFilterComponent {
     else
       this.questionnaire = null;
 
-    // TODO: Keep participant if also part of this study?
-    this.participant = null;
+    // TODO: Keep participants if also part of this study?
+    this.participants = [];
   }
 
   questionnairesForStudy(): Questionnaire[] {
@@ -92,7 +92,8 @@ export class AnswersFilterComponent {
 
     this.answersProvider.listByQuestionnaire(this.questionnaire.id)
       .subscribe(answers => {
-        const participantAnswers = answers.filter(a => !this.participant || a.userId === this.participant.id);
+        const participantIds = this.participants.map(p => p.id);
+        const participantAnswers = answers.filter(a => !this.participants.length || participantIds.includes(a.userId));
         const mappedAnswers = indexBy(participantAnswers, a => a.questionId);
         this.answersChange.emit(mappedAnswers);
       });

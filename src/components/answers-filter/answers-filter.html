@@ -13,8 +13,7 @@
 </ion-item>
 <ion-item>
   <ion-label>Filter by participant</ion-label>
-  <ion-select [(ngModel)]="participant" (ionChange)="loadAnswers()" interface="popover" placeholder="all">
-    <ion-option></ion-option>
+  <ion-select [(ngModel)]="participants" (ionChange)="loadAnswers()" multiple="true" interface="popover" placeholder="all">
     <ion-option *ngFor="let u of users" [value]="u">{{u.name}} ({{u.id}})</ion-option>
   </ion-select>
 </ion-item>
