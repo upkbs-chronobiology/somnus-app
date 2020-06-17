@@ -40,25 +40,48 @@ export class AnswersPage {
     this.questionIdsInScope = Array.from(this.answers.keys());
   }
 
-  renderAnswerContent(answer: Answer): string {
+  renderQuestionLabel(questionId: number): string {
+    const question = this.questionById(questionId);
+    switch (question.answerType) {
+      case AnswerType.Date:
+      case AnswerType.TimeOfDay:
+      case AnswerType.Text:
+      case AnswerType.MultipleChoiceMany:
+      case AnswerType.MultipleChoiceSingle:
+        return null;
+      case AnswerType.RangeContinuous:
+      case AnswerType.RangeDiscrete:
+        const min = question.answerRange.min;
+        const max = question.answerRange.max;
+        const left = question.answerLabels[0];
+        const right = question.answerLabels[question.answerLabels.length - 1];
+        return `${left} (${min}) → ${right} (${max})`;
+      default:
+        console.warn('Unexpected question type: ' + question.answerType);
+        return null;
+    }
+  }
+
+  renderAnswerLabel(answer: Answer): string {
     const question: Question = this.questionById(answer.questionId);
     switch (question.answerType) {
       case AnswerType.Date:
       case AnswerType.TimeOfDay:
       case AnswerType.Text:
-        return answer.content;
+        return null;
       case AnswerType.MultipleChoiceMany:
       case AnswerType.MultipleChoiceSingle:
-        const indices = answer.content.split(',').map(parseInt);
-        const selectedLabels = question.answerLabels.filter((_l, i) => indices.includes(i)).join(', ');
-        return `${answer.content} (${selectedLabels})`;
+        const indices = answer.content.split(',').map(s => parseInt(s));
+        const selectedLabels = question.answerLabels.filter((_l, i) => indices.includes(i))
+          .map(l => `"${l}"`)
+          .join(', ');
+        return selectedLabels;
       case AnswerType.RangeContinuous:
       case AnswerType.RangeDiscrete:
-        const leftRightLabels = question.answerLabels.join(' → ');
-        return `${answer.content} (${leftRightLabels})`;
+        return null;
       default:
         console.warn('Unexpected answer type: ' + question.answerType);
-        return answer.content;
+        return null;
     }
   }
 

@@ -5,10 +5,14 @@
 
   <ion-list *ngIf="answers">
     <ng-container *ngFor="let qId of questionIdsInScope">
-      <ion-item-divider color="light">{{questionById(qId).content}}</ion-item-divider>
+      <ion-item-divider color="light">
+        {{questionById(qId).content}}
+        <ion-note>{{renderQuestionLabel(qId)}}</ion-note>
+      </ion-item-divider>
       <ion-item *ngFor="let a of answers.get(qId)">
         <p item-start>{{userById(a.userId).name}}:</p>
-        {{renderAnswerContent(a)}}
+        {{a.content}}
+        <ion-note>{{renderAnswerLabel(a)}}</ion-note>
         <p color="light" item-end>{{renderCreationDate(a)}}</p>
       </ion-item>
     </ng-container>
