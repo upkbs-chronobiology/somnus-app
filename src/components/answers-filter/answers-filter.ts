@@ -10,6 +10,7 @@ import { QuestionnairesProvider } from '../../providers/questionnaires/questionn
 import { QuestionsProvider } from '../../providers/questions/questions';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { UsersProvider } from '../../providers/users/users';
+import { indexBy } from '../../util/arrays';
 
 @Component({
   selector: 'answers-filter',
@@ -91,14 +92,8 @@ export class AnswersFilterComponent {
 
     this.answersProvider.listByQuestionnaire(this.questionnaire.id)
       .subscribe(answers => {
-        const mappedAnswers = answers
-          .filter(a => !this.participant || a.userId === this.participant.id)
-          .reduce((map: Map<number, Answer[]>, a: Answer) => {
-            if (!map.has(a.questionId)) map.set(a.questionId, []);
-            map.get(a.questionId).push(a);
-            return map;
-          }, new Map());
-
+        const participantAnswers = answers.filter(a => !this.participant || a.userId === this.participant.id);
+        const mappedAnswers = indexBy(participantAnswers, a => a.questionId);
         this.answersChange.emit(mappedAnswers);
       });
   }

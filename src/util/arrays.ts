@@ -26,3 +26,12 @@ export function groupArray<T>(array: T[], mapping: (t: T) => string): { [key: st
 
   return result;
 }
+
+export function indexBy<K, T>(array: T[], mapping: (t: T) => K): Map<K, T[]> {
+  return array.reduce((map: Map<K, T[]>, t: T) => {
+    const key = mapping(t);
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(t);
+    return map;
+  }, new Map());
+}
