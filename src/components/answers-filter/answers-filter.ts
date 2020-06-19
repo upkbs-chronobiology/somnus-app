@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import moment from 'moment';
 import { Observable } from 'rxjs';
 import { Answer } from '../../model/answer';
 import { Question } from '../../model/question';
@@ -11,6 +12,7 @@ import { QuestionsProvider } from '../../providers/questions/questions';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { UsersProvider } from '../../providers/users/users';
 import { indexBy } from '../../util/arrays';
+import { DATE_FORMAT } from '../../util/schedule-analyzer';
 
 @Component({
   selector: 'answers-filter',
@@ -38,6 +40,8 @@ export class AnswersFilterComponent {
 
   questionnaire: Questionnaire;
   participants: User[] = [];
+  fromDate: string;
+  toDate: string;
 
   constructor(
     usersProvider: UsersProvider,
@@ -94,8 +98,31 @@ export class AnswersFilterComponent {
       .subscribe(answers => {
         const participantIds = this.participants.map(p => p.id);
         const participantAnswers = answers.filter(a => !this.participants.length || participantIds.includes(a.userId));
-        const mappedAnswers = indexBy(participantAnswers, a => a.questionId);
+        const timeLimited = participantAnswers.filter(a => {
+          const created = moment(a.createdLocal);
+          if (this.fromDate && created < moment(this.fromDate).startOf('day')) return false;
+          if (this.toDate && created > moment(this.toDate).endOf('day')) return false;
+          return true;
+        });
+        const mappedAnswers = indexBy(timeLimited, a => a.questionId);
         this.answersChange.emit(mappedAnswers);
       });
+  }
+
+  limit7Days() {
+    const now = moment();
+    this.fromDate = now.clone().subtract(7, 'days').format(DATE_FORMAT);
+    this.toDate = moment().format(DATE_FORMAT);
+  }
+
+  limit28Days() {
+    const now = moment();
+    this.fromDate = now.clone().subtract(28, 'days').format(DATE_FORMAT);
+    this.toDate = moment().format(DATE_FORMAT);
+  }
+
+  unlimitedDates() {
+    this.fromDate = null;
+    this.toDate = null;
   }
 }

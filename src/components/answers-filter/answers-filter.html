@@ -13,7 +13,27 @@
 </ion-item>
 <ion-item>
   <ion-label>Filter by participant</ion-label>
-  <ion-select [(ngModel)]="participants" (ionChange)="loadAnswers()" multiple="true" interface="popover" placeholder="all">
+  <ion-select [(ngModel)]="participants" (ionChange)="loadAnswers()" multiple="true" interface="popover"
+    placeholder="all">
     <ion-option *ngFor="let u of users" [value]="u">{{u.name}} ({{u.id}})</ion-option>
   </ion-select>
 </ion-item>
+
+<ion-item-group>
+  <ion-item-divider>
+    <ion-label>Time Window</ion-label>
+    <button ion-button item-end outline (click)="limit7Days()">past 7 days</button>
+    <button ion-button item-end outline (click)="limit28Days()">past 28 days</button>
+    <button ion-button item-end outline (click)="unlimitedDates()">unlimited</button>
+  </ion-item-divider>
+  <div class="time-window-inputs">
+    <ion-item no-lines>
+      <ion-label>From</ion-label>
+      <ion-input type="date" [(ngModel)]="fromDate" (ionChange)="loadAnswers()" name="fromDate"></ion-input>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label>To</ion-label>
+      <ion-input type="date" [(ngModel)]="toDate" (ionChange)="loadAnswers()" name="toDate"></ion-input>
+    </ion-item>
+  </div>
+</ion-item-group>
