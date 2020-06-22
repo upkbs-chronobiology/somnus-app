@@ -49,4 +49,16 @@ export class CacheProvider {
     this.runningFactories[key] = running;
     return running;
   }
+
+  /**
+   * Get an Observable that will cache and return the same result for the given lifespan on subsequent calls.
+   */
+  cachedObservable<T>(factory: () => Observable<T>, lifespan: number = DEFAULT_LIFESPAN): Observable<T> {
+    // Make sure the source observable operates async, otherwise we might lose some items due to the way RxJS behaves:
+    // https://stackoverflow.com/a/62422444/1090166
+    const delayedFactory = () => factory().delay(0);
+    return Observable.defer(delayedFactory)
+      .publishReplay(1, lifespan)
+      .refCount();
+  }
 }

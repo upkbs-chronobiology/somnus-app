@@ -5,7 +5,7 @@
 </ion-item>
 
 <ng-container *ngIf="isRangeQuestion(question)">
-  <ion-item>
+  <ion-item no-lines>
     <continuous-range item-content *ngIf="question.answerType === AnswerType.RangeContinuous" [(ngModel)]="answer.content"
       [min]="question.answerRange.min" [max]="question.answerRange.max" required>
       <ion-label range-left>

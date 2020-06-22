@@ -1,0 +1,19 @@
+<ion-content>
+  <answers-filter (answersChange)="onAnswersChange($event)"></answers-filter>
+
+  <div padding class="graph-area">
+    <ion-card *ngFor="let question of questionsInScope" class="graph-card">
+      <ion-card-header>
+        <ion-card-title [title]="question.content">{{question.content}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p *ngIf="isTimeline(question)" class="hint">
+          Hover a data point to show the corresponding answer
+        </p>
+        <div class="canvas-container">
+          <canvas #chartCanvas [attr.data-question-id]="question.id"></canvas>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,34 +1,34 @@
-import { AboutPage } from '../pages/about/about';
-import { AnswersProvider } from '../providers/answers/answers';
-import { AppVersion } from '@ionic-native/app-version';
-import { AuthenticationProvider } from '../providers/authentication/authentication';
-import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
-import { BrowserModule } from '@angular/platform-browser';
-import { CacheProvider } from '../providers/cache/cache';
-import { ComponentsModule } from '../components/components.module';
-import { ConfirmationProvider } from '../providers/confirmation/confirmation';
-import { DataPage } from '../pages/data/data';
-import { DataProvider } from '../providers/data/data';
-import { Device } from '@ionic-native/device';
-import { EditorPageModule } from '../pages/editor/editor.module';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { HeaderColor } from '@ionic-native/header-color';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppVersion } from '@ionic-native/app-version';
+import { Device } from '@ionic-native/device';
+import { HeaderColor } from '@ionic-native/header-color';
 import { KeychainTouchId } from '@ionic-native/keychain-touch-id';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { MyApp } from './app.component';
+import { StatusBar } from '@ionic-native/status-bar';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { ComponentsModule } from '../components/components.module';
+import { AboutPage } from '../pages/about/about';
+import { DataPageModule } from '../pages/data/data.module';
+import { EditorPageModule } from '../pages/editor/editor.module';
+import { QuestionsPage } from '../pages/questions/questions';
+import { TabsPage } from '../pages/tabs/tabs';
+import { AnswersProvider } from '../providers/answers/answers';
+import { AuthRestProvider } from '../providers/auth-rest/auth-rest';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
+import { CacheProvider } from '../providers/cache/cache';
+import { ConfirmationProvider } from '../providers/confirmation/confirmation';
+import { DataProvider } from '../providers/data/data';
 import { NotificationsProvider } from '../providers/notifications/notifications';
 import { QuestionnairesProvider } from '../providers/questionnaires/questionnaires';
-import { QuestionsPage } from '../pages/questions/questions';
 import { QuestionsProvider } from '../providers/questions/questions';
 import { RestProvider } from '../providers/rest/rest';
 import { SchedulesProvider } from '../providers/schedules/schedules';
-import { StatusBar } from '@ionic-native/status-bar';
 import { StudiesProvider } from '../providers/studies/studies';
-import { TabsPage } from '../pages/tabs/tabs';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
+import { MyApp } from './app.component';
 
 
 @NgModule({
@@ -36,23 +36,22 @@ import { UsersProvider } from '../providers/users/users';
     MyApp,
     AboutPage,
     QuestionsPage,
-    TabsPage,
-    DataPage
+    TabsPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     ComponentsModule,
-    EditorPageModule
+    EditorPageModule,
+    DataPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     AboutPage,
     QuestionsPage,
-    TabsPage,
-    DataPage
+    TabsPage
   ],
   providers: [
     StatusBar,

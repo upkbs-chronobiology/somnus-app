@@ -1,46 +1,20 @@
 import { Component } from '@angular/core';
-import { DataProvider } from '../../providers/data/data';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { StudiesProvider } from '../../providers/studies/studies';
-import { Study } from '../../model/study';
+import { IonicPage } from 'ionic-angular';
+import { AnswersPage } from './answers/answers';
+import { ExportPage } from './export/export';
+import { GraphsPage } from './graphs/graphs';
 
+@IonicPage()
 @Component({
   selector: 'page-data',
   templateUrl: 'data.html',
 })
 export class DataPage {
 
-  studies: Study[];
-  studyToExport: Study;
-  blobUrl: SafeUrl;
-
-  loading: boolean;
+  answers = AnswersPage;
+  graphs = GraphsPage;
+  export = ExportPage;
 
   constructor(
-    private studiesProvider: StudiesProvider,
-    private data: DataProvider,
-    private domSanitizer: DomSanitizer
-  ) {
-    this.loadData();
-  }
-
-  private loadData() {
-    delete this.studies;
-    this.studiesProvider.listAll().subscribe(s => this.studies = s);
-  }
-
-  ionViewDidLoad() {
-  }
-
-  fetch(study: Study) {
-    this.loading = true;
-    this.data.fetch(study.id).subscribe(blob => {
-      this.loading = false;
-      this.blobUrl = this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
-    });
-  }
-
-  flush() {
-    delete this.blobUrl;
-  }
+  ) { }
 }

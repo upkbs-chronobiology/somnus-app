@@ -1,0 +1,35 @@
+graphs {
+  .graph-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
+
+    // For small screens, keep (single) column restricted to parent size
+    @media (max-width: 45em) {
+      grid-template-columns: 1fr;
+    }
+
+    .graph-card {
+      margin: 1ex;
+
+      ion-card-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .canvas-container {
+        position: relative;
+        height: 20em;
+      }
+
+      .hint {
+        opacity: 0.6;
+        text-align: center;
+        font-style: italic;
+      }
+
+      .hint + .canvas-container {
+        height: 18.5em;
+      }
+    }
+  }
+}

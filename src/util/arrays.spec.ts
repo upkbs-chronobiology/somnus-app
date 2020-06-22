@@ -1,4 +1,4 @@
-import { arraysEqual, groupArray } from './arrays';
+import { arraysEqual, groupArray, indexBy, flatten } from './arrays';
 
 describe('arraysEqual', () => {
   it('should match empty arrays', () => {
@@ -46,5 +46,37 @@ describe('groupArray', () => {
         'f': ['foo'],
         'b': ['bar', 'baz']
       });
+  });
+});
+
+describe('indexBy', () => {
+  it('should map an empty array to an empty object', () => {
+    expect(indexBy([], x => '')).toEqual(new Map());
+  });
+
+  it('should correctly index an array by a string', () => {
+    expect(indexBy(['foo', 'bar', 'baz'], word => word.substring(0, 1)))
+      .toEqual(new Map(Object.entries({
+        'f': ['foo'],
+        'b': ['bar', 'baz']
+      })));
+  });
+
+  it('should correctly index an array by a number', () => {
+    expect(indexBy<number, string>(['foo', 'baar', 'baz'], word => word.length))
+      .toEqual(new Map(Object.entries({
+        3: ['foo', 'baz'],
+        4: ['baar']
+      }).map(([a, b]) => [parseInt(a), b])));
+  });
+});
+
+fdescribe('flatten', () => {
+  it('should reduce the dimension of an empty 2-dim array', () => {
+    expect(flatten([[]])).toEqual([]);
+  });
+
+  it('should flatten a 2-dim string array', () => {
+    expect(flatten([['foo', 'bar'], ['baz', 'hi']])).toEqual(['foo', 'bar', 'baz', 'hi']);
   });
 });

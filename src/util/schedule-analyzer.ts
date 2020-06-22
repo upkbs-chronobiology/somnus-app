@@ -1,6 +1,5 @@
-import moment, { Duration } from 'moment';
-import { Moment } from 'moment';
 import { Schedule } from 'model/schedule';
+import moment, { Duration, Moment } from 'moment';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const TIME_FORMAT = 'HH:mm:ss.SSS';
@@ -17,16 +16,23 @@ function combineDateAndTime(date: Moment, time: Moment): Moment {
 
 export class ScheduleAnalyzer {
 
-  private startTimeRef: Moment;
-  private endTimeRef: Moment;
-  private startDate: Moment;
-  private endDate: Moment;
+  private get startTimeRef(): Moment {
+    return momentForTime(this.schedule.startTime);
+  }
+
+  private get endTimeRef(): Moment {
+    return momentForTime(this.schedule.endTime);
+  }
+
+  private get startDate(): Moment {
+    return moment(this.schedule.startDate);
+  }
+
+  private get endDate(): Moment {
+    return moment(this.schedule.endDate);
+  }
 
   constructor(public schedule: Schedule) {
-    this.startTimeRef = momentForTime(schedule.startTime);
-    this.endTimeRef = momentForTime(schedule.endTime);
-    this.startDate = moment(schedule.startDate);
-    this.endDate = moment(schedule.endDate);
   }
 
   private timeInterval(): Duration {
@@ -117,7 +123,7 @@ export class ScheduleAnalyzer {
     const interval = this.timeInterval();
 
     const result = [];
-    for (let i = 0, time = this.startTimeRef; i < this.schedule.frequency; i++ , time = time.clone().add(interval))
+    for (let i = 0, time = this.startTimeRef; i < this.schedule.frequency; i++, time = time.clone().add(interval))
       result.push(time);
     return result;
   }
