@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 import { Answer } from '../../model/answer';
 import { Question } from '../../model/question';
 import { Questionnaire } from '../../model/questionnaire';
+import { Schedule } from '../../model/schedule';
 import { Study } from '../../model/study';
 import { User } from '../../model/user';
 import { AnswersProvider } from '../../providers/answers/answers';
 import { QuestionnairesProvider } from '../../providers/questionnaires/questionnaires';
 import { QuestionsProvider } from '../../providers/questions/questions';
+import { SchedulesProvider } from '../../providers/schedules/schedules';
 import { StudiesProvider } from '../../providers/studies/studies';
 import { UsersProvider } from '../../providers/users/users';
 import { indexBy } from '../../util/arrays';
@@ -21,7 +23,16 @@ import { DATE_FORMAT } from '../../util/schedule-analyzer';
 export class AnswersFilterComponent {
 
   @Output()
-  answersChange: EventEmitter<Map<number, Answer[]>> = new EventEmitter();
+  readonly answersChange: EventEmitter<Map<number, Answer[]>> = new EventEmitter();
+
+  @Output()
+  readonly schedulesChange: EventEmitter<Map<number, Schedule[]>> = new EventEmitter();
+
+  @Output()
+  readonly toDateChange: EventEmitter<string> = new EventEmitter();
+
+  @Output()
+  readonly fromDateChange: EventEmitter<string> = new EventEmitter();
 
   users: User[];
   studies: Study[];
@@ -40,15 +51,32 @@ export class AnswersFilterComponent {
 
   questionnaire: Questionnaire;
   participants: User[] = [];
-  fromDate: string;
-  toDate: string;
+
+  private _fromDate: string;
+  public get fromDate(): string {
+    return this._fromDate;
+  }
+  public set fromDate(value: string) {
+    this._fromDate = value;
+    this.fromDateChange.emit(value);
+  }
+
+  private _toDate: string;
+  public get toDate(): string {
+    return this._toDate;
+  }
+  public set toDate(value: string) {
+    this._toDate = value;
+    this.toDateChange.emit(value);
+  }
 
   constructor(
     usersProvider: UsersProvider,
     studiesProvider: StudiesProvider,
     questionnairesProvider: QuestionnairesProvider,
     questionsProvider: QuestionsProvider,
-    private answersProvider: AnswersProvider
+    private answersProvider: AnswersProvider,
+    private schedulesProvider: SchedulesProvider
   ) {
     Observable.combineLatest(
       usersProvider.listAll(),
@@ -96,17 +124,44 @@ export class AnswersFilterComponent {
 
     this.answersProvider.listByQuestionnaire(this.questionnaire.id)
       .subscribe(answers => {
-        const participantIds = this.participants.map(p => p.id);
-        const participantAnswers = answers.filter(a => !this.participants.length || participantIds.includes(a.userId));
-        const timeLimited = participantAnswers.filter(a => {
-          const created = moment(a.createdLocal);
-          if (this.fromDate && created < moment(this.fromDate).startOf('day')) return false;
-          if (this.toDate && created > moment(this.toDate).endOf('day')) return false;
-          return true;
-        });
+        const participantAnswers = this.filterByParticipants(answers, a => a.userId);
+        const timeLimited = this.limitByTime(participantAnswers, a => moment(a.createdLocal));
         const mappedAnswers = indexBy(timeLimited, a => a.questionId);
         this.answersChange.emit(mappedAnswers);
       });
+
+    if (this.schedulesChange.observers.length)
+      this.loadSchedules();
+  }
+
+  private loadSchedules() {
+    this.schedulesProvider.listForQuestionnaire(this.questionnaire.id)
+      .subscribe(schedules => {
+        const participantSchedules = this.filterByParticipants(schedules, s => s.userId);
+        const timeLimited = this.limitByTime(participantSchedules, s => moment(s.startDate), s => moment(s.endDate));
+        const mappedSchedules = indexBy(timeLimited, s => s.userId);
+        // // There should only be one schedule per user
+        // const singleSchedules = transformValues(mappedSchedules, s => s[0]);
+        this.schedulesChange.emit(mappedSchedules);
+      });
+  }
+
+  private filterByParticipants<T>(items: T[], extractId: (t: T) => number) {
+    const participantIds = this.participants.map(p => p.id);
+    const participantAnswers = items.filter(t => !this.participants.length || participantIds.includes(extractId(t)));
+    return participantAnswers;
+  }
+
+  private limitByTime<T>(items: T[], extractStart: (t: T) => moment.Moment, extractEnd: (t: T) => moment.Moment = extractStart) {
+    return items.filter(t => {
+      const start = extractStart(t);
+      const end = extractEnd(t);
+      if (this.fromDate && end < moment(this.fromDate).startOf('day'))
+        return false;
+      if (this.toDate && start > moment(this.toDate).endOf('day'))
+        return false;
+      return true;
+    });
   }
 
   limit7Days() {

@@ -71,7 +71,7 @@ describe('indexBy', () => {
   });
 });
 
-fdescribe('flatten', () => {
+describe('flatten', () => {
   it('should reduce the dimension of an empty 2-dim array', () => {
     expect(flatten([[]])).toEqual([]);
   });
