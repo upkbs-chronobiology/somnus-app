@@ -9,6 +9,8 @@ export function arraysEqual<T>(
   // == because we want to match null and undefined
   if (!a || !b) return a == b;
 
+  if (a === b) return true;
+
   return a.length === b.length &&
     a.map((item, i) => equality(b[i], item))
       .reduce((merged, item) => merged && item, true);
