@@ -72,6 +72,10 @@ describe('indexBy', () => {
 });
 
 describe('flatten', () => {
+  it('should leave an empty array as-is', () => {
+    expect(flatten([])).toEqual([]);
+  });
+
   it('should reduce the dimension of an empty 2-dim array', () => {
     expect(flatten([[]])).toEqual([]);
   });

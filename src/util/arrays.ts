@@ -39,5 +39,5 @@ export function indexBy<K, T>(array: T[], mapping: (t: T) => K): Map<K, T[]> {
 }
 
 export function flatten<T>(arr: T[][]): T[] {
-  return arr.reduce((acc: T[], item: T[]) => [...acc, ...item]);
+  return arr.reduce((acc: T[], item: T[]) => [...acc, ...item], []);
 }
