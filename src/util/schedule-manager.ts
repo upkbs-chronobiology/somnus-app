@@ -6,6 +6,15 @@ import { ScheduleAnalyzer } from './schedule-analyzer';
 
 export class Prompt {
   constructor(public readonly moment: Moment, public readonly schedule: Schedule) { }
+
+  static equal(a: Prompt, b: Prompt): boolean {
+    if (!a || !b) return a == b;
+
+    if (a === b) return true;
+
+    return a.moment.isSame(b.moment) &&
+      Schedule.equal(a.schedule, b.schedule);
+  }
 }
 
 function promptComparator(a: Prompt, b: Prompt): number {
@@ -31,12 +40,13 @@ export class ScheduleManager {
   }
 
   /**
-   * List the most recently due prompt of each schedule.
+   * List the most recently due prompt of each schedule, ordered by moment, descending.
    */
   mostRecentsDue(reference: Moment = moment()): Prompt[] {
     return this.scheduleAnalyzers
       .filter(analyzer => analyzer.getMostRecent(reference))
-      .map(analyzer => new Prompt(analyzer.getMostRecent(reference), analyzer.schedule));
+      .map(analyzer => new Prompt(analyzer.getMostRecent(reference), analyzer.schedule))
+      .sort((a, b) => b.moment.diff(a.moment));
   }
 
   private nextDueFor(reference: Moment, analyzer: ScheduleAnalyzer): Prompt {
@@ -64,10 +74,27 @@ export class ScheduleManager {
       // take all same-time first ones...
       do
         dues.push(next.shift());
-      while (next.length && next[0].moment.isSame(dues[dues.length - 1]));
+      while (next.length && next[0].moment.isSame(dues[dues.length - 1].moment));
 
       // ...then refresh (strictly going forward, hence + 1 ms)
       next = this.nextDuesForEach(dues[dues.length - 1].moment.clone().add(1, 'ms'));
+    }
+
+    return dues;
+  }
+
+  pastNDues(n: number, reference: Moment = moment()): Prompt[] {
+    const dues = [];
+    let next = this.mostRecentsDue(reference);
+
+    while (n > dues.length && next.length) {
+      // take all same-time first ones...
+      do
+        dues.push(next.shift());
+      while (next.length && next[0].moment.isSame(dues[dues.length - 1].moment));
+
+      // ...then refresh (strictly going backward, hence - 1 ms)
+      next = this.mostRecentsDue(dues[dues.length - 1].moment.clone().subtract(1, 'ms'));
     }
 
     return dues;

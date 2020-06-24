@@ -9,6 +9,8 @@ export function arraysEqual<T>(
   // == because we want to match null and undefined
   if (!a || !b) return a == b;
 
+  if (a === b) return true;
+
   return a.length === b.length &&
     a.map((item, i) => equality(b[i], item))
       .reduce((merged, item) => merged && item, true);
@@ -37,5 +39,5 @@ export function indexBy<K, T>(array: T[], mapping: (t: T) => K): Map<K, T[]> {
 }
 
 export function flatten<T>(arr: T[][]): T[] {
-  return arr.reduce((acc: T[], item: T[]) => [...acc, ...item]);
+  return arr.reduce((acc: T[], item: T[]) => [...acc, ...item], []);
 }

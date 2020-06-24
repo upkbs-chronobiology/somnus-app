@@ -1,10 +1,7 @@
-import { AppModule } from '../../app/app.module';
+import { TestBed } from '@angular/core/testing';
 import { AuthRestProvider } from '../auth-rest/auth-rest';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Platform } from 'ionic-angular';
+import { CacheProvider } from '../cache/cache';
 import { QuestionsProvider } from './questions';
-import { RestProvider } from '../rest/rest';
-import { StatusBar } from '@ionic-native/status-bar';
 
 const mockAuthRestProvider = {} as AuthRestProvider;
 
@@ -19,7 +16,7 @@ describe('QuestionsProvider', () => {
       providers: [
       ],
     }).compileComponents();
-    questionsProvider = new QuestionsProvider(mockAuthRestProvider);
+    questionsProvider = new QuestionsProvider(mockAuthRestProvider, new CacheProvider());
   });
 
   it('should create component', () => expect(questionsProvider).toBeDefined());

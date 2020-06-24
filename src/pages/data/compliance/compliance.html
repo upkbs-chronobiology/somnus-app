@@ -1,0 +1,41 @@
+<ion-content>
+  <answers-filter (schedulesChange)="onSchedulesChange($event)" (answersChange)="onAnswersChange($event)"
+    (fromDateChange)="fromDate = $event" (toDateChange)="toDate = $event">
+  </answers-filter>
+
+  <hr>
+
+  <p padding>
+    <em>Due to performance reasons, only up to {{maxPrompts}} scheduled prompt moments are listed at once.</em>
+  </p>
+
+  <button ion-button icon-left block clear (click)="refresh()">
+    <ion-icon name="refresh"></ion-icon>
+    Refresh
+  </button>
+
+  <ion-list>
+    <ion-list-header color="light">
+      <span item-start>Scheduled at</span>
+      <span item-end>Answers</span>
+    </ion-list-header>
+
+    <ion-item *ngIf="!dataReady()" text-center>
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-item>
+
+    <ng-container *ngIf="dataReady()">
+      <ion-item *ngFor="let prompt of allPrompts; let i = index">
+        <ion-badge item-start color="light">{{prompt.moment.format('ddd')}}</ion-badge>
+        <p item-start>{{prompt.moment.format(dateFormat)}}</p>
+        <ion-chip item-start [style.color]="userColor(prompt.schedule.userId)"
+          [style.background]="lightUserColor(prompt.schedule.userId)" class="user-tag">
+          {{userById(prompt.schedule.userId).name}}</ion-chip>
+
+        <p item-end>{{answersFor(prompt).length}}</p>
+        <ion-icon [name]="answersFor(prompt).length ? 'checkmark' : 'alert'" item-end
+          [color]="answersFor(prompt).length ? 'dark' : 'danger'"></ion-icon>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

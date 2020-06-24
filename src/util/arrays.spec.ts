@@ -67,11 +67,16 @@ describe('indexBy', () => {
       .toEqual(new Map(Object.entries({
         3: ['foo', 'baz'],
         4: ['baar']
-      }).map(([a, b]) => [parseInt(a), b])));
+        // TODO: Remove 'as ...' once we're on a new TS version (see maps.ts for an explanation)
+      }).map(([a, b]) => [parseInt(a), b] as [number, string[]])));
   });
 });
 
-fdescribe('flatten', () => {
+describe('flatten', () => {
+  it('should leave an empty array as-is', () => {
+    expect(flatten([])).toEqual([]);
+  });
+
   it('should reduce the dimension of an empty 2-dim array', () => {
     expect(flatten([[]])).toEqual([]);
   });

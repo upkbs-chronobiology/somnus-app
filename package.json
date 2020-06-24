@@ -12,7 +12,7 @@
     "ionic:serve": "ionic-app-scripts serve",
     "ionic": "ionic",
     "test": "karma start ./test-config/karma.conf.js",
-    "test-ci": "karma start ./test-config/karma.conf.js --single-run",
+    "test-ci": "karma start ./test-config/karma.conf.js --single-run --fail-on-skipped-tests",
     "test-integration": "karma start ./test-config/karma-integration.conf.js",
     "tsc": "tsc"
   },

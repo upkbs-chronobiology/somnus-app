@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { ComponentsModule } from '../../components/components.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { AnswersPage } from './answers/answers';
+import { CompliancePage } from './compliance/compliance';
 import { DataPage } from './data';
 import { ExportPage } from './export/export';
 import { GraphsPage } from './graphs/graphs';
@@ -12,7 +13,8 @@ import { GraphsPage } from './graphs/graphs';
     DataPage,
     AnswersPage,
     ExportPage,
-    GraphsPage
+    GraphsPage,
+    CompliancePage
   ],
   imports: [
     IonicPageModule.forChild(DataPage),
@@ -23,7 +25,8 @@ import { GraphsPage } from './graphs/graphs';
     DataPage,
     AnswersPage,
     ExportPage,
-    GraphsPage
+    GraphsPage,
+    CompliancePage
   ]
 })
 export class DataPageModule { }
