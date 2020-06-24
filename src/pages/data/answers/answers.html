@@ -5,6 +5,10 @@
     <h3>Answers</h3>
 
     <ion-list *ngIf="answers">
+      <ion-item *ngIf="!answers.size" text-center>
+        <ion-label color="medium">No answers yet</ion-label>
+      </ion-item>
+
       <ng-container *ngFor="let qId of questionIdsInScope">
         <ion-item-divider color="light">
           {{questionById(qId).content}}

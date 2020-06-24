@@ -1,6 +1,8 @@
 <ion-content>
   <answers-filter (answersChange)="onAnswersChange($event)"></answers-filter>
 
+  <ion-label *ngIf="questionsInScope && !questionsInScope.length" text-center padding color="medium">No graphs to display</ion-label>
+
   <div padding class="graph-area">
     <ion-card *ngFor="let question of questionsInScope" class="graph-card">
       <ion-card-header>

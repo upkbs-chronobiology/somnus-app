@@ -39,6 +39,7 @@ $colors: (
   secondary:  #FFC555,
   danger:     #FD5458,
   light:      #f4f4f4,
+  medium:     #999999,
   dark:       #222
 );
 
@@ -47,6 +48,7 @@ $primary: color($colors, primary, base);
 $secondary: color($colors, secondary, base);
 $danger: color($colors, danger, base);
 $light: color($colors, light, base);
+$medium: color($colors, medium, base);
 $dark: color($colors, dark, base);
 
 // App iOS Variables
