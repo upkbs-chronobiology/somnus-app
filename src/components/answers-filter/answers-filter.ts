@@ -99,6 +99,10 @@ export class AnswersFilterComponent {
     });
   }
 
+  refresh() {
+    this.loadAnswers();
+  }
+
   private resetAfterStudyChange() {
     const forStudy = this.questionnairesForStudy();
     if (forStudy.length > 0)

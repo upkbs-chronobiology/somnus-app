@@ -9,13 +9,21 @@
     <em>Due to performance reasons, only up to {{maxPrompts}} scheduled prompt moments are listed at once.</em>
   </p>
 
+  <button ion-button icon-left block clear (click)="refresh()">
+    <ion-icon name="refresh"></ion-icon>
+    Refresh
+  </button>
+
   <ion-list>
     <ion-list-header color="light">
       <span item-start>Scheduled at</span>
       <span item-end>Answers</span>
     </ion-list-header>
 
-    <ion-loading *ngIf="!dataReady()"></ion-loading>
+    <ion-item *ngIf="!dataReady()" text-center>
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-item>
+
     <ng-container *ngIf="dataReady()">
       <ion-item *ngFor="let prompt of allPrompts; let i = index">
         <ion-badge item-start color="light">{{prompt.moment.format('ddd')}}</ion-badge>

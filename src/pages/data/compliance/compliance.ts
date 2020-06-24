@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import moment from 'moment';
+import { AnswersFilterComponent } from '../../../components/answers-filter/answers-filter';
 import { Answer } from '../../../model/answer';
 import { Question } from '../../../model/question';
 import { Schedule } from '../../../model/schedule';
@@ -21,6 +22,9 @@ export class CompliancePage {
   readonly maxPrompts = 50;
   readonly dateFormat = 'YYYY-MM-DD HH:mm';
 
+  @ViewChild(AnswersFilterComponent)
+  answersFilter: AnswersFilterComponent;
+
   fromDate: string;
   toDate: string;
 
@@ -41,6 +45,11 @@ export class CompliancePage {
       this.questionsIndex = transformValues(indexBy(questions, q => q.id), ([q]) => q);
       this.updateAnswersByPrompt();
     });
+  }
+
+  refresh() {
+    this.answersByPrompt = null;
+    this.answersFilter.refresh();
   }
 
   onSchedulesChange(schedulesByUser: Map<number, Schedule[]>) {
