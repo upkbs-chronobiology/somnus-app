@@ -8,6 +8,7 @@ import { ToastProvider } from '../providers/toast/toast';
 import { TabsPage } from '../pages/tabs/tabs';
 import { RestProvider } from '../providers/rest/rest';
 import { PRIMARY_HEX } from '../util/theme';
+import { PreferencesProvider } from '../providers/preferences/preferences';
 
 const DATE_HEADER = 'Date';
 const MAX_TIME_DIFF = 10 * 1000; // [ms]
@@ -19,7 +20,7 @@ export class MyApp {
   rootPage: any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, headerColor: HeaderColor,
-    private rest: RestProvider, private toast: ToastProvider) {
+    private rest: RestProvider, private toast: ToastProvider, preferences: PreferencesProvider) {
     const originalNow = Date.now;
     Date.now = () => originalNow();
     platform.ready().then(() => {
@@ -31,6 +32,8 @@ export class MyApp {
       // Somnus is English-only for now. Once localize, we should do instead:
       // moment.locale(window.navigator.language);
       moment.locale('en');
+
+      preferences.applyPreferences();
 
       this.checkTime();
     });
