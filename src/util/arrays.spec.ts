@@ -67,7 +67,8 @@ describe('indexBy', () => {
       .toEqual(new Map(Object.entries({
         3: ['foo', 'baz'],
         4: ['baar']
-      }).map(([a, b]) => [parseInt(a), b])));
+        // TODO: Remove 'as ...' once we're on a new TS version (see maps.ts for an explanation)
+      }).map(([a, b]) => [parseInt(a), b] as [number, string[]])));
   });
 });
 
