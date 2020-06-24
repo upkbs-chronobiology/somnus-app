@@ -14,12 +14,23 @@
   </p>
   <p>
     Source code can be found
-    <a href="https://github.com/upkbs-chronobiology?utf8=✓&q=somnus"
-      target="_blank">on GitHub</a>.
+    <a href="https://github.com/upkbs-chronobiology?utf8=✓&q=somnus" target="_blank">on GitHub</a>.
   </p>
   <p>You are currently logged in as
     <strong>{{currentUserName}}</strong>.</p>
   <button ion-button (click)="logOut()">Log out</button>
 
   <p *ngIf="appVersion" class="version-info">Somnus app {{appVersion}}</p>
+
+  <h2>Preferences</h2>
+
+  <ion-item>
+    <ion-label>
+      <h2>
+        Full-width layout
+      </h2>
+      <p>For large screens</p>
+    </ion-label>
+    <ion-toggle [(ngModel)]="preferences.fullWidthLayout" item-end></ion-toggle>
+  </ion-item>
 </ion-content>

@@ -29,6 +29,7 @@ import { StudiesProvider } from '../providers/studies/studies';
 import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
 import { MyApp } from './app.component';
+import { PreferencesProvider } from '../providers/preferences/preferences';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { MyApp } from './app.component';
     Device,
     AppVersion,
     KeychainTouchId,
+    PreferencesProvider,
   ]
 })
 export class AppModule { }

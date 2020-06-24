@@ -3,6 +3,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { NavController } from 'ionic-angular';
 import { AuthRestProvider } from '../../providers/auth-rest/auth-rest';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { PreferencesProvider } from '../../providers/preferences/preferences';
 
 @Component({
   selector: 'page-about',
@@ -17,7 +18,8 @@ export class AboutPage {
     public navCtrl: NavController,
     private auth: AuthenticationProvider,
     private authRest: AuthRestProvider,
-    appVersion: AppVersion
+    appVersion: AppVersion,
+    public preferences: PreferencesProvider
   ) {
     appVersion.getVersionNumber()
       .then(version => this.appVersion = version)
