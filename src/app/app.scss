@@ -67,3 +67,45 @@ ion-slide .slide-zoom {
   max-height: 100%;
   overflow: auto;
 }
+
+ion-content .scroll-content {
+  overflow-y: auto;
+}
+
+@media (min-width: $page-max-width) {
+  body.limit-width {
+    page-questions,
+    page-about,
+    page-about,
+    page-editor .ion-page,
+    page-data .ion-page {
+      > ion-content > .scroll-content {
+        padding-left: calc(50% - #{$page-max-width / 2});
+        padding-right: calc(50% - #{$page-max-width / 2});
+        overflow-y: auto;
+      }
+      > ion-content[padding] > .scroll-content {
+        padding-left: calc(max(50% - #{$page-max-width / 2}, 1em));
+        padding-right: calc(max(50% - #{$page-max-width / 2}, 1em));
+        overflow-y: auto;
+      }
+    }
+
+    ion-title {
+      max-width: calc(#{$page-max-width} + 2ex);
+      margin: auto;
+
+      .toolbar-title {
+        padding: 0 1ex;
+      }
+    }
+
+    .tabbar {
+      padding: 0 calc(50% - #{$page-max-width / 2});
+    }
+
+    ion-fab[right] {
+      margin-right: calc(50% - #{$page-max-width / 2});
+    }
+  }
+}

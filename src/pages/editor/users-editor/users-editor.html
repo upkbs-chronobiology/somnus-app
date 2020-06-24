@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [class.loading]="!users">
   <ng-container *ngIf="users; else loadingIndicator">
     <button ion-button icon-left block clear (click)="loadData()">
       <ion-icon name="refresh"></ion-icon>

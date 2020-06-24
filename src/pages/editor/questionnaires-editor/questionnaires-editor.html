@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [class.loading]="!groupedQuestionnaires">
   <ng-container *ngIf="groupedQuestionnaires; else loadingIndicator">
     <button ion-button icon-left block clear (click)="loadData()">
       <ion-icon name="refresh"></ion-icon>
