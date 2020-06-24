@@ -1,6 +1,6 @@
 page-users-editor {
   // leave some space to prevent fab from covering last item
-  ion-content .scroll-content::after {
+  ion-content:not(.loading) .scroll-content::after {
     content: "";
     display: block;
     height: 3em;
