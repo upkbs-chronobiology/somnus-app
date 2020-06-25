@@ -1,0 +1,18 @@
+<ion-item [attr.no-lines]="open ? '' : null">
+  <!-- because transclusion select is not propagated through multiple
+    levels, so we need to "replicate" each case -->
+  <ng-content></ng-content>
+  <ng-content select="[item-start]" item-start></ng-content>
+  <ng-content select="[item-content]" item-content></ng-content>
+  <ng-content select="[item-end]" item-end></ng-content>
+
+  <button ion-button icon-only round small clear (click)="open = !open" color="medium" item-end>
+    <ion-icon name="ios-arrow-down"></ion-icon>
+  </button>
+</ion-item>
+
+<ion-item *ngIf="open">
+  <ion-label no-margin>
+    <ng-content select="[expandable-content]"></ng-content>
+  </ion-label>
+</ion-item>

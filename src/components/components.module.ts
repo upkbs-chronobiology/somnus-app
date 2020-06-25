@@ -12,6 +12,7 @@ import { StudyEditorComponent } from './study-editor/study-editor';
 import { UserEditorComponent } from './user-editor/user-editor';
 import { UserPickerComponent } from './user-picker/user-picker';
 import { AnswersFilterComponent } from './answers-filter/answers-filter';
+import { ExpandableItemComponent } from './expandable-item/expandable-item';
 
 @NgModule({
   declarations: [LoginComponent,
@@ -25,7 +26,8 @@ import { AnswersFilterComponent } from './answers-filter/answers-filter';
     ScheduleEditorComponent,
     QuestionPosingComponent,
     ResetPasswordComponent,
-    AnswersFilterComponent],
+    AnswersFilterComponent,
+    ExpandableItemComponent],
   imports: [
     IonicModule,
   ],
@@ -40,7 +42,8 @@ import { AnswersFilterComponent } from './answers-filter/answers-filter';
     ScheduleEditorComponent,
     QuestionPosingComponent,
     ResetPasswordComponent,
-    AnswersFilterComponent],
+    AnswersFilterComponent,
+    ExpandableItemComponent],
   entryComponents: [LoginComponent,
     ResetPasswordComponent,
     UserPickerComponent]

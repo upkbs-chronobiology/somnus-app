@@ -112,11 +112,23 @@ export class CompliancePage {
     return this.userIndex.get(id);
   }
 
+  questionById(id: number): Question {
+    return this.questionsIndex.get(id);
+  }
+
   userColor(id: number): string {
     return getVividColor(this.userById(id).name);
   }
 
   lightUserColor(id: number): string {
     return getVividColor(this.userById(id).name, 0.1);
+  }
+
+  creationString(answer: Answer): string {
+    return moment(answer.createdLocal).format('HH:mm');
+  }
+
+  answerDelay(prompt: Prompt, answer: Answer): string {
+    return prompt.moment.to(moment(answer.createdLocal), true);
   }
 }
