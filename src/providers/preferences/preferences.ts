@@ -16,7 +16,6 @@ export class PreferencesProvider {
   }
 
   constructor(public http: HttpClient) {
-    console.log('Hello PreferencesProvider Provider');
   }
 
   applyPreferences() {

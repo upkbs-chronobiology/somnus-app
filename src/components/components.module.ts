@@ -13,6 +13,7 @@ import { UserEditorComponent } from './user-editor/user-editor';
 import { UserPickerComponent } from './user-picker/user-picker';
 import { AnswersFilterComponent } from './answers-filter/answers-filter';
 import { ExpandableItemComponent } from './expandable-item/expandable-item';
+import { InputErrorHintComponent } from './input-error-hint/input-error-hint';
 
 @NgModule({
   declarations: [LoginComponent,
@@ -27,7 +28,8 @@ import { ExpandableItemComponent } from './expandable-item/expandable-item';
     QuestionPosingComponent,
     ResetPasswordComponent,
     AnswersFilterComponent,
-    ExpandableItemComponent],
+    ExpandableItemComponent,
+    InputErrorHintComponent],
   imports: [
     IonicModule,
   ],
@@ -43,7 +45,8 @@ import { ExpandableItemComponent } from './expandable-item/expandable-item';
     QuestionPosingComponent,
     ResetPasswordComponent,
     AnswersFilterComponent,
-    ExpandableItemComponent],
+    ExpandableItemComponent,
+    InputErrorHintComponent],
   entryComponents: [LoginComponent,
     ResetPasswordComponent,
     UserPickerComponent]
