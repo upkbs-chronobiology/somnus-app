@@ -66,9 +66,11 @@ export class AuthRestProvider {
   }
 
   // XXX: Might semantically better fit to AuthenticationProvider, but lives here for technical reasons:
-  //  This one depends on LoginComponent (to display the modal on-the-go when necessary), and adding
-  //  having a dependency from AuthenticationProvider to here would cause a circular dependency chain.
+  //  This one depends on LoginComponent (to display the modal on-the-go when necessary), and having
+  //  a dependency from AuthenticationProvider to here would cause a circular dependency chain.
   //  This whole setup could use some refactoring.
+  //  Idea: Use some sort of event bus/callback to trigger showing the login screen, rather than a direct
+  //  dependency from here to LoginComponent.
   logOut() {
     this.get('auth/logout')
       .subscribe(
@@ -76,6 +78,11 @@ export class AuthRestProvider {
         _err => this.confirmation
           .confirm('Logout failed. Do you want to log in as a different user anyway?')
           .subscribe(confirmed => confirmed && this.forgetSession()));
+  }
+
+  // FIXME: This would belong to AuthenticationProvider, but cannot for above reason (see logOut()).
+  changePassword(pwChangeForm: any) {
+    return this.post('auth/password/mine/change', pwChangeForm);
   }
 
   private forgetSession() {

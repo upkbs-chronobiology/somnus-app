@@ -33,4 +33,35 @@
     </ion-label>
     <ion-toggle [(ngModel)]="preferences.fullWidthLayout" item-end></ion-toggle>
   </ion-item>
+
+  <h2>Change password</h2>
+
+  <form #pwChangeForm="ngForm">
+    <ion-item>
+      <ion-label stacked>Old password</ion-label>
+      <ion-input type="password" [(ngModel)]="oldPassword" required name="oldPassword"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>New password</ion-label>
+      <ion-input type="password" [(ngModel)]="newPassword" required [minlength]="PW_MIN_LENGTH" #newPwInput="ngModel"
+        name="newPassword"></ion-input>
+    </ion-item>
+    <input-error-hint [condition]="newPwInput.touched && newPwInput.errors?.minlength">
+      The new password must contain at least {{PW_MIN_LENGTH}} characters
+    </input-error-hint>
+    <ion-item>
+      <ion-label stacked>Confirm new password</ion-label>
+      <ion-input type="password" [(ngModel)]="newPwConfirmation" required [min]="PW_MIN_LENGTH"
+        #newPwConfirmationInput="ngModel" name="newPwConfirmation"></ion-input>
+    </ion-item>
+    <input-error-hint
+      [condition]="newPwInput.touched && newPwConfirmationInput.touched && newPassword !== newPwConfirmation">
+      New password and confirmation do not match
+    </input-error-hint>
+
+    <ion-item no-lines>
+      <button ion-button item-end [disabled]="!pwChangeForm.valid || newPassword !== newPwConfirmation" (click)="changePassword()">Change
+        password</button>
+    </ion-item>
+  </form>
 </ion-content>
