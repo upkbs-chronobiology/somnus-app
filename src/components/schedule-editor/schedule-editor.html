@@ -5,7 +5,11 @@
       <strong>{{questionnaire.name}}</strong> for
       <strong>{{participant.name}}</strong>
     </ion-title>
+  </ion-navbar>
+  <ion-navbar>
     <ion-buttons right>
+      <button ion-button (click)="copyFromQuestionnaireAndUser()" color="primary" [disabled]="submitting">Copy from
+        other questionnaire</button>
       <button ion-button (click)="copyFromUser()" color="primary" [disabled]="submitting">Copy from other user</button>
     </ion-buttons>
   </ion-navbar>

@@ -1,18 +1,21 @@
 import { ApplicationModule } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { AlertButton, AlertController, IonicModule, NavParams, ViewController } from 'ionic-angular';
+import { AlertButton, AlertController, IonicModule, LoadingController, NavParams, ViewController } from 'ionic-angular';
 import { mockView } from 'ionic-angular/util/mock-providers';
 import { Observable } from 'rxjs';
+import { Questionnaire } from '../../model/questionnaire';
 import { Schedule } from '../../model/schedule';
 import { User } from '../../model/user';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { ConfirmationProvider } from '../../providers/confirmation/confirmation';
+import { QuestionnairesProvider } from '../../providers/questionnaires/questionnaires';
 import { SchedulesProvider } from '../../providers/schedules/schedules';
+import { StudiesProvider } from '../../providers/studies/studies';
 import { ToastProvider } from '../../providers/toast/toast';
 import { ScheduleEditorComponent } from './schedule-editor';
 
-describe('LoginComponent', () => {
+fdescribe('ScheduleEditor', () => {
 
   const existingId = 7;
   const otherId = 8;
@@ -20,6 +23,7 @@ describe('LoginComponent', () => {
   const otherUser = new User('Another One', null, 99);
   const existingSchedule = new Schedule(existingId, 1, participant.id, '2020-01-01', '2020-02-02', '08:00:00', '17:00:00', 66);
   const otherSchedule = new Schedule(otherId, 1, otherUser.id, '2020-01-01', '2020-02-02', '08:00:00', '17:00:00', 77);
+  const testQuestionnaire = new Questionnaire(123, 'Test Questionnaire', null);
 
   let component: ScheduleEditorComponent;
   let fixture: ComponentFixture<ScheduleEditorComponent>;
@@ -31,7 +35,8 @@ describe('LoginComponent', () => {
       schedule: existingSchedule,
       participant: participant,
       allParticipants: [participant, otherUser],
-      allSchedules: [existingSchedule, otherSchedule]
+      allSchedules: [existingSchedule, otherSchedule],
+      questionnaire: testQuestionnaire
     }
   } as NavParams;
 
@@ -71,6 +76,17 @@ describe('LoginComponent', () => {
         { provide: ConfirmationProvider, useValue: { confirm: () => Observable.of(true) } },
         { provide: ToastProvider, useValue: {} as ToastProvider },
         { provide: AlertController, useValue: mockAlertController },
+        { provide: QuestionnairesProvider, useValue: {} as QuestionnairesProvider },
+        { provide: StudiesProvider, useValue: {} as StudiesProvider },
+        {
+          provide: LoadingController,
+          useValue: {
+            create: () => ({
+              present: () => { },
+              dismiss: () => { }
+            })
+          } as LoadingController
+        },
       ]
     });
   }));
