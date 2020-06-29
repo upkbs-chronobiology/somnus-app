@@ -41,3 +41,11 @@ export function indexBy<K, T>(array: T[], mapping: (t: T) => K): Map<K, T[]> {
 export function flatten<T>(arr: T[][]): T[] {
   return arr.reduce((acc: T[], item: T[]) => [...acc, ...item], []);
 }
+
+export async function filterAsync<T>(array: T[], filter: (t: T) => Promise<boolean>): Promise<T[]> {
+  const removed = Symbol();
+  const combed = await Promise.all(array.map(async t => (await filter(t)) ? t : removed));
+  return combed
+    .filter(t => t !== removed)
+    .map(t => t as T);
+}
