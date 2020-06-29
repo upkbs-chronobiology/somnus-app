@@ -193,6 +193,8 @@ export class ScheduleEditorComponent {
     this.editedSchedule.userId = this.participant.id;
     this.editedSchedule.questionnaireId = this.questionnaire.id;
 
+    this.scheduleAnalyzer = new ScheduleAnalyzer(this.editedSchedule);
+
     loading.dismiss();
   }
 
