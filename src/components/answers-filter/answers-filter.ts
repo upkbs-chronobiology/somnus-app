@@ -59,6 +59,7 @@ export class AnswersFilterComponent {
   public set fromDate(value: string) {
     this._fromDate = value;
     this.fromDateChange.emit(value);
+    this.loadAnswers();
   }
 
   private _toDate: string;
@@ -68,6 +69,7 @@ export class AnswersFilterComponent {
   public set toDate(value: string) {
     this._toDate = value;
     this.toDateChange.emit(value);
+    this.loadAnswers();
   }
 
   constructor(
