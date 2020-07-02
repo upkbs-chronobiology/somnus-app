@@ -19,8 +19,8 @@ import { Prompt, ScheduleManager } from '../../../util/schedule-manager';
 })
 export class CompliancePage {
 
-  readonly maxPrompts = 50;
   readonly dateFormat = 'YYYY-MM-DD HH:mm';
+  maxPrompts = 50;
 
   @ViewChild(AnswersFilterComponent)
   answersFilter: AnswersFilterComponent;

@@ -5,9 +5,13 @@
 
   <hr>
 
-  <p padding>
-    <em>Due to performance reasons, only up to {{maxPrompts}} scheduled prompt moments are listed at once.</em>
-  </p>
+  <ion-item>
+    <ion-label stacked>Maximum number of items to list</ion-label>
+    <ion-input type="number" [(ngModel)]="maxPrompts" min="0"></ion-input>
+  </ion-item>
+  <input-error-hint [condition]="maxPrompts > 200">
+    Listing too many scheduled prompt moments can be slow
+  </input-error-hint>
 
   <button ion-button icon-left block clear (click)="refresh()">
     <ion-icon name="refresh"></ion-icon>
