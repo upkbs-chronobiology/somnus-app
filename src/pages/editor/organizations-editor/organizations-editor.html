@@ -1,0 +1,33 @@
+<ion-content>
+  <ng-container *ngIf="organizations" class="line">
+    <form #form="ngForm" *ngFor="let organization of organizations; let i = index">
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="organization.name" required name="organization-{{i}}"></ion-input>
+
+        <ion-buttons item-end>
+          <button ion-button icon-only small round (click)="update(organization)" [disabled]="form.invalid"
+            class="update-button">
+            <ion-icon name="cloud-upload"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-item>
+    </form>
+
+    <ion-item *ngIf="organizations.length === 0">
+      <ion-label color="medium" text-center> No items </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="creating">
+      <ion-label stacked>New organization</ion-label>
+      <ion-input #newName type="text" required></ion-input>
+      <ion-buttons item-end>
+        <button ion-button (click)="create(newName.value)" [disabled]="!newName.value"> Create </button>
+      </ion-buttons>
+    </ion-item>
+    <button ion-item *ngIf="!creating" (click)="creating = true" icon-start text-right>
+      <ion-label color="primary">
+        <ion-icon name="add"></ion-icon> Add
+      </ion-label>
+    </button>
+  </ng-container>
+</ion-content>

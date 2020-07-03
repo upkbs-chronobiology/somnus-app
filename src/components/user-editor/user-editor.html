@@ -15,6 +15,15 @@
     </ion-select>
   </ion-item>
 
+  <ion-item *ngIf="currentUserIsAdmin && this.organizations">
+    <ion-label>Organization</ion-label>
+    <ion-select class="organization" item-end interface="popover" [(ngModel)]="user.organizationId" (ionChange)="onChange()"
+      [disabled]="!currentUserIsAdmin">
+      <ion-option></ion-option>
+      <ion-option *ngFor="let org of organizations" [value]="org.id">{{org.id}}: {{org.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
   <h4>Password reset</h4>
 
   <button ion-button block *ngIf="!pwReset && !loadingReset" [disabled]="userIsEditor && !currentUserIsAdmin"
