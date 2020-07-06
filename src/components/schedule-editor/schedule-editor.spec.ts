@@ -15,7 +15,7 @@ import { StudiesProvider } from '../../providers/studies/studies';
 import { ToastProvider } from '../../providers/toast/toast';
 import { ScheduleEditorComponent } from './schedule-editor';
 
-fdescribe('ScheduleEditor', () => {
+describe('ScheduleEditor', () => {
 
   const existingId = 7;
   const otherId = 8;
