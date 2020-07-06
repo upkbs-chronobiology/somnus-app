@@ -30,6 +30,7 @@ import { ToastProvider } from '../providers/toast/toast';
 import { UsersProvider } from '../providers/users/users';
 import { MyApp } from './app.component';
 import { PreferencesProvider } from '../providers/preferences/preferences';
+import { OrganizationsProvider } from '../providers/organizations/organizations';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { PreferencesProvider } from '../providers/preferences/preferences';
     AppVersion,
     KeychainTouchId,
     PreferencesProvider,
+    OrganizationsProvider,
   ]
 })
 export class AppModule { }

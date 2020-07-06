@@ -1,14 +1,16 @@
-import * as moment from 'moment';
-import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { Component, HostBinding } from '@angular/core';
-import { enumAsArray } from '../../util/enums';
 import { NavParams, ViewController } from 'ionic-angular';
+import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
+import { Organization } from '../../model/organization';
 import { PwReset } from '../../model/pw-reset';
 import { Role } from '../../model/role';
-import { ToastProvider } from '../../providers/toast/toast';
 import { User } from '../../model/user';
+import { AuthenticationProvider } from '../../providers/authentication/authentication';
+import { OrganizationsProvider } from '../../providers/organizations/organizations';
+import { ToastProvider } from '../../providers/toast/toast';
 import { UsersProvider } from '../../providers/users/users';
+import { enumAsArray } from '../../util/enums';
 
 @Component({
   selector: 'user-editor',
@@ -27,6 +29,7 @@ export class UserEditorComponent {
   loadingReset: boolean;
 
   roles: string[] = enumAsArray(Role);
+  organizations: Organization[];
 
   constructor(
     private usersProvider: UsersProvider,
@@ -34,10 +37,15 @@ export class UserEditorComponent {
     auth: AuthenticationProvider,
     private view: ViewController,
     params: NavParams,
+    organizationsProvider: OrganizationsProvider,
   ) {
     this.currentUserIsAdmin = auth.userIsAdmin();
     this.user = params.data.user;
     this.userIsEditor = auth.userCanEdit(this.user);
+
+    if (this.currentUserIsAdmin)
+      organizationsProvider.listAll()
+        .subscribe(os => this.organizations = os);
   }
 
   onChange() {

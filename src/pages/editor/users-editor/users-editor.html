@@ -15,6 +15,7 @@
     </ion-list-header>
 
     <button ion-item *ngFor="let user of filteredUsers()" (click)="edit(user)">
+      <ion-badge *ngIf="actorIsAdmin" item-start color="medium">{{user.organizationId}}</ion-badge>
       <ion-label>{{user.name}}</ion-label>
       <ion-badge item-end>{{user.role}}</ion-badge>
     </button>

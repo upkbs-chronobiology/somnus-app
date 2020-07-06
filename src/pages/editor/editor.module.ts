@@ -1,17 +1,18 @@
-import { ComponentsModule } from '../../components/components.module';
-import { EditorPage } from './editor';
-import { IonicPageModule } from 'ionic-angular';
 import { NgModule } from '@angular/core';
-import { PipesModule } from '../../pipes/pipes.module';
+import { IonicPageModule } from 'ionic-angular';
+import { ComponentsModule } from '../../components/components.module';
 import { QuestionEditorComponent } from '../../components/question-editor/question-editor';
 import { QuestionnaireEditorComponent } from '../../components/questionnaire-editor/questionnaire-editor';
-import { QuestionnairesEditorPage } from './questionnaires-editor/questionnaires-editor';
-import { QuestionsEditorPage } from './questions-editor/questions-editor';
 import { ScheduleEditorComponent } from '../../components/schedule-editor/schedule-editor';
-import { SchedulesEditorComponent } from './schedules-editor/schedules-editor';
-import { StudiesEditorPage } from './studies-editor/studies-editor';
 import { StudyEditorComponent } from '../../components/study-editor/study-editor';
 import { UserEditorComponent } from '../../components/user-editor/user-editor';
+import { PipesModule } from '../../pipes/pipes.module';
+import { EditorPage } from './editor';
+import { OrganizationsEditorPage } from './organizations-editor/organizations-editor';
+import { QuestionnairesEditorPage } from './questionnaires-editor/questionnaires-editor';
+import { QuestionsEditorPage } from './questions-editor/questions-editor';
+import { SchedulesEditorComponent } from './schedules-editor/schedules-editor';
+import { StudiesEditorPage } from './studies-editor/studies-editor';
 import { UsersEditorPage } from './users-editor/users-editor';
 
 
@@ -22,7 +23,8 @@ import { UsersEditorPage } from './users-editor/users-editor';
     StudiesEditorPage,
     UsersEditorPage,
     QuestionnairesEditorPage,
-    SchedulesEditorComponent
+    SchedulesEditorComponent,
+    OrganizationsEditorPage
   ],
   imports: [
     IonicPageModule.forChild(EditorPage),
@@ -39,7 +41,8 @@ import { UsersEditorPage } from './users-editor/users-editor';
     QuestionnairesEditorPage,
     QuestionnaireEditorComponent,
     SchedulesEditorComponent,
-    ScheduleEditorComponent
+    ScheduleEditorComponent,
+    OrganizationsEditorPage
   ]
 })
 export class EditorPageModule { }

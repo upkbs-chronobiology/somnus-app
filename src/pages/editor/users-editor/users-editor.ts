@@ -8,6 +8,7 @@ import { User } from '../../../model/user';
 import { ToastProvider } from '../../../providers/toast/toast';
 import { UsersProvider } from '../../../providers/users/users';
 import { enumAsArray } from '../../../util/enums';
+import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
 @Component({
   selector: 'page-users-editor',
@@ -18,6 +19,8 @@ export class UsersEditorPage {
   readonly roles = enumAsArray(Role);
   readonly baseUsersRole = 'base user';
 
+  actorIsAdmin: boolean;
+
   users: User[];
   filterQuery: string;
   roleFilter: string[] = [...this.roles.map(r => r.toString()), this.baseUsersRole];
@@ -26,8 +29,10 @@ export class UsersEditorPage {
     private usersProvider: UsersProvider,
     private alertController: AlertController,
     private modal: ModalController,
-    private toast: ToastProvider
+    private toast: ToastProvider,
+    auth: AuthenticationProvider,
   ) {
+    this.actorIsAdmin = auth.userIsAdmin();
     this.loadData();
   }
 
