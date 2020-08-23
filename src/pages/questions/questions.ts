@@ -154,7 +154,7 @@ export class QuestionsPage implements OnInit {
         return answer;
       });
 
-      // jump to first slide for a new questionaire to prevent UI glitches
+      // jump to first slide for a new questionnaire to prevent UI glitches
       // FIXME: this.slidesInstances is undefined during tests, hence this guard
       this.slidesInstances && this.slidesInstances.forEach(slides => slides.slideTo(0, 0));
     });
